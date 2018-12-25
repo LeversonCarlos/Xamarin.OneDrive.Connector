@@ -1,8 +1,9 @@
+using System;
 using Microsoft.Identity.Client;
 
 namespace Xamarin.OneDrive
 {
-   public partial class Configs
+   public partial class Configs : IDisposable
    {
 
       public string ClientID { get; set; }
@@ -10,6 +11,11 @@ namespace Xamarin.OneDrive
 
       internal string RedirectUri { get; set; }
       internal UIParent UiParent { get; set; }
+
+      public void Dispose()
+      {
+         this.UiParent = null;
+      }
 
    }
 }

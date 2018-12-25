@@ -7,13 +7,14 @@ namespace Xamarin.OneDrive
       Configs Configs { get; set; }
 
       public Token(Configs configs)
-      { 
+      {
          this.Configs = configs;
       }
 
       public void Dispose()
-      { 
-
+      {
+         this.Configs.Dispose();
+         this.Configs = null;
       }
 
    }
