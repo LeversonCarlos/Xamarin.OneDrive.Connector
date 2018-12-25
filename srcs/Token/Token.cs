@@ -2,9 +2,9 @@ using System;
 
 namespace Xamarin.OneDrive
 {
-   internal partial class Token : IDisposable
+   public partial class Token : IDisposable
    {
-      Configs Configs { get; set; }
+      public Configs Configs { get; private set; }
 
       public Token(Configs configs)
       {
