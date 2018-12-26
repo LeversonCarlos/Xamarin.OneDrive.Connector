@@ -19,6 +19,7 @@ namespace Xamarin.OneDrive
       public void Dispose()
       {
          this.Client = null;
+         this.AuthResult = null;
          this.Configs.Dispose();
          this.Configs = null;
       }
