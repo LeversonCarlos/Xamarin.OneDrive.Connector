@@ -16,10 +16,10 @@ TODO
 
 ## Changelog
 ### v0.0.1
-Initial release. 
-Trying to learn and apply unit tests (quantum physics for me). 
-Conditional framework's builds according to platform specifics, need because android requires some extras steps on acquiring token. 
-Extending the HttpClient library to accommodate token acquisition. 
+Initial release.  
+Trying to learn and apply unit tests (quantum physics for me).  
+Conditional framework's builds according to platform specifics, need because android requires some extras steps on acquiring token.  
+Extending the HttpClient library to accommodate token acquisition.  
 
 ## Authors
 * [Leverson Carlos](https://github.com/LeversonCarlos). 
