@@ -22,7 +22,7 @@ namespace Xamarin.OneDrive
             }
             return this.IsValid();
          }
-         catch (Exception) { return false; }
+         catch (Exception) { throw; }
       }
 
    }

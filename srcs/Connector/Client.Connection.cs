@@ -9,36 +9,33 @@ namespace Xamarin.OneDrive
 
       public async Task<bool> ConnectAsync()
       {
-         try
-         {
-            var httpContent = new StringContent(ConnectorHandler.InnerConnectionConnect);
-            var httpMessage = await this.PostAsync(ConnectorHandler.InnerConnectionPath, httpContent);
-            if (httpMessage.IsSuccessStatusCode) { return true; }
-            else
-            {
-               var httpResult = await httpMessage.Content.ReadAsStringAsync();
-               throw new Exception(httpResult);
-            }
-         }
-         catch (Exception) { throw; }
+         return await this.ConnectorAsync(ConnectorHandler.InnerConnectionConnect);
       }
 
       public async Task<bool> DisconnectAsync()
       {
+         return await this.ConnectorAsync(ConnectorHandler.InnerConnectionDisconnect);
+      }
+
+      public async Task<bool> ConnectorAsync(string connectorState)
+      {
          try
          {
-            var httpContent = new StringContent(ConnectorHandler.InnerConnectionDisconnect);
-            var httpMessage = await this.PostAsync(ConnectorHandler.InnerConnectionPath, httpContent);
+            var httpParam = new StringContent(connectorState);
+            var httpMessage = await this.PostAsync(ConnectorHandler.InnerConnectionPath, httpParam);
             if (httpMessage.IsSuccessStatusCode) { return true; }
             else
             {
-               var httpResult = await httpMessage.Content.ReadAsStringAsync();
-               throw new Exception(httpResult);
+               var httpReason = httpMessage.ReasonPhrase;
+               var httpContent = string.Empty;
+               if (httpMessage.Content != null) { 
+                  httpContent = await httpMessage.Content.ReadAsStringAsync();
+               }
+               throw new Exception($"{httpReason}\n{httpContent}");
             }
          }
          catch (Exception) { throw; }
       }
-
 
    }
 }

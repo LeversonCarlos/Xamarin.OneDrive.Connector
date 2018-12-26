@@ -13,7 +13,7 @@ namespace Xamarin.OneDrive
             this.AuthResult = await this.Client.AcquireTokenAsync(this.Configs.Scopes, this.Configs.UiParent);
             return this.IsValid();
          }
-         catch (Exception) { return false; }
+         catch (Exception) { throw; }
       }
 
    }

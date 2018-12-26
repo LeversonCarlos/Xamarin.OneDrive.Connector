@@ -9,8 +9,13 @@ namespace Xamarin.OneDrive.Tests
 
       public ConnectorFixture()
       {
-         var configs = new Configs { ClientID = Settings.ClientID };
+         var configs = new Configs
+         {
+            ClientID = Settings.ClientID,
+            Scopes = new string[] { "User.Read" }
+         };
          this.Connector = new Connector(configs);
+         // var connectorResult = this.Connector.ConnectAsync().GetAwaiter().GetResult();
       }
 
       public void Dispose()
