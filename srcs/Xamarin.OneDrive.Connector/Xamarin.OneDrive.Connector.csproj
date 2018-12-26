@@ -39,6 +39,7 @@
 
    <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
       <Compile Include="Configs\*.uwp.cs" />
+      <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.1.5" />
    </ItemGroup>
 
    <ItemGroup>

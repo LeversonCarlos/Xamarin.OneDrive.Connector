@@ -1,11 +1,8 @@
 # Xamarin.OneDrive.Connector
 A wrapper around microsoft identity connector and microsoft graph api to access one drive content
 
-## Install instructions
-TODO
-
 ## Sample of how to use the library
-### Simplest get started sample
+### Simplest get-started sample
 ```csharp
    using Xamarin.OneDrive;
 
@@ -22,6 +19,17 @@ TODO
       /* json message with the requested data */
    }
    connector.Dispose();
+```
+
+## Install instructions
+You can add the library to your project using the [nuget](https://www.nuget.org/packages/Xamarin.OneDrive.Connector) package: 
+```shell
+dotnet add package Xamarin.OneDrive.Connector
+```  
+
+And the optionals plugins:
+```shell
+dotnet add package Xamarin.OneDrive.Connector.Profile
 ```
 
 ## Build using
