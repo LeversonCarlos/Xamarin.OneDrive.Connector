@@ -1,0 +1,19 @@
+# Starter pipeline
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- script: dotnet restore ./srcs/Xamarin.OneDrive.Connector
+  displayName: 'dotnet restore'
+- script: dotnet build ./srcs/Xamarin.OneDrive.Connector --configuration $(buildConfiguration)
+  displayName: 'dotnet build $(buildConfiguration)'
+- script: dotnet pack ./srcs/Xamarin.OneDrive.Connector /p:Configuration=$(buildConfiguration) --include-symbols -p:SymbolPackageFormat=snupkg
+  displayName: 'dotnet pack'
