@@ -13,6 +13,10 @@
       <PackageReference Include="MSBuild.Sdk.Extras" Version="1.6.65" PrivateAssets="All" />
    </ItemGroup>
 
+   <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
+      <Compile Include="Configs\*.netstandard.cs" />
+   </ItemGroup>
+
    <ItemGroup>
       <None Include="**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
    </ItemGroup>
