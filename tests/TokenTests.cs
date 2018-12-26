@@ -4,31 +4,26 @@ using Xamarin.OneDrive.Connector;
 
 namespace Xamarin.OneDrive.Connector.Tests
 {
-   public class TokenTests
+   public class TokenTests : IClassFixture<TokenFixture>
    {
 
-      [Fact]
-      public void ClientProperty_MustMatch_DefaultValue()
+      TokenFixture TokenFixture;
+
+      public TokenTests()
       {
-         using (var configs = new Configs { ClientID = Settings.ClientID })
-         {
-            using (var token = new Token(configs))
-            {
-               Assert.Equal(Settings.ClientID, token.Configs.ClientID);
-            }
-         }
+         this.TokenFixture = new TokenFixture();
+      }
+
+      [Fact]
+      public void ClientID_MustMatch_DefaultValue()
+      {
+         Assert.Equal(Settings.ClientID, this.TokenFixture.Token.Configs.ClientID);
       }
 
       [Fact]
       public void InitialToken_MustBe_Invalid()
       {
-         using (var configs = new Configs { ClientID = Settings.ClientID })
-         {
-            using (var token = new Token(configs))
-            {
-               Assert.Equal(false, token.IsValid());
-            }
-         }
+         Assert.False(this.TokenFixture.Token.IsValid());
       }
 
    }
