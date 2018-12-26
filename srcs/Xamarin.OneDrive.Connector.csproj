@@ -17,6 +17,10 @@
       <Compile Include="Configs\*.netstandard.cs" />
    </ItemGroup>
 
+   <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
+      <Compile Include="Configs\*.uwp.cs" />
+   </ItemGroup>
+
    <ItemGroup>
       <None Include="**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
    </ItemGroup>
