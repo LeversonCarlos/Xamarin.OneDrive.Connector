@@ -17,6 +17,10 @@
       <Compile Include="Configs\*.netstandard.cs" />
    </ItemGroup>
 
+   <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+      <Compile Include="Configs\*.ios.cs" />
+   </ItemGroup>
+
    <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
       <Compile Include="Configs\*.uwp.cs" />
    </ItemGroup>
