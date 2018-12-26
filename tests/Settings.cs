@@ -1,4 +1,4 @@
-namespace Xamarin.OneDrive.Connector.Tests
+namespace Xamarin.OneDrive.Tests
 {
    internal class Settings
    {

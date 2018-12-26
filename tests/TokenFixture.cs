@@ -1,6 +1,7 @@
 using System;
+using Xamarin.OneDrive;
 
-namespace Xamarin.OneDrive.Connector.Tests
+namespace Xamarin.OneDrive.Tests
 {
    public class TokenFixture : IDisposable
    {
@@ -10,14 +11,12 @@ namespace Xamarin.OneDrive.Connector.Tests
       {
          var configs = new Configs { ClientID = Settings.ClientID };
          this.Token = new Token(configs);
-         Console.WriteLine("TokenFixture Initialize");
       }
 
       public void Dispose()
       {
          this.Token.Dispose();
          this.Token = null;
-         Console.WriteLine("TokenFixture Dispose");
       }
 
    }

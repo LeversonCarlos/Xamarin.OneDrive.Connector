@@ -1,8 +1,7 @@
 using System;
 using Xunit;
-using Xamarin.OneDrive.Connector;
 
-namespace Xamarin.OneDrive.Connector.Tests
+namespace Xamarin.OneDrive.Tests
 {
    public class TokenTests : IClassFixture<TokenFixture>
    {
