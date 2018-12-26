@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 
 namespace Xamarin.OneDrive
 {
-   partial class Connector
+   public static class ProfileConnector
    {
 
-      public async Task<Profile> GetProfileAsync()
+      public static async Task<Profile> GetProfileAsync(this Connector connector)
       {
          try
          { 
-            var httpMessage = await this.GetAsync("me?$select=id,displayName,mail");
+            var httpMessage = await connector.GetAsync("me?$select=id,displayName,mail");
             if (!httpMessage.IsSuccessStatusCode)
             { throw new Exception(await httpMessage.Content.ReadAsStringAsync()); }
 
