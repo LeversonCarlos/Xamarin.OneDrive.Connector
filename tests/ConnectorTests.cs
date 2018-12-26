@@ -12,7 +12,7 @@ namespace Xamarin.OneDrive.Tests
          this.ConnectorFixture = new ConnectorFixture();
       }
 
-      [Fact]
+      [Fact(Skip="We cant test this cause we have no interactive mode here")]
       public async Task Connect_MustBe_True()
       {
          var result = await this.ConnectorFixture.Connector.ConnectAsync();
