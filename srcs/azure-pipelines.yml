@@ -18,5 +18,5 @@ steps:
   displayName: 'build assemblies'
 - script: msbuild ./srcs/Xamarin.OneDrive.Connector /t:pack /p:Configuration=$(buildConfiguration)
   displayName: 'package binaries'
-- script: dotnet nuget push **/Xamarin.OneDrive.Connector*.nupkg -k $(nugetApiKey) -s $(nugetApiUrl)
+- script: dotnet nuget push **/Xamarin.OneDrive.Connector*.nupkg -k $(nugetApiKey) -s $(nugetApiUrl) -n
   displayName: 'publish nuget'
