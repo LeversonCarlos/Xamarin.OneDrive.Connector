@@ -9,11 +9,14 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  -group: nuget
 
 steps:
 - script: dotnet restore ./srcs/Xamarin.OneDrive.Connector
-  displayName: 'dotnet restore'
-- script: dotnet build ./srcs/Xamarin.OneDrive.Connector --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
-- script: dotnet pack ./srcs/Xamarin.OneDrive.Connector /p:Configuration=$(buildConfiguration) --include-symbols -p:SymbolPackageFormat=snupkg
+  displayName: 'msbuild ./srcs/Xamarin.OneDrive.Connector /t:restore'
+- script: msbuild ./srcs/Xamarin.OneDrive.Connector /t:build /p:Configuration=$(buildConfiguration)
+  displayName: 'dotnet build '
+- script: msbuild ./srcs/Xamarin.OneDrive.Connector /t:pack /p:Configuration=$(buildConfiguration)
   displayName: 'dotnet pack'
+- script: dotnet nuget push ./srcs/Xamarin.OneDrive.Connector/bin/Release/*.nupkg -k $(nugetApiKey) -s $(nugetApiUrl)
+  displayName: 'dotnet nuget push'
