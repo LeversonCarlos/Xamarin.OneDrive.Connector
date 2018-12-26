@@ -7,6 +7,15 @@ namespace Xamarin.OneDrive
    { 
       AuthenticationResult AuthResult { get; set; }
 
+      public string CurrentToken
+      {
+         get
+         {
+            if (!this.IsValid()) { return string.Empty; }
+            return this.AuthResult.AccessToken;
+         }
+      }
+
       public bool IsValid()
       {
          if (this.AuthResult == null) { return false; }
