@@ -9,6 +9,7 @@
       <Compile Include="Configs\*.shared.cs" />
       <Compile Include="Connector\*.cs" />
       <Compile Include="Token\*.cs" />
+      <Compile Include="Profile\*.cs" />
       <PackageReference Include="Microsoft.Identity.Client" Version="2.6.2" />
       <PackageReference Include="MSBuild.Sdk.Extras" Version="1.6.65" PrivateAssets="All" />
    </ItemGroup>
