@@ -17,7 +17,7 @@ namespace Xamarin.OneDrive
          return await this.ConnectorAsync(ConnectorHandler.InnerConnectionDisconnect);
       }
 
-      public async Task<bool> ConnectorAsync(string connectorState)
+      private async Task<bool> ConnectorAsync(string connectorState)
       {
          try
          {
