@@ -1,11 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup>
-    <ProjectReference Include="..\Xamarin.OneDrive.Connector\Xamarin.OneDrive.Connector.csproj" />
-  </ItemGroup>
-
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+
+   <PropertyGroup>
+      <PackageId>Xamarin.OneDrive.Connector.Profile</PackageId>
+      <Version>0.0.1</Version>
+      <Description>A plugin for the xamarin onedrive connector to extract **profile data**.</Description>
+      <Authors>Leverson Carlos;lcjohnny</Authors>
+      <Company>Leverson Carlos</Company>    
+      <RepositoryUrl>https://github.com/LeversonCarlos/Xamarin.OneDrive.Connector</RepositoryUrl>
+      <PackageTags>Xamarin.OneDrive.Connector Xamarin Xamarin.OneDrive OneDrive Microsoft.Identity Microsoft.Identity.Client Microsoft.Graph</PackageTags>      
+   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Xamarin.OneDrive.Connector\Xamarin.OneDrive.Connector.csproj" />
+  </ItemGroup>
 
 </Project>
