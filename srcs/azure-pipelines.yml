@@ -12,8 +12,8 @@ variables:
   -group: nuget
 
 steps:
-- script: dotnet restore ./srcs/Xamarin.OneDrive.Connector
-  displayName: 'msbuild ./srcs/Xamarin.OneDrive.Connector /t:restore'
+- script: msbuild ./srcs/Xamarin.OneDrive.Connector /t:restore
+  displayName: 'dotnet restore'
 - script: msbuild ./srcs/Xamarin.OneDrive.Connector /t:build /p:Configuration=$(buildConfiguration)
   displayName: 'dotnet build '
 - script: msbuild ./srcs/Xamarin.OneDrive.Connector /t:pack /p:Configuration=$(buildConfiguration)
