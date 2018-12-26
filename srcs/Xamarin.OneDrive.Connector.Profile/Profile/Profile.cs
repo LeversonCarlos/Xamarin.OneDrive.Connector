@@ -1,10 +1,10 @@
 using System.Runtime.Serialization;
 
-namespace Xamarin.OneDrive
+namespace Xamarin.OneDrive.Profile
 {
 
    [DataContract]
-   public class Profile
+   public class ProfileData
    {
 
       [DataMember(Name = "id")]

@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Xamarin.OneDrive
+namespace Xamarin.OneDrive.Profile
 {
    public static class ProfileConnector
    {
 
-      public static async Task<Profile> GetProfileAsync(this Connector connector)
+      public static async Task<ProfileData> GetProfileAsync(this Xamarin.OneDrive.Connector connector)
       {
          try
          { 
@@ -15,8 +15,8 @@ namespace Xamarin.OneDrive
             { throw new Exception(await httpMessage.Content.ReadAsStringAsync()); }
 
             var httpContent = await httpMessage.Content.ReadAsStreamAsync();
-            var serializer = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(Profile));
-            var httpResult = (Profile)serializer.ReadObject(httpContent);
+            var serializer = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(ProfileData));
+            var httpResult = (ProfileData)serializer.ReadObject(httpContent);
 
             return httpResult;
          }
