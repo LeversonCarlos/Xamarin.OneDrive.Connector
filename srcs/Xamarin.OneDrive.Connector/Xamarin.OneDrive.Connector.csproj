@@ -1,26 +1,38 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras/1.6.65" ToolsVersion="15.0">
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 
    <PropertyGroup>
       <TargetFrameworks>netstandard2.0;Xamarin.iOS10;MonoAndroid81;uap10.0.16299</TargetFrameworks>
       <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+      <Configurations>Debug;Release</Configurations>
    </PropertyGroup>
 
    <PropertyGroup>
       <PackageId>Xamarin.OneDrive.Connector</PackageId>
-      <Version>0.0.1</Version>
+      <Version>0.0.2</Version>
       <Description>A wrapper around microsoft identity connector and microsoft graph api to access one drive content</Description>
       <Authors>Leverson Carlos;lcjohnny</Authors>
       <Company>Leverson Carlos</Company>    
       <RepositoryUrl>https://github.com/LeversonCarlos/Xamarin.OneDrive.Connector</RepositoryUrl>
-      <PackageTags>Xamarin.OneDrive.Connector Xamarin Xamarin.OneDrive OneDrive Microsoft.Identity Microsoft.Identity.Client Microsoft.Graph</PackageTags>      
+      <DefaultLanguage>en</DefaultLanguage>
+      <PackageTags>Xamarin.OneDrive.Connector Xamarin Xamarin.OneDrive OneDrive Microsoft.Identity Microsoft.Identity.Client Microsoft.Graph</PackageTags>
+      <PackageLicenseUrl>https://raw.githubusercontent.com/LeversonCarlos/Xamarin.OneDrive.Connector/master/LICENSE</PackageLicenseUrl>
    </PropertyGroup>
 
+   <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
+      <DebugType>full</DebugType>
+      <DebugSymbols>true</DebugSymbols>
+   </PropertyGroup>
+
+   <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
+      <DebugType>pdbonly</DebugType>
+   </PropertyGroup>     
+
    <ItemGroup>
+      <PackageReference Include="MSBuild.Sdk.Extras" Version="1.6.65" PrivateAssets="All" />
+      <PackageReference Include="Microsoft.Identity.Client" Version="2.6.2" />
       <Compile Include="Configs\*.shared.cs" />
       <Compile Include="Connector\*.cs" />
       <Compile Include="Token\*.cs" />
-      <Compile Include="Profile\*.cs" />
-      <PackageReference Include="Microsoft.Identity.Client" Version="2.6.2" />
    </ItemGroup>
 
    <ItemGroup Condition=" $(TargetFramework.StartsWith('netstandard')) ">
@@ -28,8 +40,8 @@
    </ItemGroup>
 
    <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
-      <Compile Include="Configs\*.android.cs" />
       <PackageReference Include="Xamarin.Forms" Version="3.4.0.1008975" />
+      <Compile Include="Configs\*.android.cs" />
    </ItemGroup>
 
    <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
@@ -37,11 +49,9 @@
    </ItemGroup>
 
    <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
-      <Compile Include="Configs\*.uwp.cs" />
       <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.1.5" />
+      <Compile Include="Configs\*.uwp.cs" />
    </ItemGroup>
 
-   <ItemGroup>
-      <None Include="**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
-   </ItemGroup>
+   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>
