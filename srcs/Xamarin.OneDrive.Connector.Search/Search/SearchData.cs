@@ -8,7 +8,7 @@ namespace Xamarin.OneDrive.Search
    internal class SearchData
    {
 
-      [DataMember(nameof = "value")]
+      [DataMember(Name = "value")]
       public List<FileData> Files { get; set; }
 
       [DataMember(Name = "@odata.nextLink")]
