@@ -20,6 +20,25 @@ A wrapper around microsoft identity connector and microsoft graph api to access 
    }
    connector.Dispose();
 ```
+### Using the profile plugin to request user profile data
+```csharp
+   using Xamarin.OneDrive;
+   using Xamarin.OneDrive.Profile;
+
+   var configs = new Configs
+   {
+      ClientID = "YOUR_MICROSOFT_APPLICATION_ID",
+      Scopes = new string[] { "User.Read" }
+   };
+
+   var connector = new Connector(configs);
+   if (await connector.ConnectAsync())
+   {
+      var profile = await App.OneDrive.GetProfileAsync();
+      Console.WriteLine($"Connected to {profile.Name} account through address {profile.Mail}");
+   }
+   connector.Dispose();
+```
 
 ## Install instructions
 You can add the library to your project using the [nuget](https://www.nuget.org/packages/Xamarin.OneDrive.Connector) package: 
@@ -29,7 +48,8 @@ dotnet add package Xamarin.OneDrive.Connector
 
 And the optionals plugins:
 ```shell
-dotnet add package Xamarin.OneDrive.Connector.Profile
+dotnet add package Xamarin.OneDrive.Connector.Profile  
+dotnet add package Xamarin.OneDrive.Connector.Search  
 ```
 
 ## Build using
