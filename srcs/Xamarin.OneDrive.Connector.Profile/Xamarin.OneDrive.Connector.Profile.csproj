@@ -27,10 +27,10 @@
 
    <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
       <DebugType>pdbonly</DebugType>
-   </PropertyGroup>     
+   </PropertyGroup>
 
    <ItemGroup>
-      <ProjectReference Include="..\Xamarin.OneDrive.Connector\Xamarin.OneDrive.Connector.csproj" />
+     <PackageReference Include="Xamarin.OneDrive.Connector" Version="0.1.50" />
    </ItemGroup>
 
 </Project>
