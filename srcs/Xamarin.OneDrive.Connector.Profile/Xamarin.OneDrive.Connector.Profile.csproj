@@ -1,21 +1,35 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
+   <PropertyGroup>
+      <TargetFramework>netstandard2.0</TargetFramework>
+      <Configurations>Debug;Release</Configurations>
+   </PropertyGroup>
 
    <PropertyGroup>
       <PackageId>Xamarin.OneDrive.Connector.Profile</PackageId>
-      <Version>0.0.1</Version>
-      <Description>A plugin for the xamarin onedrive connector to extract **profile data**.</Description>
+      <Version>0.0.5</Version>
+      <Description>A plugin for the [xamarin onedrive connector](https://www.nuget.org/packages/Xamarin.OneDrive.Connector/) to extract **profile data**.</Description>
       <Authors>Leverson Carlos;lcjohnny</Authors>
       <Company>Leverson Carlos</Company>    
       <RepositoryUrl>https://github.com/LeversonCarlos/Xamarin.OneDrive.Connector</RepositoryUrl>
+      <DefaultLanguage>en</DefaultLanguage>
       <PackageTags>Xamarin.OneDrive.Connector Xamarin Xamarin.OneDrive OneDrive Microsoft.Identity Microsoft.Identity.Client Microsoft.Graph</PackageTags>      
+      <PackageLicenseUrl>https://raw.githubusercontent.com/LeversonCarlos/Xamarin.OneDrive.Connector/master/LICENSE</PackageLicenseUrl>
+      <IncludeSymbols>false</IncludeSymbols>
+      <SymbolPackageFormat>snupkg</SymbolPackageFormat>
    </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Xamarin.OneDrive.Connector\Xamarin.OneDrive.Connector.csproj" />
-  </ItemGroup>
+   <PropertyGroup Condition=" '$(Configuration)'=='Debug' ">
+      <DebugType>full</DebugType>
+      <DebugSymbols>true</DebugSymbols>
+   </PropertyGroup>
+
+   <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
+      <DebugType>pdbonly</DebugType>
+   </PropertyGroup>     
+
+   <ItemGroup>
+      <ProjectReference Include="..\Xamarin.OneDrive.Connector\Xamarin.OneDrive.Connector.csproj" />
+   </ItemGroup>
 
 </Project>
