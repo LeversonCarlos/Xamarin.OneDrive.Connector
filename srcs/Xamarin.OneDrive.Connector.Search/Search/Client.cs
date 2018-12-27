@@ -62,6 +62,9 @@ namespace Xamarin.OneDrive.Search
                   .Where(folder => folder.id == file.parentReference.id)
                   .Select(folder => folder.FilePath)
                   .FirstOrDefault();
+               var createdDateTime=DateTime.MinValue;
+               if (DateTime.TryParse(file.CreatedDateTimeText, out createdDateTime))
+               { file.CreatedDateTime = createdDateTime; }
             }
 
             // RESULT
