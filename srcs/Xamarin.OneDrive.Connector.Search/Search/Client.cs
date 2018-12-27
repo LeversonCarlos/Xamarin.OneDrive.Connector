@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Xamarin.OneDrive.Search
@@ -32,7 +34,7 @@ namespace Xamarin.OneDrive.Search
                // CHECK IF THERE IS ANOTHER PAGE OF RESULTS
                httpPath = httpResult.nextLink;
                if (!string.IsNullOrEmpty(httpPath))
-               { httpPath = httpPath.Replace(this.BaseAddress.AbsoluteUri, string.Empty); }
+               { httpPath = httpPath.Replace(connector.BaseAddress.AbsoluteUri, string.Empty); }
 
             }
 
