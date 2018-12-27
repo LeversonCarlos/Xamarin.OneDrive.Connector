@@ -5,7 +5,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'macOS-10.13'
+  vmImage: 'vs2017-win2016'
 
 variables:
   buildConfiguration: 'Release'
@@ -14,9 +14,16 @@ variables:
 steps:
 - script: msbuild ./srcs/Xamarin.OneDrive.Connector /t:restore
   displayName: 'restore packages'
-- script: msbuild ./srcs/Xamarin.OneDrive.Connector /t:build /p:Configuration=$(buildConfiguration)
-  displayName: 'build assemblies'
+
+- task: MSBuild@1 
+  displayName: build assemblies
+  inputs:
+    solution: ./srcs/Xamarin.OneDrive.Connector\Xamarin.OneDrive.Connector.csproj
+    configuration: $(buildConfiguration)
+    # msbuildArguments: 
+
 - script: msbuild ./srcs/Xamarin.OneDrive.Connector /t:pack /p:Configuration=$(buildConfiguration)
   displayName: 'package binaries'
+
 - script: dotnet nuget push **/Xamarin.OneDrive.Connector*.nupkg -k $(nugetApiKey) -s $(nugetApiUrl)
   displayName: 'publish nuget'
