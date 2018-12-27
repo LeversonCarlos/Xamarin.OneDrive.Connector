@@ -7,8 +7,9 @@
 
    <PropertyGroup>
       <PackageId>Xamarin.OneDrive.Connector.Profile</PackageId>
-      <Version>0.0.5</Version>
-      <Description>A plugin for the [xamarin onedrive connector](https://www.nuget.org/packages/Xamarin.OneDrive.Connector/) to extract **profile data**.</Description>
+      <BuildVersion>0</BuildVersion>
+      <Version>0.1.$(BuildVersion)</Version>
+      <Description>A plugin for the [Xamarin.OneDrive.Connector] to access profile data through the microsoft graph api.</Description>
       <Authors>Leverson Carlos;lcjohnny</Authors>
       <Company>Leverson Carlos</Company>    
       <RepositoryUrl>https://github.com/LeversonCarlos/Xamarin.OneDrive.Connector</RepositoryUrl>
