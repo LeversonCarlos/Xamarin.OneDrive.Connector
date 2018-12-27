@@ -20,7 +20,7 @@ A wrapper around microsoft identity connector and microsoft graph api to access 
    }
    connector.Dispose();
 ```
-### Using the profile plugin to request user profile data
+### Using the [profile](https://www.nuget.org/packages/Xamarin.OneDrive.Connector.Profile) plugin to request user profile data
 ```csharp
    using Xamarin.OneDrive;
    using Xamarin.OneDrive.Profile;
