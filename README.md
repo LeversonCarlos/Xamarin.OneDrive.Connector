@@ -34,7 +34,7 @@ A wrapper around microsoft identity connector and microsoft graph api to access 
    var connector = new Connector(configs);
    if (await connector.ConnectAsync())
    {
-      var profile = await App.OneDrive.GetProfileAsync();
+      var profile = await connector.GetProfileAsync();
       Console.WriteLine($"Connected to {profile.Name} account through address {profile.Mail}");
    }
    connector.Dispose();
