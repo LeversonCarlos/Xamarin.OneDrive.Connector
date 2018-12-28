@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.OneDrive.Profile
 {
-   public static class ProfileConnector
+   public static partial class Extender
    {
 
       public static async Task<ProfileData> GetProfileAsync(this Xamarin.OneDrive.Connector connector)

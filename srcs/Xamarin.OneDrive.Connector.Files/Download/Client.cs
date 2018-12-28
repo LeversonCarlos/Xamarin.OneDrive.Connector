@@ -1,11 +1,9 @@
 using System;
-using System.Linq;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Xamarin.OneDrive.Files
 {
-   partial class FilesConnector
+   partial class Extender
    {
 
       public static async Task<string> GetDownloadUrlAsync(this Xamarin.OneDrive.Connector connector, FileData file)
