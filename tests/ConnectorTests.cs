@@ -1,23 +1,40 @@
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Xamarin.OneDrive.Tests
 {
-   public class ConnectorTests : IClassFixture<ConnectorFixture>
-   { 
+   public class ConnectorTests
+   {
 
-      ConnectorFixture ConnectorFixture;
-      public ConnectorTests()
+      [Fact]
+      public void NullConfigs_Throws_Exception()
       {
-         this.ConnectorFixture = new ConnectorFixture();
+         Assert.Throws<NullReferenceException>(() =>
+         {
+            var connector = new Connector(null);
+         });
       }
 
-      [Fact(Skip="We cant test this cause we have no interactive mode here")]
-      public async Task Connect_MustBe_True()
+/*
+      [Fact]
+      public void EmptyClientID_Throws_Exception()
       {
-         var result = await this.ConnectorFixture.Connector.ConnectAsync();
-         Assert.True(result);
+         Assert.Throws<ArgumentNullException>(() =>
+         {
+            var connector = new Connector("", "");
+         });
       }
+
+      [Fact]
+      public void EmptyScope_Throws_Exception()
+      {
+         Assert.Throws<ArgumentNullException>(() =>
+         {
+            var connector = new Connector(Settings.ClientID, "");
+         });
+      }
+      */
 
    }
 }
