@@ -6,7 +6,7 @@ namespace Xamarin.OneDrive
    partial class Token
    { 
 
-      public async Task<bool> AcquireAsync()
+      internal async Task<bool> AcquireAsync()
       {
          try
          {

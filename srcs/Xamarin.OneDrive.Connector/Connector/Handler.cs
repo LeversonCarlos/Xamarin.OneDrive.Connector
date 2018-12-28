@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -13,8 +14,17 @@ namespace Xamarin.OneDrive
       internal const string InnerConnectionConnect = "CONNECT";
       internal const string InnerConnectionDisconnect = "DISCONNECT";
 
-      public ConnectorHandler(Configs configs)
-      { 
+      public ConnectorHandler(Configs configs) 
+      {
+
+         // VALIDATION
+         if (configs == null) { throw new NullReferenceException("The configs parameter must be defined with the microsoft graph definitions"); }
+         if (string.IsNullOrEmpty(configs.ClientID)) { throw new ArgumentNullException("Your microsoft graph client id must be informed"); }
+         if (configs.Scopes == null || configs.Scopes.Length == 0) { throw new ArgumentNullException("Your microsoft graph required scopes must be informed"); }
+         if (configs.Scopes.Count(x => !string.IsNullOrEmpty(x)) == 0) { throw new ArgumentNullException("Your microsoft graph required scopes must be informed"); }
+
+         // INITIALIZATION
+         Dependency.Current.Initialize(configs);
          this.Token = new Token(configs);
          this.InnerHandler = new HttpClientHandler();
       }

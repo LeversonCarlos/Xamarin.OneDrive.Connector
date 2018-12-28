@@ -7,7 +7,7 @@ namespace Xamarin.OneDrive
    partial class Token
    {
 
-      public async Task<bool> ConnectAsync()
+      internal async Task<bool> ConnectAsync()
       {
          try
          {
@@ -28,7 +28,7 @@ namespace Xamarin.OneDrive
          catch (Exception) { throw; }
       }
 
-      public async Task DisconnectAsync()
+      internal async Task DisconnectAsync()
       {
          try
          {

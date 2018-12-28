@@ -3,12 +3,12 @@ using Microsoft.Identity.Client;
 
 namespace Xamarin.OneDrive
 {
-   public partial class Token : IDisposable
+   internal partial class Token : IDisposable
    {
-      public Configs Configs { get; private set; }
+      internal Configs Configs { get; private set; }
       PublicClientApplication Client { get; set; }
 
-      public Token(Configs configs)
+      internal Token(Configs configs)
       {
          this.Configs = configs;
          this.Client = new PublicClientApplication(configs.ClientID);
