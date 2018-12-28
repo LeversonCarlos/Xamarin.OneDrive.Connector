@@ -6,7 +6,7 @@
    </PropertyGroup>
 
    <PropertyGroup>
-      <PackageId>Xamarin.OneDrive.Connector.Search</PackageId>
+      <PackageId>Xamarin.OneDrive.Connector.Files</PackageId>
       <BuildVersion>0</BuildVersion>
       <Version>0.1.$(BuildVersion)</Version>
       <Description>A plugin for the [Xamarin.OneDrive.Connector] to search for files through the microsoft graph api.</Description>
