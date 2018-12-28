@@ -60,7 +60,7 @@ dotnet add package Xamarin.OneDrive.Connector.Search
 * [vsCode](https://github.com/Microsoft/vscode) 
 
 ## Changelog
-### v0.0.1
+### v0.1.*
 Trying to learn and apply unit tests (quantum physics for me).  
 Conditional framework's builds according to platform specifics, need because android requires some extras steps on acquiring token.  
 Extending the HttpClient library to accommodate token acquisition.  
