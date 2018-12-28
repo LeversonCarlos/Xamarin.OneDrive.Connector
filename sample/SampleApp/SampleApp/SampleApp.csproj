@@ -12,4 +12,10 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="3.3.0.967583" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\srcs\Xamarin.OneDrive.Connector.Files\Xamarin.OneDrive.Connector.Files.csproj" />
+    <ProjectReference Include="..\..\..\srcs\Xamarin.OneDrive.Connector.Profile\Xamarin.OneDrive.Connector.Profile.csproj" />
+    <ProjectReference Include="..\..\..\srcs\Xamarin.OneDrive.Connector\Xamarin.OneDrive.Connector.csproj" />
+  </ItemGroup>
 </Project>
