@@ -5,13 +5,13 @@
    xmlns:local="clr-namespace:SampleApp"
    x:Class="SampleApp.MainPage">
 
-   <StackLayout VerticalOptions="Center" Margin="20">
+   <StackLayout Margin="20" >
       <Label x:Name="InfoLabel" HorizontalOptions="Center" />
-      <Button x:Name="ConnectButton" HorizontalOptions="Center" Clicked="ConnectButton_Clicked" />
-      <Button x:Name="DisconnectButton" HorizontalOptions="Center" Clicked="DisconnectButton_Clicked" />
-
+      <StackLayout Orientation="Horizontal" HorizontalOptions="Center" >
+         <Button x:Name="ConnectButton" Clicked="ConnectButton_Clicked" />
+         <Button x:Name="DisconnectButton" Clicked="DisconnectButton_Clicked" />
+      </StackLayout>
       <Button x:Name="FilesButton" HorizontalOptions="Center" Text="Load Files" Clicked="FilesButton_Clicked" />
-      <Image x:Name="ImageCover" Aspect="AspectFit" HeightRequest="150" />
       <ListView x:Name="FileList" HorizontalOptions="Center" HeightRequest="500">
          <ListView.ItemTemplate>
             <DataTemplate>
@@ -19,6 +19,7 @@
             </DataTemplate>
          </ListView.ItemTemplate>
       </ListView>
+      <Image x:Name="ImageCover" HorizontalOptions="Center" Aspect="AspectFit" HeightRequest="150" BackgroundColor="Silver" />
 
    </StackLayout>
 
