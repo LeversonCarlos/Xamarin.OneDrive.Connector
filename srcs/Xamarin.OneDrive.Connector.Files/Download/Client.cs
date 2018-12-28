@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.OneDrive.Files
 {
-   public static class DownloadConnector
+   partial class FilesConnector
    {
 
       public static async Task<string> GetDownloadUrlAsync(this Xamarin.OneDrive.Connector connector, FileData file)

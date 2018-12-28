@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.OneDrive.Files
 {
-   public static class SearchConnector
+   partial class FilesConnector
    {
 
       public static async Task<List<FileData>> SearchFilesAsync(this Xamarin.OneDrive.Connector connector, string searchText)
