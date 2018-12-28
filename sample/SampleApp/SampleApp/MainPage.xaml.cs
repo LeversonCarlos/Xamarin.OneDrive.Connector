@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.OneDrive.Profile;
 using Xamarin.OneDrive.Files;
+using System.Linq;
 
 namespace SampleApp
 {
@@ -80,7 +81,28 @@ namespace SampleApp
             var imageCell = sender as TextCell;
             var file = imageCell.BindingContext as Xamarin.OneDrive.Files.FileData;
             var downloadUrl = await App.OneDrive.GetDownloadUrlAsync(file);
-            this.InfoLabel.Text = downloadUrl;
+
+            using (var zipStream = new System.IO.Compression.HttpZipStream(downloadUrl))
+            {
+               if (file.Size.HasValue && file.Size.Value > 0)
+               { zipStream.SetContentLength(file.Size.Value); }
+
+               var entryList = await zipStream.GetEntriesAsync();
+
+               var entry = entryList
+                  .Where(x =>
+                     x.FileName.ToLower().EndsWith(".jpg") ||
+                     x.FileName.ToLower().EndsWith(".jpeg") ||
+                     x.FileName.ToLower().EndsWith(".png"))
+                  .OrderBy(x => x.FileName)
+                  .FirstOrDefault();
+
+               await zipStream.ExtractAsync(entry, async (entryStream) => {
+                  this.ImageCover.Source = ImageSource.FromStream(() => { return entryStream; });
+               });
+
+            }
+
          }
          catch (Exception ex) { this.InfoLabel.Text = $"Exception: {ex.ToString()}"; }
          finally { this.Enable(); }
