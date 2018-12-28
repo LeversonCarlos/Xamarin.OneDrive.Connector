@@ -12,6 +12,7 @@
          <Button x:Name="DisconnectButton" Clicked="DisconnectButton_Clicked" />
       </StackLayout>
       <Button x:Name="FilesButton" HorizontalOptions="Center" Text="Load Files" Clicked="FilesButton_Clicked" />
+      <ActivityIndicator x:Name="ActivityIndicator" HorizontalOptions="FillAndExpand"></ActivityIndicator>
       <ListView x:Name="FileList" HorizontalOptions="Center" HeightRequest="500">
          <ListView.ItemTemplate>
             <DataTemplate>

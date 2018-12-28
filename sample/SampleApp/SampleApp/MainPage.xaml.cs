@@ -30,7 +30,7 @@ namespace SampleApp
       {
          try
          {
-            this.IsEnabled = false;
+            this.Disable();
             if (!await App.OneDrive.ConnectAsync()) { return; }
             var profile = await App.OneDrive.GetProfileAsync();
             if (profile == null) { return; }
@@ -40,14 +40,14 @@ namespace SampleApp
             this.FilesButton.IsVisible = true;
          }
          catch (Exception ex) { this.InfoLabel.Text = $"Exception: {ex.ToString()}"; }
-         finally { this.IsEnabled = true; }
+         finally { this.Enable(); }
       }
 
       async void DisconnectButton_Clicked(object sender, EventArgs e)
       {
          try
          {
-            this.IsEnabled = false;
+            this.Disable();
             await App.OneDrive.DisconnectAsync();
             this.InfoLabel.Text = "Click to authorize access to your OneDrive account";
             this.ConnectButton.IsVisible = true;
@@ -55,27 +55,27 @@ namespace SampleApp
             this.FilesButton.IsVisible = false;
          }
          catch (Exception ex) { this.InfoLabel.Text = $"Exception: {ex.ToString()}"; }
-         finally { this.IsEnabled = true; }
+         finally { this.Enable(); }
       }
 
       async void FilesButton_Clicked(object sender, EventArgs e)
       {
          try
          {
-            this.IsEnabled = false;
+            this.Disable();
             var fileList = await App.OneDrive.SearchFilesAsync("*.cbz");
             this.FileList.IsVisible = true;
             FileList.ItemsSource = fileList;
          }
          catch (Exception ex) { this.InfoLabel.Text = $"Exception: {ex.ToString()}"; }
-         finally { this.IsEnabled = true; }
+         finally { this.Enable(); }
       }
 
       async void ImageCell_Tapped(object sender, EventArgs e)
       {
          try
          {
-            this.IsEnabled = false;
+            this.Disable();
 
             var imageCell = sender as TextCell;
             var file = imageCell.BindingContext as Xamarin.OneDrive.Files.FileData;
@@ -83,7 +83,25 @@ namespace SampleApp
             this.InfoLabel.Text = downloadUrl;
          }
          catch (Exception ex) { this.InfoLabel.Text = $"Exception: {ex.ToString()}"; }
-         finally { this.IsEnabled = true; }
+         finally { this.Enable(); }
+      }
+
+      void Enable()
+      {
+         this.ConnectButton.IsEnabled = true;
+         this.DisconnectButton.IsEnabled = true;
+         this.FilesButton.IsEnabled = true;
+         this.ActivityIndicator.IsEnabled = false;
+         this.ActivityIndicator.IsRunning = false;
+      }
+
+      void Disable()
+      {
+         this.ConnectButton.IsEnabled = false;
+         this.DisconnectButton.IsEnabled = false;
+         this.FilesButton.IsEnabled = false;
+         this.ActivityIndicator.IsEnabled = true;
+         this.ActivityIndicator.IsRunning = true;
       }
 
    }
