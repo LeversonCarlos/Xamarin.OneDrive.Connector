@@ -72,7 +72,7 @@ Preparing projects to be build, packed and deploy by the server.
 
 
 ## Authors
-* [Leverson Carlos](https://github.com/LeversonCarlos). 
+* [Leverson Carlos](https://github.com/LeversonCarlos) 
 
 ## License
 MIT License - see the [LICENSE](LICENSE) file for details.
