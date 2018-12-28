@@ -6,13 +6,7 @@ A wrapper around microsoft identity connector and microsoft graph api to access 
 ```csharp
    using Xamarin.OneDrive;
 
-   var configs = new Configs
-   {
-      ClientID = "YOUR_MICROSOFT_APPLICATION_ID",
-      Scopes = new string[] { "User.Read" }
-   };
-
-   var connector = new Connector(configs);
+   var connector = new Connector(clientID: "YOUR_MICROSOFT_APPLICATION_ID", scope: "User.Read");
    if (await connector.ConnectAsync())
    {
       var httpMessage = await connector.GetAsync("me");
@@ -25,17 +19,26 @@ A wrapper around microsoft identity connector and microsoft graph api to access 
    using Xamarin.OneDrive;
    using Xamarin.OneDrive.Profile;
 
-   var configs = new Configs
-   {
-      ClientID = "YOUR_MICROSOFT_APPLICATION_ID",
-      Scopes = new string[] { "User.Read" }
-   };
-
-   var connector = new Connector(configs);
+   var connector = new Connector(clientID: "YOUR_MICROSOFT_APPLICATION_ID", scope: "User.Read");
    if (await connector.ConnectAsync())
    {
       var profile = await connector.GetProfileAsync();
       Console.WriteLine($"Connected to {profile.Name} account through address {profile.Mail}");
+   }
+   connector.Dispose();
+```
+### Using the [files](https://www.nuget.org/packages/Xamarin.OneDrive.Connector.Files) plugin to search download and manipulate files stored in OneDrive
+```csharp
+   using Xamarin.OneDrive;
+   using Xamarin.OneDrive.Files;
+
+   var connector = new Connector(clientID: "YOUR_MICROSOFT_APPLICATION_ID", scope: "Files.Read");
+   if (await connector.ConnectAsync())
+   {
+      var fileList = await connector.SearchFilesAsync("*.zip");
+      Console.WriteLine($"Retrieved {fileList.Count} files on the search request");
+      var file = fileList[0];
+      Console.WriteLine($"The file {file.FileName} has {file.Bytes} bytes and is located on {file.FilePath}.");
    }
    connector.Dispose();
 ```
@@ -49,7 +52,7 @@ dotnet add package Xamarin.OneDrive.Connector
 And the optionals plugins:
 ```shell
 dotnet add package Xamarin.OneDrive.Connector.Profile  
-dotnet add package Xamarin.OneDrive.Connector.Search  
+dotnet add package Xamarin.OneDrive.Connector.Files  
 ```
 
 ## Build using
