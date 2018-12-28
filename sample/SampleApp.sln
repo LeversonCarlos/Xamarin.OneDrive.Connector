@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28306.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp.Android", "SampleApp\SampleApp.Android\SampleApp.Android.csproj", "{70EC5E05-8415-4C4B-B4C8-CEFBAC022988}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp.Android", "SampleApp.Android\SampleApp.Android.csproj", "{70EC5E05-8415-4C4B-B4C8-CEFBAC022988}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp.iOS", "SampleApp\SampleApp.iOS\SampleApp.iOS.csproj", "{32F374B2-E7CD-465C-AFDD-C1E470B43A85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp.iOS", "SampleApp.iOS\SampleApp.iOS.csproj", "{32F374B2-E7CD-465C-AFDD-C1E470B43A85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp.UWP", "SampleApp\SampleApp.UWP\SampleApp.UWP.csproj", "{C41A0F85-575A-4F53-A58C-B0EBBAEC47E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp.UWP", "SampleApp.UWP\SampleApp.UWP.csproj", "{C41A0F85-575A-4F53-A58C-B0EBBAEC47E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "SampleApp\SampleApp\SampleApp.csproj", "{9B81E039-83AB-4F95-80B8-CA4161573AA0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "SampleApp\SampleApp.csproj", "{9B81E039-83AB-4F95-80B8-CA4161573AA0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xamarin.OneDrive.Connector", "..\srcs\Xamarin.OneDrive.Connector\Xamarin.OneDrive.Connector.csproj", "{61D2D4CE-0593-456C-A9B5-22D2CA7E7187}"
 EndProject
