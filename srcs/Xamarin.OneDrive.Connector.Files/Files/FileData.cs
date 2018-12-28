@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Xamarin.OneDrive.Search
+namespace Xamarin.OneDrive.Files
 {
 
    [DataContract]

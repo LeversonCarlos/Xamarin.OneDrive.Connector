@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Xamarin.OneDrive.Search
+namespace Xamarin.OneDrive.Files
 {
    public static class SearchConnector
    {
