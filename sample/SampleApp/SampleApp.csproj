@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\srcs\Xamarin.OneDrive.Connector.Files\Xamarin.OneDrive.Connector.Files.csproj" />
-    <ProjectReference Include="..\..\..\srcs\Xamarin.OneDrive.Connector.Profile\Xamarin.OneDrive.Connector.Profile.csproj" />
-    <ProjectReference Include="..\..\..\srcs\Xamarin.OneDrive.Connector\Xamarin.OneDrive.Connector.csproj" />
+    <ProjectReference Include="..\..\srcs\Xamarin.OneDrive.Connector.Files\Xamarin.OneDrive.Connector.Files.csproj" />
+    <ProjectReference Include="..\..\srcs\Xamarin.OneDrive.Connector.Profile\Xamarin.OneDrive.Connector.Profile.csproj" />
+    <ProjectReference Include="..\..\srcs\Xamarin.OneDrive.Connector\Xamarin.OneDrive.Connector.csproj" />
   </ItemGroup>
 </Project>

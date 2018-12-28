@@ -93,7 +93,7 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\srcs\Xamarin.OneDrive.Connector\Xamarin.OneDrive.Connector.csproj">
+    <ProjectReference Include="..\..\srcs\Xamarin.OneDrive.Connector\Xamarin.OneDrive.Connector.csproj">
       <Project>{61d2d4ce-0593-456c-a9b5-22d2ca7e7187}</Project>
       <Name>Xamarin.OneDrive.Connector</Name>
     </ProjectReference>
