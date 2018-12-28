@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Xamarin.OneDrive.Connector.SampleApp</PackageId>
+    <Authors>Leverson Carlos</Authors>
+    <Company>Leverson Carlos</Company>
+    <Product>Xamarin.OneDrive.Connector.SampleApp</Product>
+    <AssemblyName>Xamarin.OneDrive.Connector.SampleApp</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
