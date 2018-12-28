@@ -16,8 +16,10 @@ namespace Xamarin.OneDrive.Tests
       [Fact]
       public async Task Connection_Must_Succeed()
       {
-         var connect = await this.Fixture.Connector.ConnectAsync();
-         Assert.True(connect);
+         await Assert.ThrowsAsync<Exception>(async () =>
+         {
+            var connect = await this.Fixture.Connector.ConnectAsync();
+         });
       }
 
    }

@@ -16,7 +16,6 @@ namespace Xamarin.OneDrive.Tests
          });
       }
 
-/*
       [Fact]
       public void EmptyClientID_Throws_Exception()
       {
@@ -34,7 +33,6 @@ namespace Xamarin.OneDrive.Tests
             var connector = new Connector(Settings.ClientID, "");
          });
       }
-      */
 
    }
 }
