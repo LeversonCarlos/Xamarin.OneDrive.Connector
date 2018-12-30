@@ -6,7 +6,7 @@ A wrapper around microsoft identity connector and microsoft graph api to access 
 ```csharp
    using Xamarin.OneDrive;
 
-   var connector = new Connector(clientID: "YOUR_MICROSOFT_APPLICATION_ID", scope: "User.Read");
+   var connector = new Connector("YOUR_MICROSOFT_APPLICATION_ID", "User.Read");
    if (await connector.ConnectAsync())
    {
       var httpMessage = await connector.GetAsync("me");
@@ -19,7 +19,7 @@ A wrapper around microsoft identity connector and microsoft graph api to access 
    using Xamarin.OneDrive;
    using Xamarin.OneDrive.Profile;
 
-   var connector = new Connector(clientID: "YOUR_MICROSOFT_APPLICATION_ID", scope: "User.Read");
+   var connector = new Connector("YOUR_MICROSOFT_APPLICATION_ID", "User.Read");
    if (await connector.ConnectAsync())
    {
       var profile = await connector.GetProfileAsync();
@@ -32,7 +32,7 @@ A wrapper around microsoft identity connector and microsoft graph api to access 
    using Xamarin.OneDrive;
    using Xamarin.OneDrive.Files;
 
-   var connector = new Connector(clientID: "YOUR_MICROSOFT_APPLICATION_ID", scope: "Files.Read");
+   var connector = new Connector("YOUR_MICROSOFT_APPLICATION_ID", "Files.Read");
    if (await connector.ConnectAsync())
    {
       var fileList = await connector.SearchFilesAsync("*.zip");
@@ -44,16 +44,17 @@ A wrapper around microsoft identity connector and microsoft graph api to access 
 ```
 
 ## Install instructions
-You can add the library to your project using the [nuget](https://www.nuget.org/packages/Xamarin.OneDrive.Connector) package: 
-```shell
-dotnet add package Xamarin.OneDrive.Connector
-```  
+* You can add the library to your project using the [nuget](https://www.nuget.org/packages/Xamarin.OneDrive.Connector) package: 
+   ```shell
+   dotnet add package Xamarin.OneDrive.Connector
+   ```  
 
-And the optionals plugins:
-```shell
-dotnet add package Xamarin.OneDrive.Connector.Profile  
-dotnet add package Xamarin.OneDrive.Connector.Files  
-```
+* And the optionals plugins:
+   ```shell
+   dotnet add package Xamarin.OneDrive.Connector.Profile  
+   dotnet add package Xamarin.OneDrive.Connector.Files  
+   ```
+* You will nedd a microsoft application id that you can get following [this guide](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-v2-register-an-app).
 
 ## Build using
 * [.Net Core](https://dotnet.github.io) 

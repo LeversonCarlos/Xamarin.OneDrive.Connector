@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Xamarin.OneDrive.Connector.SampleApp</PackageId>
+    <Authors>Leverson Carlos</Authors>
+    <Company>Leverson Carlos</Company>
+    <Product>Xamarin.OneDrive.Connector.SampleApp</Product>
+    <AssemblyName>Xamarin.OneDrive.Connector.SampleApp</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HttpZipStream" Version="0.1.9" />
+    <PackageReference Include="Xamarin.Forms" Version="3.3.0.967583" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\srcs\Xamarin.OneDrive.Connector.Files\Xamarin.OneDrive.Connector.Files.csproj" />
+    <ProjectReference Include="..\..\srcs\Xamarin.OneDrive.Connector.Profile\Xamarin.OneDrive.Connector.Profile.csproj" />
+    <ProjectReference Include="..\..\srcs\Xamarin.OneDrive.Connector\Xamarin.OneDrive.Connector.csproj" />
+  </ItemGroup>
+</Project>

@@ -13,7 +13,7 @@ namespace Xamarin.OneDrive.Profile
       [DataMember(Name = "displayName")]
       public string Name { get; set; }
 
-      [DataMember(Name = "mail")]
+      [DataMember(Name = "userPrincipalName")]
       public string Mail { get; set; }
 
    }
