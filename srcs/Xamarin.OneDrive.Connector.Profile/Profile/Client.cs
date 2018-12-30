@@ -10,7 +10,7 @@ namespace Xamarin.OneDrive.Profile
       {
          try
          { 
-            var httpMessage = await connector.GetAsync("me?$select=id,displayName,mail");
+            var httpMessage = await connector.GetAsync("me?$select=id,displayName,userPrincipalName");
             if (!httpMessage.IsSuccessStatusCode)
             { throw new Exception(await httpMessage.Content.ReadAsStringAsync()); }
 
