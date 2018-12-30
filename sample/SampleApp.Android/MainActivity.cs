@@ -22,7 +22,7 @@ namespace SampleApp.Droid
       protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
       {
          base.OnActivityResult(requestCode, resultCode, data);
-         Xamarin.OneDrive.Configs.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
+         Xamarin.OneDrive.Connector.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
       }
 
    }

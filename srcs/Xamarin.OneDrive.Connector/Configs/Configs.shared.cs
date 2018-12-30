@@ -3,7 +3,7 @@ using Microsoft.Identity.Client;
 
 namespace Xamarin.OneDrive
 {
-   public partial class Configs : IDisposable
+   internal class Configs : IDisposable
    {
 
       public string ClientID { get; set; }

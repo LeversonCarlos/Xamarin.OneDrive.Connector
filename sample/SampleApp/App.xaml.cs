@@ -10,11 +10,7 @@ namespace SampleApp
       public App()
       {
          InitializeComponent();
-         OneDrive = new Xamarin.OneDrive.Connector(new Xamarin.OneDrive.Configs
-         {
-            ClientID = "YOUR_MICROSOFT_APPLICATION_ID",
-            Scopes = new string[] { "User.Read", "Files.Read" }
-         });
+         OneDrive = new Xamarin.OneDrive.Connector("YOUR_MICROSOFT_APPLICATION_ID", "User.Read", "Files.Read");
          MainPage = new MainPage();
       }
       internal static Xamarin.OneDrive.Connector OneDrive;
