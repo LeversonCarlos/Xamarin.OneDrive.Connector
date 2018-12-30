@@ -35,7 +35,7 @@ namespace SampleApp
             if (!await App.OneDrive.ConnectAsync()) { return; }
             var profile = await App.OneDrive.GetProfileAsync();
             if (profile == null) { return; }
-            this.InfoLabel.Text = $"Connected to {profile.Name} account through address {profile.Mail}";
+            this.InfoLabel.Text = $"Connected to {profile.Name} account through {profile.Mail}.";
             this.ConnectButton.IsVisible = false;
             this.DisconnectButton.IsVisible = true;
             this.FilesButton.IsVisible = true;
