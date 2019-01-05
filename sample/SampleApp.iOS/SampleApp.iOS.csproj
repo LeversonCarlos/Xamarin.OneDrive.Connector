@@ -148,10 +148,14 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.3.0.967583" />
+    <PackageReference Include="Xamarin.Forms" Version="3.2.0.871581" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\srcs\Xamarin.OneDrive.Connector\Xamarin.OneDrive.Connector.csproj">
+      <Project>{61d2d4ce-0593-456c-a9b5-22d2ca7e7187}</Project>
+      <Name>Xamarin.OneDrive.Connector</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SampleApp\SampleApp.csproj">
       <Project>{7D4CABDF-B4CB-4607-ACF3-B26246C2914C}</Project>
       <Name>SampleApp</Name>

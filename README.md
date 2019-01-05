@@ -70,6 +70,7 @@ Conditional framework's builds according to platform specifics, need because and
 Extending the HttpClient library to accommodate token acquisition.  
 Implementing the plugin concept using profile as the first try.  
 Preparing projects to be build, packed and deploy by the server.  
+Provide a sample application.
 
 
 ## Authors
