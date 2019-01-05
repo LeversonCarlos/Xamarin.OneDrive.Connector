@@ -81,7 +81,7 @@ namespace SampleApp
             var imageCell = sender as TextCell;
             var file = imageCell.BindingContext as Xamarin.OneDrive.Files.FileData;
             var downloadUrl = await App.OneDrive.GetDownloadUrlAsync(file);
-
+           
             using (var zipStream = new System.IO.Compression.HttpZipStream(downloadUrl))
             {
                if (file.Size.HasValue && file.Size.Value > 0)
@@ -97,7 +97,7 @@ namespace SampleApp
                   .OrderBy(x => x.FileName)
                   .FirstOrDefault();
 
-               await zipStream.ExtractAsync(entry, async (entryStream) => {
+               await zipStream.ExtractAsync(entry, (entryStream) => {
                   this.ImageCover.Source = ImageSource.FromStream(() => { return entryStream; });
                });
 
