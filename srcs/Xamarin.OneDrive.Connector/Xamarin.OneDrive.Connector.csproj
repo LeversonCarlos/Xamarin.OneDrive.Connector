@@ -45,7 +45,7 @@
    </ItemGroup>
 
    <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
-      <PackageReference Include="Xamarin.Forms" Version="3.4.0.1008975" />
+      <PackageReference Include="Xamarin.Forms" Version="3.2.0.871581" />
       <Compile Include="Configs\*.android.cs" />
    </ItemGroup>
 
@@ -54,7 +54,6 @@
    </ItemGroup>
 
    <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
-      <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.1.5" />
       <Compile Include="Configs\*.uwp.cs" />
    </ItemGroup>
 
