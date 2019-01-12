@@ -64,7 +64,7 @@ namespace SampleApp
          try
          {
             this.Disable();
-            var fileList = await App.OneDrive.SearchFilesAsync("*.cbz");
+            var fileList = await App.OneDrive.SearchFilesAsync("*.cbz", 1000);
             this.FileList.IsVisible = true;
             FileList.ItemsSource = fileList;
          }

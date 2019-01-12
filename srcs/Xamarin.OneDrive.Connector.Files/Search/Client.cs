@@ -8,14 +8,14 @@ namespace Xamarin.OneDrive.Files
    partial class Extender
    {
 
-      public static async Task<List<FileData>> SearchFilesAsync(this Xamarin.OneDrive.Connector connector, string searchText)
+      public static async Task<List<FileData>> SearchFilesAsync(this Xamarin.OneDrive.Connector connector, string searchText, int top = 100)
       {
          try
          { 
 
             // INITIALIZE
             var fileList = new List<FileData>();
-            var httpPath = $"me/drive/root/search(q='{searchText}')?select=id,name,createdDateTime,size,parentReference,@microsoft.graph.downloadUrl";
+            var httpPath = $"me/drive/root/search(q='{searchText}')?select=id,name,createdDateTime,size,parentReference&$top={top}";
 
             while (!string.IsNullOrEmpty(httpPath))
             { 
