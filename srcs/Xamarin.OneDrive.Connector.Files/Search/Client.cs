@@ -58,11 +58,12 @@ namespace Xamarin.OneDrive.Files
             foreach (var file in fileList)
             {
                if (file.parentReference == null) { continue; }
+               file.parentID = file.parentReference.id;
                file.FilePath = folderList
                   .Where(folder => folder.id == file.parentReference.id)
                   .Select(folder => folder.FilePath)
                   .FirstOrDefault();
-               var createdDateTime=DateTime.MinValue;
+               var createdDateTime = DateTime.MinValue;
                if (DateTime.TryParse(file.CreatedDateTimeText, out createdDateTime))
                { file.CreatedDateTime = createdDateTime; }
             }

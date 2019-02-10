@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using Xamarin.OneDrive.Profile;
 using Xamarin.OneDrive.Files;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace SampleApp
 {
@@ -65,6 +66,12 @@ namespace SampleApp
          {
             this.Disable();
             var fileList = await App.OneDrive.SearchFilesAsync("*.cbz", 1000);
+            fileList = fileList
+               .Where(x => x.FileName.EndsWith(".cbz"))
+               .ToList()
+               .OrderBy(x => x.FilePath)
+               .ThenBy(x => x.FileName)
+               .ToList();
             this.FileList.IsVisible = true;
             FileList.ItemsSource = fileList;
          }
@@ -100,6 +107,30 @@ namespace SampleApp
                var entryBytes = await zipStream.ExtractAsync(entry);
                var entryStream = new System.IO.MemoryStream(entryBytes);
                this.ImageCover.Source = ImageSource.FromStream(() => { return entryStream; });
+
+               var testName = $"Xamarin.OneDrive.Connector.Test.jpg";
+               var testSearch = await App.OneDrive.SearchFilesAsync(testName);
+               var testFile = testSearch.FirstOrDefault();
+
+               if (testFile == null)
+               {
+                  var folderList = ((List<FileData>)this.FileList.ItemsSource)
+                     .GroupBy(x => x.FilePath)
+                     .OrderBy(x => x.Key)
+                     .Select(x => x.FirstOrDefault())
+                     .ToList();
+                  var folder = folderList.FirstOrDefault();
+                  testFile = new FileData
+                  {
+                     parentID = folder.parentID,
+                     FileName = testName
+                  };
+               }
+
+               using (var uploadStream = new System.IO.MemoryStream(entryBytes))
+               {
+                  testFile = await App.OneDrive.UploadAsync(testFile, uploadStream);
+               }
 
             }
 
