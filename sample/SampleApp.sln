@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp.iOS", "SampleApp.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp.UWP", "SampleApp.UWP\SampleApp.UWP.csproj", "{C41A0F85-575A-4F53-A58C-B0EBBAEC47E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "SampleApp\SampleApp.csproj", "{9B81E039-83AB-4F95-80B8-CA4161573AA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApp", "SampleApp\SampleApp.csproj", "{9B81E039-83AB-4F95-80B8-CA4161573AA0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xamarin.OneDrive.Connector", "..\srcs\Xamarin.OneDrive.Connector\Xamarin.OneDrive.Connector.csproj", "{61D2D4CE-0593-456C-A9B5-22D2CA7E7187}"
 EndProject
