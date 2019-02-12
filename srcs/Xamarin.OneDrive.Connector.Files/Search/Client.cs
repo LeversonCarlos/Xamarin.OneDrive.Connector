@@ -10,12 +10,27 @@ namespace Xamarin.OneDrive.Files
 
       public static async Task<List<FileData>> SearchFilesAsync(this Xamarin.OneDrive.Connector connector, string searchText, int top = 100)
       {
+         var httpPath = $"me/drive/root/search(q='{searchText}')?select=id,name,createdDateTime,size,parentReference&$top={top}";
+         return await SearchFilesAsync(connector, httpPath);
+      }
+
+      public static async Task<List<FileData>> SearchFilesAsync(this Xamarin.OneDrive.Connector connector, FileData folder, string searchText, int top = 100)
+      {
+         if (folder == null || string.IsNullOrEmpty(folder.id)) {
+            return await SearchFilesAsync(connector, searchText, top);
+         }
+         else
+         {
+            var httpPath = $"me/drive/items/{folder.id}/search(q='{searchText}')?select=id,name,createdDateTime,size,parentReference&$top={top}";
+            return await SearchFilesAsync(connector, httpPath);
+         }
+      }
+
+      private static async Task<List<FileData>> SearchFilesAsync(this Xamarin.OneDrive.Connector connector, string httpPath)
+      {
          try
          { 
-
-            // INITIALIZE
             var fileList = new List<FileData>();
-            var httpPath = $"me/drive/root/search(q='{searchText}')?select=id,name,createdDateTime,size,parentReference&$top={top}";
 
             while (!string.IsNullOrEmpty(httpPath))
             { 
