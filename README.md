@@ -71,7 +71,9 @@ Extending the HttpClient library to accommodate token acquisition.
 Implementing the plugin concept using profile as the first try.  
 Preparing projects to be build, packed and deploy by the server.  
 Provide a sample application.
-Implementing the UploadAsync method to send file content to drive.  
+Implementing the UploadAsync method to send file content to drive. 
+SearchFiles overloads to allow searching on specific folder.  
+Methods for listing folder's childs.  
 
 
 ## Authors
