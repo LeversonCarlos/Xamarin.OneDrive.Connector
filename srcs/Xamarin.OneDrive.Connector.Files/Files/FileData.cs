@@ -31,6 +31,18 @@ namespace Xamarin.OneDrive.Files
       internal FileData parentReference { get; set; }
       public string parentID { get; set; }
 
+      [DataMember(Name = "folder")]
+      internal FolderData folderData { get; set; }
+
+   }
+
+   [DataContract]
+   internal class FolderData
+   {
+
+      [DataMember(Name = "childCount")]
+      internal int childCount { get; set; }
+
    }
 
 }
