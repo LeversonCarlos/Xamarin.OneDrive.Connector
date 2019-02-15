@@ -65,6 +65,15 @@ namespace SampleApp
          try
          {
             this.Disable();
+
+            /*
+            var rootFolder = await App.OneDrive.GetDetailsAsync();
+            var rootChilds = await App.OneDrive.GetChildFoldersAsync();
+            var firstChild = rootChilds.FirstOrDefault();
+            firstChild = await App.OneDrive.GetDetailsAsync(firstChild);
+            firstChild.FilePath = firstChild.FilePath.Replace(rootFolder.FilePath, "");
+            */
+
             var fileList = await App.OneDrive.SearchFilesAsync("*.cbz", 1000);
             fileList = fileList
                .Where(x => x.FileName.EndsWith(".cbz"))

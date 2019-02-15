@@ -9,7 +9,10 @@ namespace Xamarin.OneDrive.Files
       public static async Task<FileData> GetDetailsAsync(this Xamarin.OneDrive.Connector connector)
       {
          var httpPath = $"me/drive/root";
-         return await GetDetailsAsync(connector, httpPath);
+         var folder = await GetDetailsAsync(connector, httpPath);
+         if (string.IsNullOrEmpty(folder.FilePath))
+         { folder.FilePath = "/drive/root:"; }
+         return folder;
       }
 
       public static async Task<FileData> GetDetailsAsync(this Xamarin.OneDrive.Connector connector, FileData folder)
@@ -22,7 +25,7 @@ namespace Xamarin.OneDrive.Files
       {
          try
          {
-            httpPath += "?select=id,name,parentReference&$top=1";
+            httpPath += "?select=id,name,parentReference";
 
             // REQUEST DATA FROM SERVER
             var httpMessage = await connector.GetAsync(httpPath);
@@ -35,13 +38,9 @@ namespace Xamarin.OneDrive.Files
             var httpResult = (FileData)serializer.ReadObject(httpContent);
 
             // RESULT
-            if (string.IsNullOrEmpty(httpResult.FilePath))
-            { httpResult.FilePath = httpResult.FileName; }
             if (httpResult.parentReference != null)
-            {
-                httpResult.FilePath = httpResult.parentReference.FilePath; 
-            }
-            return httpResult;            
+            { httpResult.FilePath = httpResult.parentReference.FilePath; }
+            return httpResult;
 
          }
          catch (Exception) { throw; }
