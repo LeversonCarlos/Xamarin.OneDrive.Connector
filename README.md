@@ -43,6 +43,22 @@ A wrapper around microsoft identity connector and microsoft graph api to access 
    connector.Dispose();
 ```
 
+### Android project required MainActivity overrides
+```csharp
+protected override void OnCreate(Bundle savedInstanceState)
+{
+   ...
+   Xamarin.Forms.Forms.Init(this, savedInstanceState);
+   Xamarin.OneDrive.Connector.Init(this); /* optionally we could pass a specific redirectUrl */
+   ...
+}
+protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+{
+   base.OnActivityResult(requestCode, resultCode, data);
+   Xamarin.OneDrive.Connector.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
+}
+```
+
 ## Install instructions
 * You can add the library to your project using the [nuget](https://www.nuget.org/packages/Xamarin.OneDrive.Connector) package: 
    ```shell
