@@ -16,6 +16,7 @@ namespace SampleApp.Droid
 
          base.OnCreate(savedInstanceState);
          global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+         Xamarin.OneDrive.Connector.Init(this);
          LoadApplication(new App());
       }
 
