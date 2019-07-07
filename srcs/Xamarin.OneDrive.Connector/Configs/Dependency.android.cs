@@ -21,7 +21,6 @@ namespace Xamarin.OneDrive
          {
             return await client
                .AcquireTokenInteractive(configs.Scopes)
-               .WithUseEmbeddedWebView(true)
                .WithParentActivityOrWindow((Activity)configs.UiParent)
                .ExecuteAsync();
          }
