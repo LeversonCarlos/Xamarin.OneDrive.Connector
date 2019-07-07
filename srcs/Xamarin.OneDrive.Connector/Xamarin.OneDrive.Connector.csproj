@@ -1,7 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+﻿<Project Sdk="MSBuild.Sdk.Extras">
 
    <PropertyGroup>
-      <TargetFrameworks></TargetFrameworks>
       <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard2.0;MonoAndroid81;Xamarin.iOS10;uap10.0.16299</TargetFrameworks>
       <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard2.0;MonoAndroid81;Xamarin.iOS10</TargetFrameworks>
       <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
@@ -33,8 +32,7 @@
    </PropertyGroup>     
 
    <ItemGroup>
-      <PackageReference Include="MSBuild.Sdk.Extras" Version="1.6.65" PrivateAssets="All" />
-      <PackageReference Include="Microsoft.Identity.Client" Version="2.6.2" />
+      <PackageReference Include="Microsoft.Identity.Client" Version="2.7.1" />
       <Compile Include="Configs\*.shared.cs" />
       <Compile Include="Connector\*.cs" />
       <Compile Include="Token\*.cs" />
@@ -57,6 +55,5 @@
       <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.1.5" />
       <Compile Include="Configs\*.uwp.cs" />
    </ItemGroup>
-
-   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
+   
 </Project>
