@@ -10,7 +10,7 @@ namespace Xamarin.OneDrive
       public string[] Scopes { get; set; }
 
       internal string RedirectUri { get; set; }
-      internal UIParent UiParent { get; set; }
+      internal object UiParent { get; set; }
 
       public void Dispose()
       {

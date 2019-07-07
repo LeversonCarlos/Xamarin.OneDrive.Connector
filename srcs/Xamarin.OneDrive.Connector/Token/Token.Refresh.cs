@@ -17,7 +17,7 @@ namespace Xamarin.OneDrive
                var account = accounts.FirstOrDefault();
                if (account != null)
                {
-                  this.AuthResult = await this.Client.AcquireTokenSilentAsync(this.Configs.Scopes, account);
+                  this.AuthResult = await this.Client.AcquireTokenSilent(this.Configs.Scopes, account).ExecuteAsync();
                }
             }
             return this.IsValid();
