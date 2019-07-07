@@ -1,3 +1,8 @@
+using Android.App;
+using System;
+using System.Threading.Tasks;
+using Microsoft.Identity.Client;
+
 namespace Xamarin.OneDrive
 {
    internal class DependencyImplementation : IDependency
@@ -6,8 +11,20 @@ namespace Xamarin.OneDrive
       public void Initialize(Configs configs)
       {
          var mainActivity = Xamarin.Forms.Forms.Context as Forms.Platform.Android.FormsAppCompatActivity;
-         configs.UiParent = new Microsoft.Identity.Client.UIParent(mainActivity);
+         configs.UiParent = mainActivity;
          configs.RedirectUri = $"msal{configs.ClientID}://auth";
+      }
+
+      public async Task<AuthenticationResult> GetAuthResult(IPublicClientApplication client, Configs configs)
+      {
+         try
+         {
+            return await client
+               .AcquireTokenInteractive(configs.Scopes)
+               .WithParentActivityOrWindow((Activity)configs.UiParent)
+               .ExecuteAsync();
+         }
+         catch (Exception) { throw; }
       }
 
    }

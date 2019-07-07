@@ -1,5 +1,7 @@
 using System;
 using System.Threading;
+using System.Threading.Tasks;
+
 
 namespace Xamarin.OneDrive
 {
@@ -7,6 +9,7 @@ namespace Xamarin.OneDrive
    internal interface IDependency
    {
       void Initialize(Configs configs);
+      Task<Microsoft.Identity.Client.AuthenticationResult> GetAuthResult(Microsoft.Identity.Client.IPublicClientApplication client, Configs configs);
    }
 
    internal class Dependency

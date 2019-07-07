@@ -6,14 +6,20 @@ namespace Xamarin.OneDrive
    internal partial class Token : IDisposable
    {
       internal Configs Configs { get; private set; }
-      PublicClientApplication Client { get; set; }
+      IPublicClientApplication Client { get; set; }
 
       internal Token(Configs configs)
       {
          this.Configs = configs;
+         var builder = PublicClientApplicationBuilder
+            .Create(configs.ClientID);
+         if (!string.IsNullOrEmpty(configs.RedirectUri)) { builder.WithRedirectUri(configs.RedirectUri); }
+         this.Client = builder.Build();
+         /*
          this.Client = new PublicClientApplication(configs.ClientID);
          if (!string.IsNullOrEmpty(configs.RedirectUri))
          { this.Client.RedirectUri = configs.RedirectUri; }
+         */
       }
 
       public void Dispose()
