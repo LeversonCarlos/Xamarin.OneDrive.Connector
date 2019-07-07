@@ -11,15 +11,9 @@ namespace Xamarin.OneDrive
       internal Token(Configs configs)
       {
          this.Configs = configs;
-         var builder = PublicClientApplicationBuilder
-            .Create(configs.ClientID);
-         if (!string.IsNullOrEmpty(configs.RedirectUri)) { builder.WithRedirectUri(configs.RedirectUri); }
+         var builder = PublicClientApplicationBuilder.Create(configs.ClientID);
+         if (!string.IsNullOrEmpty(configs.RedirectUri)) { builder = builder.WithRedirectUri(configs.RedirectUri); }
          this.Client = builder.Build();
-         /*
-         this.Client = new PublicClientApplication(configs.ClientID);
-         if (!string.IsNullOrEmpty(configs.RedirectUri))
-         { this.Client.RedirectUri = configs.RedirectUri; }
-         */
       }
 
       public void Dispose()
