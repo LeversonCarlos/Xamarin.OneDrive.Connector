@@ -10,7 +10,7 @@
    <PropertyGroup>
       <PackageId>Xamarin.OneDrive.Connector</PackageId>
       <BuildVersion>0</BuildVersion>
-      <Version>0.1.$(BuildVersion)</Version>
+      <Version>0.2.$(BuildVersion)</Version>
       <Description>A wrapper around microsoft identity connector and microsoft graph api to access onedrive content. Extend-it with any of the additional purpose plugins like [Xamarin.OneDrive.Connector.Profile] and [Xamarin.OneDrive.Connector.Files]</Description>
       <Authors>Leverson Carlos;lcjohnny</Authors>
       <Company>Leverson Carlos</Company>    

@@ -74,6 +74,8 @@ Provide a sample application.
 Implementing the UploadAsync method to send file content to drive. 
 SearchFiles overloads to allow searching on specific folder.  
 Methods for listing folder's childs.  
+### v0.2.*
+Upgrading Microsoft Identity Client.  
 
 
 ## Authors
