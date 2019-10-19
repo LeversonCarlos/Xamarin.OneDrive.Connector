@@ -34,6 +34,18 @@ namespace Xamarin.OneDrive.Files
       [DataMember(Name = "folder")]
       internal FolderData folderData { get; set; }
 
+      [DataMember(Name = "file")]
+      internal FileDetailsData fileData { get; set; }
+
+   }
+
+   [DataContract]
+   internal class FileDetailsData
+   {
+
+      [DataMember(Name = "mimeType")]
+      internal string mimeType { get; set; }
+
    }
 
    [DataContract]

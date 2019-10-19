@@ -85,5 +85,50 @@ namespace Xamarin.OneDrive.Files
          catch (Exception) { throw; }
       }
 
+
+      public static async Task<List<FileData>> GetChildFilesAsync(this Xamarin.OneDrive.Connector connector, FileData folder)
+      {
+         try
+         {
+            var fileList = new List<FileData>();
+            var httpPath = $"me/drive/items/{folder.id}/children";
+            httpPath += "?select=id,name,createdDateTime,size,file&$top=1000";
+
+            while (!string.IsNullOrEmpty(httpPath))
+            {
+
+               // REQUEST DATA FROM SERVER
+               var httpMessage = await connector.GetAsync(httpPath);
+               if (!httpMessage.IsSuccessStatusCode)
+               { throw new Exception(await httpMessage.Content.ReadAsStringAsync()); }
+
+               // SERIALIZE AND STORE RESULT
+               var httpContent = await httpMessage.Content.ReadAsStreamAsync();
+               var serializer = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(SearchData));
+               var httpResult = (SearchData)serializer.ReadObject(httpContent);
+               var files = httpResult.Files.Where(x => x.fileData != null).ToList();
+               fileList.AddRange(files);
+
+               // CHECK IF THERE IS ANOTHER PAGE OF RESULTS
+               httpPath = httpResult.nextLink;
+               if (!string.IsNullOrEmpty(httpPath))
+               { httpPath = httpPath.Replace(connector.BaseAddress.AbsoluteUri, string.Empty); }
+
+            }
+
+            // NORMALIZE FILE's PATHS
+            foreach (var file in fileList)
+            {
+               file.parentID = folder.id;
+               file.FilePath = folder.FilePath;               
+            }
+
+            // RESULT
+            return fileList;
+
+         }
+         catch (Exception) { throw; }
+      }
+
    }
 }
