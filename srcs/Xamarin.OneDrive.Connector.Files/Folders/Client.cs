@@ -129,6 +129,23 @@ namespace Xamarin.OneDrive.Files
          }
          catch (Exception) { throw; }
       }
+      
+     public async Task<FileData>GetThisAppFolderAsync()
+     {
+         var httpMessage = await GetAsync("drive/special/approot:/");
+         if (!httpMessage.IsSuccessStatusCode)
+         { throw new Exception(await httpMessage.Content.ReadAsStringAsync()); }
+
+         // SERIALIZE AND STORE RESULT
+         var httpContent = await httpMessage.Content.ReadAsStreamAsync();
+         var serializer = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(FileData));
+         var httpResult = (FileData)serializer.ReadObject(httpContent);
+
+         // RESULT
+         if (httpResult.parentReference != null)
+         { httpResult.FilePath = httpResult.parentReference.FilePath; }
+         return httpResult;
+     }
 
    }
 }
