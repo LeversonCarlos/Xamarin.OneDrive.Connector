@@ -46,6 +46,37 @@ namespace Xamarin.OneDrive.Files
          catch (Exception) { throw; }
       }
 
+      public static async Task<bool> DeleteFile(this Xamarin.OneDrive.Connector connector, FileData file)
+      {
+            if (string.IsNullOrEmpty(file.id))
+                throw new ArgumentException("OneDrive.DeleteFile called with null FileData.id");
+
+            var httpMessage = await connector.DeleteAsync("drive/items/" + file.id);
+            return httpMessage.IsSuccessStatusCode;
+      }
+
+      public static async Task<bool> DeleteFile(this Xamarin.OneDrive.Connector connector, string httpFilePath)
+      {
+            if (string.IsNullOrEmpty(httpFilePath))
+                throw new ArgumentException("OneDrive.DeleteFile called with null httpFilePath");
+
+            if (!httpFilePath.StartsWith("/"))
+                httpFilePath = "/" + httpFilePath;
+            var httpMessage = await connector.DeleteAsync("drive/root:" + httpFilePath);
+            return httpMessage.IsSuccessStatusCode;
+      }
+
+      public static async Task<bool> DeleteFile(this Xamarin.OneDrive.Connector connector, FileData parentFolder, string fileName)
+      {
+            if (string.IsNullOrEmpty(parentFolder.id))
+                throw new ArgumentException("OneDrive.DeleteFile called with null parentFolder.id");
+            if (string.IsNullOrEmpty(fileName))
+                throw new ArgumentException("OneDrive.DeleteFile called with null fileName");
+
+            var httpMessage = await connector.DeleteAsync("drive/items/" + parentFolder.id + ":/" + fileName);
+            return httpMessage.IsSuccessStatusCode;
+      }
+
 
    }
 }
