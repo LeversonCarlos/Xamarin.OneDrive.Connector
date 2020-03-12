@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
    <PropertyGroup>
-      <TargetFramework>netstandard2.0</TargetFramework>
+      <TargetFramework>netstandard2.1</TargetFramework>
       <Configurations>Debug;Release</Configurations>
    </PropertyGroup>
 
    <PropertyGroup>
       <PackageId>Xamarin.OneDrive.Connector.Profile</PackageId>
       <BuildVersion>0</BuildVersion>
-      <Version>0.2.$(BuildVersion)</Version>
+      <Version>0.3.$(BuildVersion)</Version>
       <Description>A plugin for the [Xamarin.OneDrive.Connector] to access profile data through the microsoft graph api.</Description>
       <Authors>Leverson Carlos;lcjohnny</Authors>
       <Company>Leverson Carlos</Company>    
