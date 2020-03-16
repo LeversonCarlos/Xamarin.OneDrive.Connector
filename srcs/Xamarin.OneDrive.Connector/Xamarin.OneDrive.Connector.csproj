@@ -1,4 +1,4 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras">
+﻿<Project Sdk="MSBuild.Sdk.Extras/1.6.68">
 
    <PropertyGroup>
       <TargetFrameworks>netstandard2.1;MonoAndroid90;Xamarin.iOS10</TargetFrameworks>
@@ -42,7 +42,7 @@
    </ItemGroup>
 
    <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
-      <PackageReference Include="Xamarin.Forms" Version="4.0.0.497661" />
+      <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
       <Compile Include="Configs\*.android.cs" />
    </ItemGroup>
 
