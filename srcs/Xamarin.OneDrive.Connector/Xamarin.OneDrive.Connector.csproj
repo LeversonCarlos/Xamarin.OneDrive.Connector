@@ -32,6 +32,8 @@
 
    <ItemGroup>
       <PackageReference Include="Microsoft.Identity.Client" Version="4.1.0" />
+      <Compile Remove="Configs\*.cs" />
+      <None Remove="Configs\*.cs" />
       <Compile Include="Configs\*.shared.cs" />
       <Compile Include="Connector\*.cs" />
       <Compile Include="Token\*.cs" />
