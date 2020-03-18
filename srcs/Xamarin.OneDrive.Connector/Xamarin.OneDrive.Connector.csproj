@@ -1,13 +1,14 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras/2.0.54">
+<Project Sdk="MSBuild.Sdk.Extras/2.0.54">
 
-   <PropertyGroup>
-      <TargetFrameworks>netstandard2.1;MonoAndroid90;Xamarin.iOS10</TargetFrameworks>
-      <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-      <Configurations>Debug;Release</Configurations>
-   </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1;MonoAndroid90;Xamarin.iOS10</TargetFrameworks>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <Configurations>Debug;Release</Configurations>
+  </PropertyGroup>
 
    <PropertyGroup>
       <PackageId>Xamarin.OneDrive.Connector</PackageId>
+      <RootNamespace>Xamarin.OneDrive</RootNamespace>
       <BuildVersion>0</BuildVersion>
       <Version>0.3.$(BuildVersion)</Version>
       <Description>A wrapper around microsoft identity connector and microsoft graph api to access onedrive content. Extend-it with any of the additional purpose plugins like [Xamarin.OneDrive.Connector.Profile] and [Xamarin.OneDrive.Connector.Files]</Description>
@@ -51,5 +52,5 @@
    <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
       <Compile Include="Configs\*.ios.cs" />
    </ItemGroup>
-   
+
 </Project>
