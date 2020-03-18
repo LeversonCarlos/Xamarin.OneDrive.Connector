@@ -92,6 +92,11 @@ SearchFiles overloads to allow searching on specific folder.
 Methods for listing folder's childs.  
 ### v0.2.*
 Upgrading Microsoft Identity Client.  
+### v0.3.*
+Upgrading MsBuild.Sdk.Extras dependency.  
+Upgrading Xamarin.Forms dependency.  
+Upgrading Microsoft Identity Client dependency.  
+Removing UWP scenarios and projects.  
 
 
 ## Authors
