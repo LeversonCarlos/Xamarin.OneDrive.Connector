@@ -120,7 +120,7 @@ namespace Xamarin.OneDrive.Files
             foreach (var file in fileList)
             {
                file.parentID = folder.id;
-               file.FilePath = folder.FilePath;               
+               file.FilePath = folder.FilePath;
             }
 
             // RESULT
@@ -129,10 +129,10 @@ namespace Xamarin.OneDrive.Files
          }
          catch (Exception) { throw; }
       }
-      
-     public async Task<FileData>GetThisAppFolderAsync()
-     {
-         var httpMessage = await GetAsync("drive/special/approot:/");
+
+      public static async Task<FileData> GetThisAppFolderAsync(this Xamarin.OneDrive.Connector connector)
+      {
+         var httpMessage = await connector.GetAsync("drive/special/approot:/");
          if (!httpMessage.IsSuccessStatusCode)
          { throw new Exception(await httpMessage.Content.ReadAsStringAsync()); }
 
@@ -145,7 +145,7 @@ namespace Xamarin.OneDrive.Files
          if (httpResult.parentReference != null)
          { httpResult.FilePath = httpResult.parentReference.FilePath; }
          return httpResult;
-     }
+      }
 
    }
 }

@@ -1,16 +1,16 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras">
+<Project Sdk="MSBuild.Sdk.Extras/2.0.54">
 
-   <PropertyGroup>
-      <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard2.0;MonoAndroid90;Xamarin.iOS10;uap10.0.16299</TargetFrameworks>
-      <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard2.0;MonoAndroid90;Xamarin.iOS10</TargetFrameworks>
-      <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-      <Configurations>Debug;Release</Configurations>
-   </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1;MonoAndroid90;Xamarin.iOS10</TargetFrameworks>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <Configurations>Debug;Release</Configurations>
+  </PropertyGroup>
 
    <PropertyGroup>
       <PackageId>Xamarin.OneDrive.Connector</PackageId>
+      <RootNamespace>Xamarin.OneDrive</RootNamespace>
       <BuildVersion>0</BuildVersion>
-      <Version>0.2.$(BuildVersion)</Version>
+      <Version>0.3.$(BuildVersion)</Version>
       <Description>A wrapper around microsoft identity connector and microsoft graph api to access onedrive content. Extend-it with any of the additional purpose plugins like [Xamarin.OneDrive.Connector.Profile] and [Xamarin.OneDrive.Connector.Files]</Description>
       <Authors>Leverson Carlos;lcjohnny</Authors>
       <Company>Leverson Carlos</Company>    
@@ -32,7 +32,9 @@
    </PropertyGroup>     
 
    <ItemGroup>
-      <PackageReference Include="Microsoft.Identity.Client" Version="4.1.0" />
+      <PackageReference Include="Microsoft.Identity.Client" Version="4.10.0" />
+      <Compile Remove="Configs\*.cs" />
+      <None Remove="Configs\*.cs" />
       <Compile Include="Configs\*.shared.cs" />
       <Compile Include="Connector\*.cs" />
       <Compile Include="Token\*.cs" />
@@ -43,7 +45,7 @@
    </ItemGroup>
 
    <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
-      <PackageReference Include="Xamarin.Forms" Version="4.0.0.497661" />
+      <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
       <Compile Include="Configs\*.android.cs" />
    </ItemGroup>
 
@@ -51,8 +53,4 @@
       <Compile Include="Configs\*.ios.cs" />
    </ItemGroup>
 
-   <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
-      <Compile Include="Configs\*.uwp.cs" />
-   </ItemGroup>
-   
 </Project>
