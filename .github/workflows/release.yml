@@ -30,7 +30,7 @@ jobs:
         uses: actions/upload-artifact@v1.0.0
         with:
           name: connector-artifact
-          path: ./srcs/Xamarin.OneDrive.Connector/bin/Release/*.nupkg 
+          path: ./srcs/Xamarin.OneDrive.Connector/bin/Release 
 
       - name: Build and Pack the Profiles Plugin
         run: msbuild ./srcs/Xamarin.OneDrive.Connector.Profile -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /t:pack 
@@ -39,7 +39,7 @@ jobs:
         uses: actions/upload-artifact@v1.0.0
         with:
           name: profiles-artifact
-          path: ./srcs/Xamarin.OneDrive.Connector.Profile/bin/Release/*.nupkg 
+          path: ./srcs/Xamarin.OneDrive.Connector.Profile/bin/Release 
 
       - name: Build and Pack the Files Plugin
         run: msbuild ./srcs/Xamarin.OneDrive.Connector.Files -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /t:pack 
@@ -48,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v1.0.0
         with:
           name: files-artifact
-          path: ./srcs/Xamarin.OneDrive.Connector.Files/bin/Release/*.nupkg 
+          path: ./srcs/Xamarin.OneDrive.Connector.Files/bin/Release 
           
   deploy: 
     needs: [build]
