@@ -30,7 +30,7 @@ jobs:
         uses: actions/upload-artifact@v1.0.0
         with:
           name: connector-artifact
-          path: ./srcs/Xamarin.OneDrive.Connector/bin/Release 
+          path: ./srcs/Xamarin.OneDrive.Connector/bin/Release/*.nupkg 
 
       - name: Build and Pack the Profiles Plugin
         run: msbuild ./srcs/Xamarin.OneDrive.Connector.Profile -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /t:pack 
@@ -39,7 +39,7 @@ jobs:
         uses: actions/upload-artifact@v1.0.0
         with:
           name: profiles-artifact
-          path: ./srcs/Xamarin.OneDrive.Connector.Profile/bin/Release 
+          path: ./srcs/Xamarin.OneDrive.Connector.Profile/bin/Release/*.nupkg 
 
       - name: Build and Pack the Files Plugin
         run: msbuild ./srcs/Xamarin.OneDrive.Connector.Files -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /t:pack 
@@ -48,24 +48,40 @@ jobs:
         uses: actions/upload-artifact@v1.0.0
         with:
           name: files-artifact
-          path: ./srcs/Xamarin.OneDrive.Connector.Files/bin/Release 
+          path: ./srcs/Xamarin.OneDrive.Connector.Files/bin/Release/*.nupkg 
           
-#  deploy: 
-#    needs: [build]
-#    name: Publish Packages
-#    runs-on: ubuntu-latest
-#    
-#    steps:
-#    
-#      - name: Setup .NET Core
-#        uses: actions/setup-dotnet@v1
-#        with:
-#          dotnet-version: 3.1.101
-#              
-#      - name: Retrieve Artifacts
-#        uses: actions/download-artifact@v1.0.0
-#        with:
-#          name: artifacts
-#        
-#      - name: Publish Artifact to NuGet
-#        run: dotnet nuget push artifacts/*.nupkg --api-key ${{ secrets.NUGET_TOKEN_FOR_GITHUB }} --source https://nuget.org --skip-duplicate --no-symbols true 
+  deploy: 
+    needs: [build]
+    name: Publish Packages
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.101
+              
+      - name: Retrieve Connector Artifacts
+        uses: actions/download-artifact@v1.0.0
+        with:
+          name: connector-artifact
+        
+      - name: Publish Connector Artifact to NuGet
+        run: dotnet nuget push connector-artifact/*.nupkg --api-key ${{ secrets.NUGET_TOKEN_FOR_GITHUB }} --source https://nuget.org --skip-duplicate --no-symbols true 
+
+      - name: Retrieve Profiles Artifacts
+        uses: actions/download-artifact@v1.0.0
+        with:
+          name: profiles-artifact
+        
+      - name: Publish Connector Profiles to NuGet
+        run: dotnet nuget push profiles-artifact/*.nupkg --api-key ${{ secrets.NUGET_TOKEN_FOR_GITHUB }} --source https://nuget.org --skip-duplicate --no-symbols true 
+
+      - name: Retrieve Files Artifacts
+        uses: actions/download-artifact@v1.0.0
+        with:
+          name: files-artifact
+        
+      - name: Publish Connector Files to NuGet
+        run: dotnet nuget push files-artifact/*.nupkg --api-key ${{ secrets.NUGET_TOKEN_FOR_GITHUB }} --source https://nuget.org --skip-duplicate --no-symbols true 
