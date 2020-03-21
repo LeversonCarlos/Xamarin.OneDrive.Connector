@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HttpZipStream" Version="0.2.84" />
+    <PackageReference Include="HttpZipStream" Version="0.4.2" />
     <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
   </ItemGroup>
 
