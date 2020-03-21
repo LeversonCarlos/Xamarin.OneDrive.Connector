@@ -1,5 +1,6 @@
 # Xamarin.OneDrive.Connector
-A wrapper around microsoft identity connector and microsoft graph api to access one drive content
+A wrapper around microsoft identity connector and microsoft graph api to access one drive content.  
+![Release](https://github.com/LeversonCarlos/Xamarin.OneDrive.Connector/workflows/Release/badge.svg)
 
 ## Sample of how to use the library
 ### Simplest get-started sample
