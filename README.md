@@ -97,6 +97,8 @@ Upgrading MsBuild.Sdk.Extras dependency.
 Upgrading Xamarin.Forms dependency.  
 Upgrading Microsoft Identity Client dependency.  
 Removing UWP scenarios and projects.  
+### v0.4.*
+Upgrading component version 
 
 
 ## Authors
