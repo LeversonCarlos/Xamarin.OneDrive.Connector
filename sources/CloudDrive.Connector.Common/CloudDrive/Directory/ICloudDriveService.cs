@@ -5,7 +5,8 @@ namespace Xamarin.CloudDrive.Connector.Common
    partial interface ICloudDriveService
    {
 
-      Task<ProfileVM> GetProfile();
+      Task<DirectoryVM[]> GetDrivers();
+      Task<DirectoryVM[]> GetFolders(DirectoryVM value);
 
    }
 }
