@@ -6,7 +6,7 @@ namespace Xamarin.CloudDrive.Connector.Common
    {
 
       Task<DirectoryVM[]> GetDrivers();
-      Task<DirectoryVM[]> GetFolders(DirectoryVM value);
+      Task<DirectoryVM[]> GetDirectories(DirectoryVM directory);
 
    }
 }
