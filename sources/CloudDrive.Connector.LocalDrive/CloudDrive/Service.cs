@@ -6,8 +6,6 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
    public partial class LocalDriveService : ICloudDriveService
    {
 
-      public Task<ProfileVM> GetProfile() => throw new System.NotImplementedException();
-
       public Task<DirectoryVM[]> GetDrivers() => throw new System.NotImplementedException();
       public Task<DirectoryVM[]> GetDirectories(DirectoryVM directory) => throw new System.NotImplementedException();
 
