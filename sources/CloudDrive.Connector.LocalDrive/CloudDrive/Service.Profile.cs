@@ -20,7 +20,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
             return profile;
          }
          catch (Exception) { throw; }
-      };
+      }
 
    }
 }
