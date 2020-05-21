@@ -1,14 +1,26 @@
+using Microsoft.Identity.Client;
 using System;
-using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector.OneDrive
 {
    partial class Token
    {
 
-      string CurrentToken { get; set; } = "";
+      AuthenticationResult AuthResult { get; set; }
 
-      public string GetCurrentToken() => this.CurrentToken;
+      bool IsAuthValid()
+      {
+         if (this.AuthResult == null) { return false; }
+         if (string.IsNullOrEmpty(this.AuthResult.AccessToken)) { return false; }
+         if (this.AuthResult.ExpiresOn < DateTimeOffset.UtcNow.AddMinutes(1)) { return false; }
+         return true;
+      }
+
+      public string GetCurrentToken()
+      {
+         if (!this.IsAuthValid()) { return ""; }
+         return this.AuthResult.AccessToken;
+      }
 
    }
 }
