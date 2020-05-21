@@ -17,6 +17,10 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
       readonly string[] Scopes;
       readonly IClientApplicationBase Client;
 
+      // tenants { common, organizations, consumers }
+      const string Authority = "https://login.microsoftonline.com/{tenant}";
+      static Uri GetAuthorityUri() => new Uri(Authority.Replace("{tenant}", "common"));
+
       public Task<bool> Connect() => throw new NotImplementedException();
       public Task<bool> IsConnected() => throw new NotImplementedException();
       public Task Disconnect() => throw new NotImplementedException();
