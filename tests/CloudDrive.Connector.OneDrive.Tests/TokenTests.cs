@@ -18,13 +18,23 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
       [Fact]
       public void InitialTokenMustBeEmpty()
       {
-         var mock = new Mock<OneDrive.IToken>();
-         mock.Setup(m => m.GetCurrentToken()).Returns("");
          var clientMock = new Mock<IClientApplicationBase>();
          var token = new OneDrive.Token(clientMock.Object);
 
-         var expected = mock.Object.GetCurrentToken();
+         var expected = "";
          var actual = token.GetCurrentToken();
+
+         Assert.Equal(expected, actual);
+      }
+
+      [Fact]
+      public async void InitialConnectionStateMustBeFalse()
+      {
+         var clientMock = new Mock<IClientApplicationBase>();
+         var token = new OneDrive.Token(clientMock.Object);
+
+         var expected = false;
+         var actual = await token.CheckConnection();
 
          Assert.Equal(expected, actual);
       }

@@ -6,7 +6,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
    {
 
       Task<bool> Connect();
-      Task<bool> IsConnected();
+      Task<bool> CheckConnection();
       Task Disconnect();
 
       string GetCurrentToken();

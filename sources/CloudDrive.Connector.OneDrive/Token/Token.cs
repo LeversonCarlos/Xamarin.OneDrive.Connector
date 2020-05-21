@@ -22,7 +22,6 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
       static Uri GetAuthorityUri() => new Uri(Authority.Replace("{tenant}", "common"));
 
       public Task<bool> Connect() => throw new NotImplementedException();
-      public Task<bool> IsConnected() => throw new NotImplementedException();
       public Task Disconnect() => throw new NotImplementedException();
 
    }
