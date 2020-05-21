@@ -7,6 +7,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
    public class UnitTest1
    {
 
+      [Fact]
       public void InitialTokenMustBeEmpty()
       {
          var mock = new Mock<OneDrive.IToken>();
@@ -17,15 +18,6 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
          var actual = token.GetCurrentToken();
 
          Assert.Equal(expected, actual);
-
-      }
-
-      [Fact]
-      public void Test1()
-      {
-         var service = new OneDrive.OneDriveService();
-
-         Assert.NotNull(service);
       }
 
    }
