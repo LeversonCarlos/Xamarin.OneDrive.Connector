@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
 {
-   public class UnitTest1
+   public class Token
    {
 
       [Fact]

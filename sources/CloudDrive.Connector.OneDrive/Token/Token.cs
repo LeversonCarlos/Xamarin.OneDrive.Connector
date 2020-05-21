@@ -10,7 +10,5 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
       public Task<bool> IsConnected() => throw new NotImplementedException();
       public Task Disconnect() => throw new NotImplementedException();
 
-      public string GetCurrentToken() => throw new NotImplementedException();
-
    }
 }
