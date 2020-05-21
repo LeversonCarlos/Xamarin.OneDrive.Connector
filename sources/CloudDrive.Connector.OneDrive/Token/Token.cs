@@ -9,8 +9,9 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
 
       public Token(IClientApplicationBase client, params string[] scopes)
       {
-         this.Scopes = scopes;
+         if (client == null) throw new ArgumentException("The client application argument for the OneDrive client must be set");
          this.Client = client;
+         this.Scopes = scopes;
       }
 
       readonly string[] Scopes;

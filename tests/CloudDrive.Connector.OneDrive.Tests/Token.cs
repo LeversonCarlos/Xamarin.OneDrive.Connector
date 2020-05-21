@@ -9,6 +9,13 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
    {
 
       [Fact]
+      public void ClientApplicationConstructorArgumentMustBeSet()
+      {
+         var ex = Assert.Throws<ArgumentException>(() => new OneDrive.Token(null));
+         Assert.Equal("The client application argument for the OneDrive client must be set", ex.Message);
+      }
+
+      [Fact]
       public void InitialTokenMustBeEmpty()
       {
          var mock = new Mock<OneDrive.IToken>();
