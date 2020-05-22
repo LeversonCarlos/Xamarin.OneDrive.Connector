@@ -12,7 +12,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
          {
 
             // CHECK IF AUTHENTICATION IS STILL VALID
-            if (this.IsAuthValid()) { return true; }
+            if (this.IsTokenValid()) { return true; }
 
             // REFRESH AN EXPIRED TOKEN 
             if (await this.RefreshToken()) { return true; }

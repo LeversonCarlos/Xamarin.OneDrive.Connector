@@ -8,7 +8,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
 
       AuthenticationResult AuthResult { get; set; }
 
-      bool IsAuthValid()
+      public bool IsTokenValid()
       {
          if (this.AuthResult == null) { return false; }
          if (string.IsNullOrEmpty(this.AuthResult.AccessToken)) { return false; }
@@ -18,7 +18,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
 
       public string GetCurrentToken()
       {
-         if (!this.IsAuthValid()) { return ""; }
+         if (!this.IsTokenValid()) { return ""; }
          return this.AuthResult.AccessToken;
       }
 

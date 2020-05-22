@@ -20,7 +20,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
                   this.AuthResult = await this.Identity.AcquireTokenSilent(this.Scopes, account).ExecuteAsync();
                }
             }
-            return this.IsAuthValid();
+            return this.IsTokenValid();
          }
          catch (Exception) { throw; }
       }
