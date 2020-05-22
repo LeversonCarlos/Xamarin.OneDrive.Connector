@@ -1,6 +1,7 @@
 using Microsoft.Identity.Client;
 using Moq;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
@@ -31,6 +32,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
       public async void InitialConnectionStateMustBeFalse()
       {
          var clientMock = new Mock<IClientApplicationBase>();
+         clientMock.Setup(m => m.GetAccountsAsync()).ReturnsAsync(() => new IAccount[] { });
          var token = new OneDrive.Token(clientMock.Object);
 
          var expected = false;
