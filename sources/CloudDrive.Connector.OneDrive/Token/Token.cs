@@ -7,15 +7,15 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
    public partial class Token : IToken
    {
 
-      public Token(IClientApplicationBase client, params string[] scopes)
+      public Token(IClientApplicationBase identity, params string[] scopes)
       {
-         if (client == null) throw new ArgumentException("The client application argument for the OneDrive client must be set");
-         this.Client = client;
+         if (identity == null) throw new ArgumentException("The identity argument for the OneDrive client must be set");
+         this.Identity = identity;
          this.Scopes = scopes;
       }
 
       readonly string[] Scopes;
-      readonly IClientApplicationBase Client;
+      readonly IClientApplicationBase Identity;
 
       // tenants { common, organizations, consumers }
       const string Authority = "https://login.microsoftonline.com/{tenant}";

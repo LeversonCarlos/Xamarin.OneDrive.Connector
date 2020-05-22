@@ -11,13 +11,13 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
       {
          try
          {
-            var accounts = await this.Client.GetAccountsAsync();
+            var accounts = await this.Identity.GetAccountsAsync();
             if (accounts != null && accounts.Count() != 0)
             {
                var account = accounts.FirstOrDefault();
                if (account != null)
                {
-                  this.AuthResult = await this.Client.AcquireTokenSilent(this.Scopes, account).ExecuteAsync();
+                  this.AuthResult = await this.Identity.AcquireTokenSilent(this.Scopes, account).ExecuteAsync();
                }
             }
             return this.IsAuthValid();
