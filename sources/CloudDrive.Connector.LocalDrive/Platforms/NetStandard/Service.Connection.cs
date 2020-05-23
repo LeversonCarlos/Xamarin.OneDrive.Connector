@@ -7,7 +7,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
 
       public Task<bool> ConnectAsync() => Task.FromResult(true);
       public Task DisconnectAsync() => Task.CompletedTask;
-      public Task<bool> IsConnected() => Task.FromResult(true);
+      public Task<bool> CheckConnectionAsync() => Task.FromResult(true);
 
    }
 }

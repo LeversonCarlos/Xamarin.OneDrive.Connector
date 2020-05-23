@@ -7,7 +7,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
       
       public Task<bool> ConnectAsync() => Permissions.AskStoragePermission();
       public Task DisconnectAsync() => Task.CompletedTask;
-      public Task<bool> IsConnected() => Permissions.HasStoragePermission();
+      public Task<bool> CheckConnectionAsync() => Permissions.HasStoragePermission();
 
    }
 }

@@ -8,7 +8,7 @@ namespace Xamarin.CloudDrive.Connector.Common
       Task<bool> ConnectAsync();
       Task DisconnectAsync();
 
-      Task<bool> IsConnected();
+      Task<bool> CheckConnectionAsync();
 
    }
 }
