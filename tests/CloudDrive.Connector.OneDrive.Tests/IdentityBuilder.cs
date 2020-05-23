@@ -1,5 +1,6 @@
 using Microsoft.Identity.Client;
 using Moq;
+using System;
 
 namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
 {

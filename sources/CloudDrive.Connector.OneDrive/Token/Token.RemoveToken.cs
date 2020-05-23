@@ -7,20 +7,16 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
    partial class Token
    {
 
-      public async Task<bool> RefreshTokenAsync()
+      public async Task RemoveTokenAsync()
       {
          try
          {
             var accounts = await this.Identity.GetAccountsAsync();
             if (accounts != null && accounts.Count() != 0)
             {
-               var account = accounts.FirstOrDefault();
-               if (account != null)
-               {
-                  this.AuthResult = await this.Identity.AcquireTokenSilent(this.Scopes, account).ExecuteAsync();
-               }
+               foreach (var account in accounts)
+               { await this.Identity.RemoveAsync(account); }
             }
-            return this.IsTokenValid();
          }
          catch (Exception) { throw; }
       }

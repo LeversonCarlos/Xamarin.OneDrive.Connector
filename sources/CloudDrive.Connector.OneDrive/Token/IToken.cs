@@ -6,13 +6,11 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
    {
 
       Task<bool> AcquireTokenAsync();
-
-      // Task<bool> Connect();
-      // Task<bool> CheckConnection();
-      // Task Disconnect();
+      Task<bool> RefreshTokenAsync();
+      Task RemoveTokenAsync();
 
       bool IsTokenValid();
-      string GetCurrentToken();
+      string GetToken();
 
    }
 }
