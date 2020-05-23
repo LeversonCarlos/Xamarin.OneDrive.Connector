@@ -7,7 +7,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
    {
 
       [Fact]
-      public void IdentityConstructorArgumentMustBeSet()
+      public void ConstructorArgumentsMustBeSet()
       {
          var creator = new Action(() => new OneDrive.Client(null));
 
