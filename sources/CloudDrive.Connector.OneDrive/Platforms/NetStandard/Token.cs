@@ -6,7 +6,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
    partial class Token
    {
 
-      static IClientApplicationBase CreateIdentity(string clientID, string redirectUri, string clientSecret)
+      internal static IClientApplicationBase CreateIdentity(string clientID, string redirectUri, string clientSecret)
       {
          return ConfidentialClientApplicationBuilder
             .Create(clientID)
