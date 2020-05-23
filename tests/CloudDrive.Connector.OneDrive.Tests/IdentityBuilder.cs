@@ -1,6 +1,5 @@
 using Microsoft.Identity.Client;
 using Moq;
-using System;
 
 namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
 {
@@ -8,12 +7,9 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
    {
 
       readonly Mock<IClientApplicationBase> Mock;
-      public IdentityBuilder()
-      {
-         this.Mock = new Mock<IClientApplicationBase>();
-      }
-
+      public IdentityBuilder() => this.Mock = new Mock<IClientApplicationBase>();
       public static IdentityBuilder Create() => new IdentityBuilder();
+      public IClientApplicationBase Builder() => this.Mock.Object;
 
       public IdentityBuilder WithEmptyAccountList()
       {
@@ -22,8 +18,6 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
             .ReturnsAsync(() => new IAccount[] { });
          return this;
       }
-
-      public IClientApplicationBase Builder() => this.Mock.Object;
 
    }
 }
