@@ -7,6 +7,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
 
       Task<bool> ConnectAsync();
       Task<bool> CheckConnectionAsync();
+      Task DisconnectAsync();
 
    }
 }
