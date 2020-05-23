@@ -20,7 +20,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
 
       protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
       {
-         if (!await this.Token.ConnectAsync())
+         if (!await this.Token.CheckConnectionAsync())
          { return this.CreateMessage(HttpStatusCode.Unauthorized, "The token connect method has failed"); }
 
          request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", this.Token.GetToken());

@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector.OneDrive
 {
@@ -15,6 +16,10 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
          this.Token = token;
          this.BaseAddress = new Uri(BaseURL);
       }
+
+      public Task<bool> ConnectAsync() => this.Token.ConnectAsync();
+      public Task<bool> CheckConnectionAsync() => this.Token.CheckConnectionAsync();
+      public Task DisconnectAsync() => this.Token.DisconnectAsync();
 
    }
 }
