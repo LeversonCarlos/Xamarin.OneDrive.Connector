@@ -6,13 +6,13 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
    public class Client : HttpClient, IClient
    {
 
-      public Client(Token token)
+      public Client(IToken token)
       {
          if (token == null) throw new ArgumentException("The token argument for the OneDrive client must be set");
          this.Token = token;
       }
 
-      readonly Token Token;
+      readonly IToken Token;
 
    }
 }
