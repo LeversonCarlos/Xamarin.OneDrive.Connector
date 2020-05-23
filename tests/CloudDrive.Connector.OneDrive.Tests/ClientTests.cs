@@ -9,11 +9,23 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
       [Fact]
       public void IdentityConstructorArgumentMustBeSet()
       {
-         var ex = Assert.Throws<ArgumentException>(() => new OneDrive.Client(null));
-         Assert.Equal("The token argument for the OneDrive client must be set", ex.Message);
+         var creator = new Action(() => new OneDrive.Client(null));
 
-         var client  = new OneDrive.Client(TokenBuilder.Create().Builder());
-         Assert.NotNull(client);
+         var expected = "The token argument for the OneDrive client must be set";
+         var value = Assert.Throws<ArgumentException>(creator);
+
+         Assert.Equal(expected, value.Message);
+      }
+
+      [Fact]
+      public void BaseAddressMustBePointingToCorrectUri()
+      {
+         var client = new OneDrive.Client(TokenBuilder.Create().Builder());
+
+         var expected = "https://graph.microsoft.com/v1.0/";
+         var value = client.BaseAddress.AbsoluteUri;
+
+         Assert.Equal(expected, value);
       }
 
 
