@@ -28,6 +28,32 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
          Assert.Equal(expected, value);
       }
 
+      [Fact]
+      public async void InitialConnectionStateMustBeOff()
+      {
+         var token = TokenBuilder.Create().WithTokenState(false).Builder();
+         var client = new OneDrive.Client(token);
+
+         var expected = false;
+         var value = await client.IsConnected();
+
+         Assert.Equal(expected, value);
+      }
+
+      [Fact]
+      public async void ConnectionStateValidAfterRefresh()
+      {
+         var token = TokenBuilder.Create()
+            .WithTokenState(false)
+            .WithSuccessfulRefreshToken()
+            .Builder();
+         var client = new OneDrive.Client(token);
+
+         var expected = true;
+         var value = await client.IsConnected();
+
+         Assert.Equal(expected, value);
+      }
 
    }
 }

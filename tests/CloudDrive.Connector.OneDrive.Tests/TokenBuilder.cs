@@ -15,5 +15,17 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
 
       public IToken Builder() => this.Mock.Object;
 
+      public TokenBuilder WithTokenState(bool state)
+      {
+         this.Mock.Setup(m => m.IsTokenValid()).Returns(state);
+         return this;
+      }
+
+      public TokenBuilder WithSuccessfulRefreshToken()
+      {
+         this.Mock.Setup(m => m.RefreshTokenAsync()).ReturnsAsync(true);
+         return this;
+      }
+
    }
 }

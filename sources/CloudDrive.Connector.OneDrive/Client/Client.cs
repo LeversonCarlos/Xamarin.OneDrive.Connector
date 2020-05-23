@@ -3,7 +3,7 @@ using System.Net.Http;
 
 namespace Xamarin.CloudDrive.Connector.OneDrive
 {
-   public class Client : HttpClient, IClient
+   public partial class Client : HttpClient, IClient
    {
 
       const string BaseURL = "https://graph.microsoft.com/v1.0/";
