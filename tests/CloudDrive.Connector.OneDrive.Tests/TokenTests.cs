@@ -10,7 +10,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
       public void IdentityConstructorArgumentMustBeSet()
       {
          var ex = Assert.Throws<ArgumentException>(() => new OneDrive.Token(null));
-         Assert.Equal("The identity argument for the OneDrive client must be set", ex.Message);
+         Assert.Equal("The identity argument for the token client must be set", ex.Message);
       }
 
       [Fact]

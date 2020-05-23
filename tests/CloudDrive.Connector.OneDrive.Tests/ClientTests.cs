@@ -11,7 +11,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
       {
          var creator = new Action(() => new OneDrive.Client(null));
 
-         var expected = "The token argument for the OneDrive client must be set";
+         var expected = "The token argument for the http client must be set";
          var value = Assert.Throws<ArgumentException>(creator);
 
          Assert.Equal(expected, value.Message);

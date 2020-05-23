@@ -12,7 +12,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
 
       public Token(IClientApplicationBase identity, params string[] scopes)
       {
-         if (identity == null) throw new ArgumentException("The identity argument for the OneDrive client must be set");
+         if (identity == null) throw new ArgumentException("The identity argument for the token client must be set");
          this.Identity = identity;
          this.Scopes = scopes;
       }

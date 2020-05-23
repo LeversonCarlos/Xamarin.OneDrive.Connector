@@ -12,7 +12,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
 
       public Client(IToken token)
       {
-         if (token == null) throw new ArgumentException("The token argument for the OneDrive client must be set");
+         if (token == null) throw new ArgumentException("The token argument for the http client must be set");
          this.Token = token;
          this.BaseAddress = new Uri(BaseURL);
       }
