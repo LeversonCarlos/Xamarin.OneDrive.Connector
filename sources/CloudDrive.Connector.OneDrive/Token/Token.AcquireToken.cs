@@ -10,8 +10,9 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
       {
          try
          {
-            await Task.CompletedTask;
-            return false;
+            this.AuthResult = await this.AcquireTokenFromIdentity();
+            if (!this.IsTokenValid()) { return false; }
+            return true;
          }
          catch (Exception) { throw; }
       }
