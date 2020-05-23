@@ -6,7 +6,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
    partial class Client
    {
 
-      public async Task<bool> IsConnected()
+      public async Task<bool> CheckConnectionAsync()
       {
          try
          {

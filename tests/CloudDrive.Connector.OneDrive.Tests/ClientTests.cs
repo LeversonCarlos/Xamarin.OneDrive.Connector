@@ -35,13 +35,13 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
          var client = new OneDrive.Client(token);
 
          var expected = false;
-         var value = await client.IsConnected();
+         var value = await client.CheckConnectionAsync();
 
          Assert.Equal(expected, value);
       }
 
       [Fact]
-      public async void ConnectionStateValidAfterRefreshToken()
+      public async void ConnectionStateMustBeValidAfterRefreshToken()
       {
          var token = TokenBuilder.Create()
             .WithTokenState(false)
@@ -50,7 +50,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
          var client = new OneDrive.Client(token);
 
          var expected = true;
-         var value = await client.IsConnected();
+         var value = await client.CheckConnectionAsync();
 
          Assert.Equal(expected, value);
       }
