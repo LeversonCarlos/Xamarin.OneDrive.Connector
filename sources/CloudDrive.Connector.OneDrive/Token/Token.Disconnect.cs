@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector.OneDrive
 {
-   partial class Client
+   partial class Token
    {
 
       public async Task DisconnectAsync()
       {
          try
          {
-            await this.Token.RemoveTokenAsync();
+            await this.RemoveTokenAsync();
          }
          catch (Exception) { throw; }
       }

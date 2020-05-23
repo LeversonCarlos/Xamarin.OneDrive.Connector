@@ -5,7 +5,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
    partial class Token
    {
 
-      public bool IsTokenValid()
+      bool IsTokenValid()
       {
          if (this.AuthResult == null) { return false; }
          if (string.IsNullOrEmpty(this.AuthResult.AccessToken)) { return false; }

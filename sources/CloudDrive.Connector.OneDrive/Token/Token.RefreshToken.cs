@@ -7,7 +7,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
    partial class Token
    {
 
-      public async Task<bool> RefreshTokenAsync()
+      async Task<bool> RefreshTokenAsync()
       {
          try
          {

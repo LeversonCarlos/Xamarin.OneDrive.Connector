@@ -5,11 +5,10 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
    public interface IToken
    {
 
-      Task<bool> AcquireTokenAsync();
-      Task<bool> RefreshTokenAsync();
-      Task RemoveTokenAsync();
+      Task<bool> ConnectAsync();
+      Task<bool> CheckConnectionAsync();
+      Task DisconnectAsync();
 
-      bool IsTokenValid();
       string GetToken();
 
    }

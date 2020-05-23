@@ -11,13 +11,5 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
       public static IdentityBuilder Create() => new IdentityBuilder();
       public IClientApplicationBase Builder() => this.Mock.Object;
 
-      public IdentityBuilder WithEmptyAccountList()
-      {
-         this.Mock
-            .Setup(m => m.GetAccountsAsync())
-            .ReturnsAsync(() => new IAccount[] { });
-         return this;
-      }
-
    }
 }

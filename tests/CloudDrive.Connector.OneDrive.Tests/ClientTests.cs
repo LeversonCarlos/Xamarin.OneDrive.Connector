@@ -31,7 +31,10 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
       [Fact]
       public async void InitialConnectionStateMustBeOff()
       {
-         var token = TokenBuilder.Create().WithTokenState(false).Builder();
+         var token = TokenBuilder
+            .Create()
+            .WithConnectionState(false)
+            .Builder();
          var client = new OneDrive.Client(token);
 
          var expected = false;
@@ -41,27 +44,11 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
       }
 
       [Fact]
-      public async void ConnectionStateMustBeValidAfterRefreshToken()
+      public async void ConnectionStateMustBeValidAfterConnect()
       {
-         var token = TokenBuilder.Create()
-            .WithTokenState(false)
-            .WithRefreshToken(true)
-            .Builder();
-         var client = new OneDrive.Client(token);
-
-         var expected = true;
-         var value = await client.CheckConnectionAsync();
-
-         Assert.Equal(expected, value);
-      }
-
-      [Fact]
-      public async void ConnectionStateMustBeValidAfterAcquireToken()
-      {
-         var token = TokenBuilder.Create()
-            .WithTokenState(false)
-            .WithRefreshToken(false)
-            .WithAcquireToken(true)
+         var token = TokenBuilder
+            .Create()
+            .WithConnectExecution(true)
             .Builder();
          var client = new OneDrive.Client(token);
 
