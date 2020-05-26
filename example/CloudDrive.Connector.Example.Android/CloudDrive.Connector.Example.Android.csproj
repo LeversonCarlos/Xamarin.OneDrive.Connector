@@ -101,9 +101,9 @@
       <Project>{a62d5722-9c3a-4918-82be-00e0a9e333f2}</Project>
       <Name>CloudDrive.Connector.OneDrive</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Xamarin.CloudDrive.Connector.Example\Xamarin.CloudDrive.Connector.Example.csproj">
-      <Project>{C4AD4958-BE01-4856-A586-03B685F37E8A}</Project>
-      <Name>Xamarin.CloudDrive.Connector.Example</Name>
+    <ProjectReference Include="..\CloudDrive.Connector.Example\CloudDrive.Connector.Example.csproj">
+      <Project>{f4c832ec-c5fc-4589-b1b4-3061bef5b6f7}</Project>
+      <Name>CloudDrive.Connector.Example</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
