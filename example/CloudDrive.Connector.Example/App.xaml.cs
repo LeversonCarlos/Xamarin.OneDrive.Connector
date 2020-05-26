@@ -1,6 +1,4 @@
-﻿using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Xamarin.CloudDrive.Connector.Example
 {
@@ -9,7 +7,6 @@ namespace Xamarin.CloudDrive.Connector.Example
       public App()
       {
          InitializeComponent();
-
          MainPage = new MainPage();
       }
 
