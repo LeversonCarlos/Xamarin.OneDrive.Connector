@@ -31,5 +31,21 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
          catch (Exception) { throw; }
       }
 
+      public async Task<bool> UploadThumbnail(FileVM fileVM, System.IO.Stream image)
+      {
+         try
+         {
+
+            var httpPath = $"me/drive/items/{fileVM.ID}/thumbnails/0/source/content";
+
+            var httpData = new System.Net.Http.StreamContent(image);
+            var httpMessage = await this.Client.PutAsync(httpPath, httpData);
+
+            if (!httpMessage.IsSuccessStatusCode) throw new Exception(await httpMessage.Content.ReadAsStringAsync());
+            return true;
+         }
+         catch (Exception) { throw; }
+      }
+
    }
 }
