@@ -12,7 +12,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
       {
          try
          {
-            var messageContent = await this.Client.GetAsync<DTOs.ProfileDTO>("me?$select=id,displayName,userPrincipalName");
+            var messageContent = await this.Client.GetAsync<DTOs.Profile>("me?$select=id,displayName,userPrincipalName");
             var profileData = new ProfileVM
             {
                ID = messageContent.id,
@@ -41,15 +41,4 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
       }
 
    }
-
-   namespace DTOs
-   {
-      internal class ProfileDTO
-      {
-         public string id { get; set; }
-         public string displayName { get; set; }
-         public string userPrincipalName { get; set; }
-      }
-   }
-
 }
