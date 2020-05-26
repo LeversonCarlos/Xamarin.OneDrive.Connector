@@ -17,6 +17,7 @@ namespace Xamarin.CloudDrive.Connector.Example
          this.ConnectionText = "Connect Account";
          this.ConnectionColor = Color.Green;
          this.ConnectionCommand = new Command(async () => await this.Connection());
+         this.SelectFileCommand = new Command(async () => await this.SelectFile());
       }
 
       string _SelectedCloundDrive;
@@ -111,6 +112,27 @@ namespace Xamarin.CloudDrive.Connector.Example
          this.CurrentItem = null;
          this.CurrentItemImage = null;
          this.IsConnected = false;
+      }
+
+      public Command SelectFileCommand { get; set; }
+      async Task SelectFile()
+      {
+         try
+         {
+            this.IsBusy = true;
+            this.CurrentItem = await Selector.GetFolder(this.DriveService);
+            if (this.CurrentItem == null) return;
+
+            var isImage = this.CurrentItem.Path.ToLower().EndsWith(".jpg") || this.CurrentItem.Path.ToLower().EndsWith(".jpeg") || this.CurrentItem.Path.ToLower().EndsWith(".png");
+            if (!isImage) { await this.DisplayAlert("Please, select an image file"); return; }
+
+            var imageBytes = await this.DriveService.Download(this.CurrentItem.ID);
+            var imageStream = new System.IO.MemoryStream(imageBytes);
+            this.CurrentItemImage = ImageSource.FromStream(() => imageStream);
+
+         }
+         catch (Exception ex) { await this.DisplayAlert(ex.ToString()); }
+         finally { this.IsBusy = false; }
       }
 
       Task DisplayAlert(string message) => (App.Current.MainPage).DisplayAlert(this.Title, message, "Ok");

@@ -16,6 +16,18 @@
          <Button Text="{Binding ConnectionText}" TextColor="{Binding ConnectionColor}" HorizontalOptions="FillAndExpand" Command="{Binding ConnectionCommand}" />
       </StackLayout>
 
+      <StackLayout HorizontalOptions="FillAndExpand" >
+         <Button Text="Select an Image File" IsVisible="{Binding IsConnected}" HorizontalOptions="FillAndExpand" Command="{Binding SelectFileCommand}" />
+         <Label Text="{Binding CurrentItem.Path}" HorizontalOptions="Center" />
+      </StackLayout>
+
+      <ActivityIndicator HorizontalOptions="Center" IsRunning="{Binding IsBusy}" IsEnabled="{Binding IsBusy}" IsVisible="{Binding IsBusy}" ></ActivityIndicator>
+
+      <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" IsVisible="{Binding IsConnected}">
+         <Image Aspect="AspectFit" Source="{Binding CurrentItemImage}" HorizontalOptions="Center">
+         </Image>
+      </Grid>
+
    </StackLayout>
 
 </ContentPage>
