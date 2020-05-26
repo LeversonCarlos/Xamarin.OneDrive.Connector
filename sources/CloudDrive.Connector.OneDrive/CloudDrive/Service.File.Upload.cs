@@ -7,8 +7,11 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
    partial class OneDriveService
    {
 
-      public Task<FileVM> Upload(string fileID, byte[] fileContent) => throw new System.NotImplementedException();
-      public Task<FileVM> Upload(string directoryID, string fileName, byte[] fileContent) => throw new System.NotImplementedException();
+      public Task<FileVM> Upload(string fileID, byte[] content)
+      { return this.UploadContent($"me/drive/items/{fileID}/content", content); }
+
+      public Task<FileVM> Upload(string folderID, string fileName, byte[] content)
+      { return this.UploadContent($"me/drive/items/{folderID}:/{fileName}:/content", content); }
 
       private async Task<FileVM> UploadContent(string httpPath, byte[] content)
       {
