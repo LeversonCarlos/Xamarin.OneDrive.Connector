@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Xamarin.CloudDrive.Connector.Common;
 
@@ -20,7 +19,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
             httpPath += "?select=id,name,folder,parentReference&$top=1000";
 
             // AUXILIARY FUNCTIONS
-            var getFullPath = new Func<DTOs.DirectoryDTO, string>(item =>
+            var getFullPath = new Func<DTOs.Directory, string>(item =>
             {
                if (item.parentReference == null || string.IsNullOrEmpty(item.parentReference.path)) { return ""; }
                var fullPath = item.parentReference.path;
@@ -33,7 +32,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
             {
 
                // REQUEST DATA FROM SERVER
-               var httpResult = await this.Client.GetAsync<DTOs.DirectorySearchDTO>(httpPath);
+               var httpResult = await this.Client.GetAsync<DTOs.DirectorySearch>(httpPath);
 
                // STORE RESULT
                var folders = httpResult?.value?
@@ -61,38 +60,4 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
       }
 
    }
-
-   namespace DTOs
-   {
-
-      internal class DirectorySearchDTO
-      {
-         public DirectoryDTO[] value { get; set; }
-
-         [DataMember(Name = "@odata.nextLink")]
-         public string nextLink { get; set; }
-      }
-
-      internal class DirectoryDTO
-      {
-         public string id { get; set; }
-         public string name { get; set; }
-         public DirectoryDetailsDTO folder { get; set; }
-         public DirectoryParentDTO parentReference { get; set; }
-      }
-
-      internal class DirectoryDetailsDTO
-      {
-         public int childCount { get; set; }
-      }
-
-      internal class DirectoryParentDTO
-      {
-         public string id { get; set; }
-         public string path { get; set; }
-         public string driveId { get; set; }
-      }
-
-   }
-
 }
