@@ -48,6 +48,20 @@ namespace Xamarin.CloudDrive.Connector.Example
          set { this.SetProperty(ref this._IsConnected, value); }
       }
 
+      SelectorItem _CurrentItem;
+      public SelectorItem CurrentItem
+      {
+         get { return this._CurrentItem; }
+         set { this.SetProperty(ref this._CurrentItem, value); }
+      }
+
+      ImageSource _CurrentItemImage;
+      public ImageSource CurrentItemImage
+      {
+         get { return this._CurrentItemImage; }
+         set { this.SetProperty(ref this._CurrentItemImage, value); }
+      }
+
       public Command ConnectionCommand { get; set; }
       async Task Connection()
       {
@@ -94,8 +108,8 @@ namespace Xamarin.CloudDrive.Connector.Example
          await this.DriveService.DisconnectAsync();
          this.ConnectionText = "Connect Account";
          this.ConnectionColor = Color.Green;
-         // this.CurrentItem = null;
-         // this.CurrentItemImage = null;
+         this.CurrentItem = null;
+         this.CurrentItemImage = null;
          this.IsConnected = false;
       }
 
