@@ -4,15 +4,17 @@
    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+   xmlns:helpers="clr-namespace:Xamarin.CloudDrive.Connector.Example.Helpers"
    mc:Ignorable="d"
    Title="{Binding Title}"
    x:Class="Xamarin.CloudDrive.Connector.Example.MainPage">
 
-   <StackLayout>
-      <!-- Place new controls here -->
-      <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+   <StackLayout Margin="20" Spacing="20">
+
+      <StackLayout>
+         <helpers:BindablePicker:BindablePicker ItemsSource="{Binding CloundDriveList}" SelectedItem="{Binding SelectedCloundDrive}"  Title="Select the implementation to use" ></helpers:BindablePicker>
+      </StackLayout>
+
    </StackLayout>
 
 </ContentPage>
