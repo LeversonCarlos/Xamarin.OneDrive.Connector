@@ -7,7 +7,6 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
    partial class Startup
    {
 
-      /*
       public static void AddOneDriveConnector(this Activity activity,
          string clientID, params string[] scopes)
       {
@@ -21,7 +20,6 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
             return new OneDriveService(client);
          });
       }
-      */
 
       public static void SetOneDriveAuthenticationResult(this Activity activity,
          int requestCode, Result resultCode, Intent data)
