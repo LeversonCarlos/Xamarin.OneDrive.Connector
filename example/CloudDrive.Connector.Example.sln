@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.CloudDrive.Connector.Example.Android", "Xamarin.CloudDrive.Connector.Example.Android\Xamarin.CloudDrive.Connector.Example.Android.csproj", "{36B32510-CF3B-479E-9AF7-4A76F7391ECF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudDrive.Connector.Example.Android", "CloudDrive.Connector.Example.Android\CloudDrive.Connector.Example.Android.csproj", "{36B32510-CF3B-479E-9AF7-4A76F7391ECF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.CloudDrive.Connector.Example.iOS", "Xamarin.CloudDrive.Connector.Example.iOS\Xamarin.CloudDrive.Connector.Example.iOS.csproj", "{00E9D24F-389F-40B5-B5FD-EDE569C28E67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudDrive.Connector.Example.iOS", "CloudDrive.Connector.Example.iOS\CloudDrive.Connector.Example.iOS.csproj", "{00E9D24F-389F-40B5-B5FD-EDE569C28E67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.CloudDrive.Connector.Example", "Xamarin.CloudDrive.Connector.Example\Xamarin.CloudDrive.Connector.Example.csproj", "{F4C832EC-C5FC-4589-B1B4-3061BEF5B6F7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudDrive.Connector.Example", "CloudDrive.Connector.Example\CloudDrive.Connector.Example.csproj", "{F4C832EC-C5FC-4589-B1B4-3061BEF5B6F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
