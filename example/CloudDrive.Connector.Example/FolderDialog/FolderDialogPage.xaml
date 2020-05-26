@@ -5,12 +5,42 @@
    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
    mc:Ignorable="d"
+   Title="{Binding Title}"
    x:Class="Xamarin.CloudDrive.Connector.Example.FolderDialog.FolderDialogPage">
    <ContentPage.Content>
-      <StackLayout>
-         <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+      <StackLayout Padding="20" Spacing="20">
+
+         <Label Text="{Binding Title}" FontSize="Medium" FontAttributes="Bold" TextColor="Accent" ></Label>
+
+         <Frame BackgroundColor="White" Padding="10">
+            <StackLayout Orientation="Vertical" Spacing="5">
+               <Label Text="Selected Path" FontSize="Micro"></Label>
+               <Label Text="{Binding CurrentItem.Path}" FontAttributes="Bold"></Label>
+            </StackLayout>
+         </Frame>
+
+         <Frame BackgroundColor="White" Padding="10" VerticalOptions="FillAndExpand">
+            <StackLayout >
+               <ScrollView Orientation="Vertical" >
+                  <CollectionView ItemsSource="{Binding Data}" SelectionChangedCommand="{Binding ItemSelectCommand}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" SelectionMode="Single" >
+                     <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                           <FlexLayout HeightRequest="50" AlignItems="Center" JustifyContent="Start">
+                              <Label Text="{Binding Name}" FontAttributes="Bold"></Label>
+                           </FlexLayout>
+                        </DataTemplate>
+                     </CollectionView.ItemTemplate>
+                  </CollectionView>
+               </ScrollView>
+               <ActivityIndicator IsRunning="{Binding IsBusy}" />
+            </StackLayout>
+         </Frame>
+
+         <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+            <Button Text="Cancel" Command="{Binding CancelCommand}" ></Button>
+            <Button Text="Confirm" Command="{Binding ConfirmCommand}" ></Button>
+         </StackLayout>
+
       </StackLayout>
    </ContentPage.Content>
 </ContentPage>
