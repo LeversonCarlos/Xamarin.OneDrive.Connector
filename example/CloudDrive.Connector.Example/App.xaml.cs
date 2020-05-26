@@ -7,7 +7,7 @@ namespace Xamarin.CloudDrive.Connector.Example
       public App()
       {
          InitializeComponent();
-         MainPage = new MainPage();
+         MainPage = new MainPage { BindingContext = new MainVM() };
       }
 
       protected override void OnStart()

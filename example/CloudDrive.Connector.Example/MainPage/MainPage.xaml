@@ -5,6 +5,7 @@
    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
    mc:Ignorable="d"
+   Title="{Binding Title}"
    x:Class="Xamarin.CloudDrive.Connector.Example.MainPage">
 
    <StackLayout>
