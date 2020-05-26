@@ -12,7 +12,8 @@
    <StackLayout Margin="20" Spacing="20">
 
       <StackLayout>
-         <helpers:BindablePicker:BindablePicker ItemsSource="{Binding CloundDriveList}" SelectedItem="{Binding SelectedCloundDrive}"  Title="Select the implementation to use" ></helpers:BindablePicker>
+         <helpers:BindablePicker ItemsSource="{Binding CloundDriveList}" SelectedItem="{Binding SelectedCloundDrive}"  Title="Select the implementation to use" />
+         <Button Text="{Binding ConnectionText}" TextColor="{Binding ConnectionColor}" HorizontalOptions="FillAndExpand" Command="{Binding ConnectionCommand}" />
       </StackLayout>
 
    </StackLayout>
