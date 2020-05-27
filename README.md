@@ -87,6 +87,7 @@ if (await service.ConnectAsync()) { // user will be asked for credentials
 **TODO**  
 *i have no mac or iDevice, any help here will be appreciated*
 
+
 ## How to use the LocalDrive implementation
 This implementation is used to access local external card data
 
@@ -109,7 +110,36 @@ public override void OnRequestPermissionsResult(int requestCode, string[] permis
 }
 ```
 
+### Simplest get-started example 
 
+```csharp
+using Xamarin.CloudDrive.Connector.Common;
+using Xamarin.CloudDrive.Connector.LocalDrive;
+
+var service = DependencyProvider.Get<LocalDriveService>();
+
+if (await service.ConnectAsync()) { // user will be asked to authorize storage permissions 
+
+   // device's external cards 
+   var driversList = await service.GetDrivers(); 
+   var driver = driversList.First();
+
+   // list directories on a directory 
+   var directoriesList = await service.GetDirectories(driver);
+   var directory = directoriesList.First();
+
+   // list files on a directory 
+   var filesList = await service.GetFiles(directory);
+   var file = filesList.First();
+
+   // open file content
+   byte[] fileContent = await service.Download(file.ID);
+   
+   // overwrite file content
+   file = await service.Upload(file.ID, fileContent);
+
+}
+```
 
 ## Build using
 * [.Net Core](https://dotnet.github.io) 
