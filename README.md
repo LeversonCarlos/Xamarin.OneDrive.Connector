@@ -1,6 +1,89 @@
-# Xamarin.OneDrive.Connector
-A wrapper around microsoft identity connector and microsoft graph api to access one drive content.  
+# Xamarin.CloudDrive.Connector
+A wrapper around some of the most common cloud drivers around to be easily used with xamarin apps. What started as a specific microsoft onedrive connector, now evolved to a generic library with multiple implementations.  
 ![Release](https://github.com/LeversonCarlos/Xamarin.OneDrive.Connector/workflows/Release/badge.svg)
+
+## Install instructions
+You can add the library to your project using the [nuget](https://www.nuget.org/packages/Xamarin.OneDrive.Connector) package:  
+   ```shell
+   dotnet add package Xamarin.OneDrive.Connector
+   ```  
+*To use the onedrive implementation, you will need a microsoft application id that you can get following [this guide](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-v2-register-an-app).*
+
+## How to use the OneDrive implementation
+Replace `{YOUR_MICROSOFT_APPLICATION_ID}` with the microsoft application id that you received following the guide mentioned above.
+
+### Android project : MainActivity.cs
+```csharp
+using Xamarin.CloudDrive.Connector.OneDrive;
+protected override void OnCreate(Bundle savedInstanceState)
+{
+   ...
+   Xamarin.Forms.Forms.Init(this, savedInstanceState);
+   this.AddOneDriveConnector("{YOUR_MICROSOFT_APPLICATION_ID}", "User.Read", "Files.ReadWrite");
+   ...
+}
+```
+```csharp
+protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+{
+   base.OnActivityResult(requestCode, resultCode, data);
+   this.SetOneDriveAuthenticationResult(requestCode, resultCode, data);
+}
+```
+
+### Android project : AndroidManifest.xml
+```xml
+<application ...>
+   <activity android:name="microsoft.identity.client.BrowserTabActivity">
+      <intent-filter>
+         <action android:name="android.intent.action.VIEW" />
+         <category android:name="android.intent.category.DEFAULT" />
+         <category android:name="android.intent.category.BROWSABLE" />
+         <data android:scheme="msal{YOUR_MICROSOFT_APPLICATION_ID}" android:host="auth" />
+      </intent-filter>
+   </activity>
+</application>
+```
+
+### Simplest get-started example 
+
+```csharp
+using Xamarin.CloudDrive.Connector.Common;
+using Xamarin.CloudDrive.Connector.OneDrive;
+
+var service = DependencyProvider.Get<OneDriveService>();
+
+if (await service.ConnectAsync()) { // user will be asked for credentials 
+
+   // user profile [id, name, mail, picture]
+   var profile = await service.GetProfile(); 
+
+   // user's drivers including shared ones
+   var driversList = await service.GetDrivers(); 
+   var driver = driversList.First();
+
+   // list directories on a directory 
+   var directoriesList = await service.GetDirectories(driver);
+   var directory = directoriesList.First();
+
+   // list files on a directory 
+   var filesList = await service.GetFiles(directory);
+   var file = filesList.First();
+
+   // download file content
+   byte[] fileContent = await service.Download(file.ID);
+   
+   // upload file content
+   file = await service.Upload(file.ID, fileContent);
+
+   // at some point you may call disconnect to clear user auth data
+   // doing so, next time user will be asked credentials again
+   // not disconnecting, will continue to use same credentials
+   await service.DisconnectAsync();
+}
+
+``´
+
 
 ## Sample of how to use the library
 ### Simplest get-started sample
@@ -60,18 +143,6 @@ protected override void OnActivityResult(int requestCode, Result resultCode, Int
 }
 ```
 
-## Install instructions
-* You can add the library to your project using the [nuget](https://www.nuget.org/packages/Xamarin.OneDrive.Connector) package: 
-   ```shell
-   dotnet add package Xamarin.OneDrive.Connector
-   ```  
-
-* And the optionals plugins:
-   ```shell
-   dotnet add package Xamarin.OneDrive.Connector.Profile  
-   dotnet add package Xamarin.OneDrive.Connector.Files  
-   ```
-* You will nedd a microsoft application id that you can get following [this guide](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-v2-register-an-app).
 
 ## Build using
 * [.Net Core](https://dotnet.github.io) 
