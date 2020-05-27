@@ -73,7 +73,7 @@ if (await service.ConnectAsync()) { // user will be asked for credentials
    // download file content
    byte[] fileContent = await service.Download(file.ID);
    
-   // upload file content
+   // upload file overwriting its content
    file = await service.Upload(file.ID, fileContent);
 
    // at some point you may call disconnect to clear user auth data
