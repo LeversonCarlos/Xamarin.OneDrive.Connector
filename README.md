@@ -96,6 +96,15 @@ if (await service.ConnectAsync()) { // user will be asked for credentials
 * [vsCode](https://github.com/Microsoft/vscode) 
 
 ## Changelog
+### v0.4.*
+Upgrading component version 
+### v0.3.*
+Upgrading MsBuild.Sdk.Extras dependency.  
+Upgrading Xamarin.Forms dependency.  
+Upgrading Microsoft Identity Client dependency.  
+Removing UWP scenarios and projects.  
+### v0.2.*
+Upgrading Microsoft Identity Client.  
 ### v0.1.*
 Trying to learn and apply unit tests (quantum physics for me).  
 Conditional framework's builds according to platform specifics, need because android requires some extras steps on acquiring token.  
@@ -106,15 +115,6 @@ Provide a sample application.
 Implementing the UploadAsync method to send file content to drive. 
 SearchFiles overloads to allow searching on specific folder.  
 Methods for listing folder's childs.  
-### v0.2.*
-Upgrading Microsoft Identity Client.  
-### v0.3.*
-Upgrading MsBuild.Sdk.Extras dependency.  
-Upgrading Xamarin.Forms dependency.  
-Upgrading Microsoft Identity Client dependency.  
-Removing UWP scenarios and projects.  
-### v0.4.*
-Upgrading component version 
 
 
 ## Authors
