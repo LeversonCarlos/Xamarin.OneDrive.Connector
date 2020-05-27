@@ -1,77 +1,145 @@
-# Xamarin.OneDrive.Connector
-A wrapper around microsoft identity connector and microsoft graph api to access one drive content.  
+# Xamarin.CloudDrive.Connector
+A wrapper around some of the **most common cloud drivers** around to be easily used with **xamarin apps**. What started as a specific microsoft onedrive connector, now evolved to a generic library with **multiple implementations** *(including an onedrive one)*.  
 ![Release](https://github.com/LeversonCarlos/Xamarin.OneDrive.Connector/workflows/Release/badge.svg)
 
-## Sample of how to use the library
-### Simplest get-started sample
-```csharp
-   using Xamarin.OneDrive;
+## Install instructions
+You can add the library to your project using the [nuget](https://www.nuget.org/packages/Xamarin.OneDrive.Connector) package:  
+   ```shell
+   dotnet add package Xamarin.OneDrive.Connector
+   ```  
+*To use the onedrive implementation, you will need a microsoft application id that you can get following [this guide](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-v2-register-an-app).*
 
-   var connector = new Connector("YOUR_MICROSOFT_APPLICATION_ID", "User.Read");
-   if (await connector.ConnectAsync())
-   {
-      var httpMessage = await connector.GetAsync("me");
-      /* json message with the requested data */
-   }
-   connector.Dispose();
-```
-### Using the [profile](https://www.nuget.org/packages/Xamarin.OneDrive.Connector.Profile) plugin to request user profile data
-```csharp
-   using Xamarin.OneDrive;
-   using Xamarin.OneDrive.Profile;
+## How to use the OneDrive implementation
+Replace `{YOUR_MICROSOFT_APPLICATION_ID}` with the microsoft application id that you received following the guide mentioned above.
 
-   var connector = new Connector("YOUR_MICROSOFT_APPLICATION_ID", "User.Read");
-   if (await connector.ConnectAsync())
-   {
-      var profile = await connector.GetProfileAsync();
-      Console.WriteLine($"Connected to {profile.Name} account through address {profile.Mail}");
-   }
-   connector.Dispose();
-```
-### Using the [files](https://www.nuget.org/packages/Xamarin.OneDrive.Connector.Files) plugin to search download and manipulate files stored in OneDrive
+### Android project : MainActivity.cs
 ```csharp
-   using Xamarin.OneDrive;
-   using Xamarin.OneDrive.Files;
-
-   var connector = new Connector("YOUR_MICROSOFT_APPLICATION_ID", "Files.Read");
-   if (await connector.ConnectAsync())
-   {
-      var fileList = await connector.SearchFilesAsync("*.zip");
-      Console.WriteLine($"Retrieved {fileList.Count} files on the search request");
-      var file = fileList[0];
-      Console.WriteLine($"The file {file.FileName} has {file.Bytes} bytes and is located on {file.FilePath}.");
-   }
-   connector.Dispose();
-```
-
-### Android project required MainActivity overrides
-```csharp
+using Xamarin.CloudDrive.Connector.OneDrive;
 protected override void OnCreate(Bundle savedInstanceState)
 {
    ...
    Xamarin.Forms.Forms.Init(this, savedInstanceState);
-   Xamarin.OneDrive.Connector.Init(this); /* optionally we could pass a specific redirectUrl */
+   this.AddOneDriveConnector("{YOUR_MICROSOFT_APPLICATION_ID}", "User.Read", "Files.ReadWrite");
    ...
 }
+```
+```csharp
 protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
 {
    base.OnActivityResult(requestCode, resultCode, data);
-   Xamarin.OneDrive.Connector.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
+   this.SetOneDriveAuthenticationResult(requestCode, resultCode, data);
 }
 ```
 
-## Install instructions
-* You can add the library to your project using the [nuget](https://www.nuget.org/packages/Xamarin.OneDrive.Connector) package: 
-   ```shell
-   dotnet add package Xamarin.OneDrive.Connector
-   ```  
+### Android project : AndroidManifest.xml
+```xml
+<application ...>
+   <activity android:name="microsoft.identity.client.BrowserTabActivity">
+      <intent-filter>
+         <action android:name="android.intent.action.VIEW" />
+         <category android:name="android.intent.category.DEFAULT" />
+         <category android:name="android.intent.category.BROWSABLE" />
+         <data android:scheme="msal{YOUR_MICROSOFT_APPLICATION_ID}" android:host="auth" />
+      </intent-filter>
+   </activity>
+</application>
+```
 
-* And the optionals plugins:
-   ```shell
-   dotnet add package Xamarin.OneDrive.Connector.Profile  
-   dotnet add package Xamarin.OneDrive.Connector.Files  
-   ```
-* You will nedd a microsoft application id that you can get following [this guide](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-v2-register-an-app).
+### Simplest get-started example 
+
+```csharp
+using Xamarin.CloudDrive.Connector.Common;
+using Xamarin.CloudDrive.Connector.OneDrive;
+
+var service = DependencyProvider.Get<OneDriveService>();
+
+if (await service.ConnectAsync()) { // user will be asked for credentials 
+
+   // user profile [id, name, mail, picture]
+   var profile = await service.GetProfile(); 
+
+   // user's drivers including shared ones
+   var driversList = await service.GetDrivers(); 
+   var driver = driversList.First();
+
+   // list directories on a directory 
+   var directoriesList = await service.GetDirectories(driver);
+   var directory = directoriesList.First();
+
+   // list files on a directory 
+   var filesList = await service.GetFiles(directory);
+   var file = filesList.First();
+
+   // download file content
+   byte[] fileContent = await service.Download(file.ID);
+   
+   // upload file overwriting its content
+   file = await service.Upload(file.ID, fileContent);
+
+   // at some point you may call disconnect to clear user auth data
+   // doing so, next time user will be asked credentials again
+   // not disconnecting, will continue to use same credentials
+   await service.DisconnectAsync();
+}
+```
+
+### iOS project 
+**TODO**  
+*i have no mac or iDevice, any help here will be appreciated*
+
+
+## How to use the LocalDrive implementation
+This implementation is used to access local external card data
+
+### Android project : MainActivity.cs
+```csharp
+using Xamarin.CloudDrive.Connector.LocalDrive;
+protected override void OnCreate(Bundle savedInstanceState)
+{
+   ...
+   Xamarin.Forms.Forms.Init(this, savedInstanceState);
+   this.AddLocalDriveConnector(savedInstanceState);
+   ...
+}
+```
+```csharp
+public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
+{
+   this.SetLocalDrivePermissionsResult(requestCode, permissions, grantResults);
+   base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+}
+```
+
+### Simplest get-started example 
+
+```csharp
+using Xamarin.CloudDrive.Connector.Common;
+using Xamarin.CloudDrive.Connector.LocalDrive;
+
+var service = DependencyProvider.Get<LocalDriveService>();
+
+if (await service.ConnectAsync()) { // user will be asked to authorize storage permissions 
+
+   // device's external cards 
+   var driversList = await service.GetDrivers(); 
+   var driver = driversList.First();
+
+   // list directories on a directory 
+   var directoriesList = await service.GetDirectories(driver);
+   var directory = directoriesList.First();
+
+   // list files on a directory 
+   var filesList = await service.GetFiles(directory);
+   var file = filesList.First();
+
+   // open file content
+   byte[] fileContent = await service.Download(file.ID);
+   
+   // overwrite file content
+   file = await service.Upload(file.ID, fileContent);
+
+}
+```
 
 ## Build using
 * [.Net Core](https://dotnet.github.io) 
@@ -81,6 +149,18 @@ protected override void OnActivityResult(int requestCode, Result resultCode, Int
 * [vsCode](https://github.com/Microsoft/vscode) 
 
 ## Changelog
+### v1.0.*
+The specific OneDrive package evolved to a generic library with multiple implementations.  
+**breaking changes**
+### v0.4.*
+Upgrading component version 
+### v0.3.*
+Upgrading MsBuild.Sdk.Extras dependency.  
+Upgrading Xamarin.Forms dependency.  
+Upgrading Microsoft Identity Client dependency.  
+Removing UWP scenarios and projects.  
+### v0.2.*
+Upgrading Microsoft Identity Client.  
 ### v0.1.*
 Trying to learn and apply unit tests (quantum physics for me).  
 Conditional framework's builds according to platform specifics, need because android requires some extras steps on acquiring token.  
@@ -91,15 +171,6 @@ Provide a sample application.
 Implementing the UploadAsync method to send file content to drive. 
 SearchFiles overloads to allow searching on specific folder.  
 Methods for listing folder's childs.  
-### v0.2.*
-Upgrading Microsoft Identity Client.  
-### v0.3.*
-Upgrading MsBuild.Sdk.Extras dependency.  
-Upgrading Xamarin.Forms dependency.  
-Upgrading Microsoft Identity Client dependency.  
-Removing UWP scenarios and projects.  
-### v0.4.*
-Upgrading component version 
 
 
 ## Authors
