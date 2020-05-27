@@ -81,67 +81,11 @@ if (await service.ConnectAsync()) { // user will be asked for credentials
    // not disconnecting, will continue to use same credentials
    await service.DisconnectAsync();
 }
-
-``´
-
-
-## Sample of how to use the library
-### Simplest get-started sample
-```csharp
-   using Xamarin.OneDrive;
-
-   var connector = new Connector("YOUR_MICROSOFT_APPLICATION_ID", "User.Read");
-   if (await connector.ConnectAsync())
-   {
-      var httpMessage = await connector.GetAsync("me");
-      /* json message with the requested data */
-   }
-   connector.Dispose();
-```
-### Using the [profile](https://www.nuget.org/packages/Xamarin.OneDrive.Connector.Profile) plugin to request user profile data
-```csharp
-   using Xamarin.OneDrive;
-   using Xamarin.OneDrive.Profile;
-
-   var connector = new Connector("YOUR_MICROSOFT_APPLICATION_ID", "User.Read");
-   if (await connector.ConnectAsync())
-   {
-      var profile = await connector.GetProfileAsync();
-      Console.WriteLine($"Connected to {profile.Name} account through address {profile.Mail}");
-   }
-   connector.Dispose();
-```
-### Using the [files](https://www.nuget.org/packages/Xamarin.OneDrive.Connector.Files) plugin to search download and manipulate files stored in OneDrive
-```csharp
-   using Xamarin.OneDrive;
-   using Xamarin.OneDrive.Files;
-
-   var connector = new Connector("YOUR_MICROSOFT_APPLICATION_ID", "Files.Read");
-   if (await connector.ConnectAsync())
-   {
-      var fileList = await connector.SearchFilesAsync("*.zip");
-      Console.WriteLine($"Retrieved {fileList.Count} files on the search request");
-      var file = fileList[0];
-      Console.WriteLine($"The file {file.FileName} has {file.Bytes} bytes and is located on {file.FilePath}.");
-   }
-   connector.Dispose();
 ```
 
-### Android project required MainActivity overrides
-```csharp
-protected override void OnCreate(Bundle savedInstanceState)
-{
-   ...
-   Xamarin.Forms.Forms.Init(this, savedInstanceState);
-   Xamarin.OneDrive.Connector.Init(this); /* optionally we could pass a specific redirectUrl */
-   ...
-}
-protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
-{
-   base.OnActivityResult(requestCode, resultCode, data);
-   Xamarin.OneDrive.Connector.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
-}
-```
+### iOS project 
+**TODO**  
+*i have no mac or iDevice, any help here will be appreciated*
 
 
 ## Build using
