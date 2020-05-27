@@ -8,12 +8,13 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
    internal class Permissions
    {
 
-      internal static Action StoragePermissionAlert { get; set; } = new Action(() =>
+      internal static async Task<bool> StoragePermissionAlert()
       {
          var mainPage = Xamarin.Forms.Application.Current.MainPage;
          var message = "Will need storage permission to browser for files";
-         mainPage.DisplayAlert(mainPage.Title, message, "Ok");
-      });
+         var response = await mainPage.DisplayAlert(mainPage.Title, message, "OK", "Cancel");
+         return response;
+      }
 
       internal static async Task<bool> HasStoragePermission()
       {
@@ -34,7 +35,9 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
             if (permissionStatus != PermissionStatus.Granted)
             {
                if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
-               { StoragePermissionAlert(); }
+               {
+                  if (!await StoragePermissionAlert()) { return false; }
+               }
 
                var requestPermissions = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
                if (requestPermissions.ContainsKey(Permission.Storage))
