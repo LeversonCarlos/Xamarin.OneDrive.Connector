@@ -1,5 +1,5 @@
 # Xamarin.CloudDrive.Connector
-A wrapper around some of the most common cloud drivers around to be easily used with xamarin apps. What started as a specific microsoft onedrive connector, now evolved to a generic library with multiple implementations.  
+A wrapper around some of the **most common cloud drivers** around to be easily used with **xamarin apps**. What started as a specific microsoft onedrive connector, now evolved to a generic library with **multiple implementations** *(including an onedrive one)*.  
 ![Release](https://github.com/LeversonCarlos/Xamarin.OneDrive.Connector/workflows/Release/badge.svg)
 
 ## Install instructions
@@ -87,6 +87,29 @@ if (await service.ConnectAsync()) { // user will be asked for credentials
 **TODO**  
 *i have no mac or iDevice, any help here will be appreciated*
 
+## How to use the LocalDrive implementation
+This implementation is used to access local external card data
+
+### Android project : MainActivity.cs
+```csharp
+using Xamarin.CloudDrive.Connector.LocalDrive;
+protected override void OnCreate(Bundle savedInstanceState)
+{
+   ...
+   Xamarin.Forms.Forms.Init(this, savedInstanceState);
+   this.AddLocalDriveConnector(savedInstanceState);
+   ...
+}
+```
+```csharp
+public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
+{
+   this.SetLocalDrivePermissionsResult(requestCode, permissions, grantResults);
+   base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+}
+```
+
+
 
 ## Build using
 * [.Net Core](https://dotnet.github.io) 
@@ -96,6 +119,9 @@ if (await service.ConnectAsync()) { // user will be asked for credentials
 * [vsCode](https://github.com/Microsoft/vscode) 
 
 ## Changelog
+### v1.0.*
+The specific OneDrive package evolved to a generic library with multiple implementations.  
+**breaking changes**
 ### v0.4.*
 Upgrading component version 
 ### v0.3.*
