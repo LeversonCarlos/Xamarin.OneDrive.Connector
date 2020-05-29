@@ -1,4 +1,4 @@
-name: Alpha-Pull-Request
+name: Pull Request [alpha]
 
 on:
   pull_request:
