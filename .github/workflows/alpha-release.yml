@@ -3,8 +3,7 @@ name: Alpha-Release
 on:
   push:
     branches: 
-      - '*'
-      - '!master'
+      - refactoring
   
 jobs:
   build:
@@ -19,10 +18,10 @@ jobs:
       - name: Setup MsBuild
         uses: microsoft/setup-msbuild@v1
         
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"          
+      # - name: Dump GitHub context
+      #   env:
+      #     GITHUB_CONTEXT: ${{ toJson(github) }}
+      #   run: echo "$GITHUB_CONTEXT"          
                     
       - name: Build and Pack the OneDrive Connector
         run: msbuild ./sources/CloudDrive.Connector.OneDrive -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /p:SuffixVersion=-alpha /t:pack 
