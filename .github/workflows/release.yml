@@ -17,10 +17,10 @@ jobs:
       - name: Setup MsBuild
         uses: microsoft/setup-msbuild@v1
         
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"          
+      # - name: Dump GitHub context
+      #   env:
+      #     GITHUB_CONTEXT: ${{ toJson(github) }}
+      #   run: echo "$GITHUB_CONTEXT"          
                     
       - name: Build and Pack the Connector
         run: msbuild ./srcs/Xamarin.OneDrive.Connector -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /t:pack 

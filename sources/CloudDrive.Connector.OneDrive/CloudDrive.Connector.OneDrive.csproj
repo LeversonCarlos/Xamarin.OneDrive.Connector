@@ -10,11 +10,16 @@
    </PropertyGroup>
 
    <PropertyGroup>
+      <Version>1.0.$(BuildVersion)$(SuffixVersion)</Version>
+      <BuildVersion>0</BuildVersion>
+      <SuffixVersion></SuffixVersion>
+   </PropertyGroup>
+
+   <PropertyGroup>
       <RootNamespace>Xamarin.CloudDrive.Connector.OneDrive</RootNamespace>
       <PackageId>Xamarin.OneDrive.Connector</PackageId>
       <Product>Xamarin.CloudDrive.Connector</Product>
       <Title>CloudDrive Connector for OneDrive on Xamarin</Title>
-      <Version>0.0.0</Version>
       <Description>A wrapper around the device local drive to easy the directory and file selection</Description>
       <Description>A wrapper around microsoft identity connector and microsoft graph api to access onedrive content. This is an evolution of the old Xamarin.OneDrive.Connector</Description>
       <Authors>Leverson Carlos;lcjohnny</Authors>
