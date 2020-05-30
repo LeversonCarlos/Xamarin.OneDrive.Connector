@@ -17,7 +17,7 @@
 
    <PropertyGroup>
       <RootNamespace>Xamarin.CloudDrive.Connector.OneDrive</RootNamespace>
-      <PackageId>Xamarin.OneDrive.Connector</PackageId>
+      <PackageId>Xamarin.CloudDrive.Connector.OneDrive</PackageId>
       <Product>Xamarin.CloudDrive.Connector</Product>
       <Title>CloudDrive Connector for OneDrive on Xamarin</Title>
       <Description>A wrapper around the device local drive to easy the directory and file selection</Description>

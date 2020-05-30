@@ -1,4 +1,4 @@
-name: Pull Request [alpha]
+name: Pull Request
 
 on:
   pull_request:
@@ -19,14 +19,17 @@ jobs:
       - name: Setup MsBuild
         uses: microsoft/setup-msbuild@v1
         
-      # - name: Dump GitHub context
-      #   env:
-      #     GITHUB_CONTEXT: ${{ toJson(github) }}
-      #   run: echo "$GITHUB_CONTEXT"          
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"          
                     
-      - name: Build and Pack the OneDrive Connector
+      - name: Build the Common Connector
+        run: msbuild ./sources/CloudDrive.Connector.Common -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /p:SuffixVersion=-alpha
+          
+      - name: Build the OneDrive Connector
         run: msbuild ./sources/CloudDrive.Connector.OneDrive -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /p:SuffixVersion=-alpha
           
-      - name: Build and Pack the LocalDrive Connector
+      - name: Build the LocalDrive Connector
         run: msbuild ./sources/CloudDrive.Connector.LocalDrive -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /p:SuffixVersion=-alpha
           
