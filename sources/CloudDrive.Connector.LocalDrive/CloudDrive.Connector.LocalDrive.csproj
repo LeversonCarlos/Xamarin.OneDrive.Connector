@@ -10,14 +10,14 @@
    </PropertyGroup>
 
    <PropertyGroup>
-      <Version>1.0.$(BuildVersion)$(SuffixVersion)</Version>
       <BuildVersion>0</BuildVersion>
       <SuffixVersion></SuffixVersion>
+      <Version>1.0.$(BuildVersion)$(SuffixVersion)</Version>
    </PropertyGroup>
 
    <PropertyGroup>
       <RootNamespace>Xamarin.CloudDrive.Connector.LocalDrive</RootNamespace>
-      <PackageId>Xamarin.LocalDrive.Connector</PackageId>
+      <PackageId>Xamarin.CloudDrive.Connector.LocalDrive</PackageId>
       <Product>Xamarin.CloudDrive.Connector</Product>
       <Title>CloudDrive Connector for LocalDrive on Xamarin</Title>
       <Description>A wrapper around the device local drive to easy the directory and file selection</Description>
