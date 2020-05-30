@@ -5,9 +5,9 @@
    </PropertyGroup>
 
    <PropertyGroup>
-      <Version>1.0.$(BuildVersion)$(SuffixVersion)</Version>
       <BuildVersion>0</BuildVersion>
       <SuffixVersion></SuffixVersion>
+      <Version>1.0.$(BuildVersion)$(SuffixVersion)</Version>
    </PropertyGroup>
 
    <PropertyGroup>
