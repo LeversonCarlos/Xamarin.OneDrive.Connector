@@ -13,74 +13,52 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
       {
          try
          {
+
+            var searchPatterns = searchPattern
+               .Replace("*.", "")
+               .ToLower()
+               .Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries)
+               .ToArray();
+
             var fileList = new List<FileVM>();
-
-            string httpPath;
-            if (string.IsNullOrEmpty(directory?.ID)) { httpPath = "me/drive/root"; }
-            else { httpPath = $"me/drive/items/{directory.ID}"; }
-            httpPath += "/search(q='{searchText}')";
-            httpPath += "?select=id,name,createdDateTime,size,@microsoft.graph.downloadUrl,file,parentReference&$top=1000";
-
-            while (!string.IsNullOrEmpty(httpPath))
+            var addFilesUntilLimit = new Func<FileVM[], bool>(files =>
             {
-
-               // REQUEST DATA FROM SERVER
-               var httpResult = await this.Client.GetAsync<DTOs.FileSearch>(httpPath);
-
-               // STORE RESULT
-               var files = httpResult?.value?
-                  .Where(x => x.file != null)
-                  .Select(x => this.GetDetails(x))
-                  .ToList();
                fileList.AddRange(files);
+               return limit == 0 || fileList.Count < limit;
+            });
 
-               // CHECK IF THERE IS ANOTHER PAGE OF RESULTS
-               httpPath = httpResult.nextLink;
-               if (!string.IsNullOrEmpty(httpPath))
-               { httpPath = httpPath.Replace(((System.Net.Http.HttpClient)this.Client).BaseAddress.AbsoluteUri, string.Empty); }
+            await this.SearchFiles(directory, searchPatterns, addFilesUntilLimit);
 
-            }
+            return fileList
+               .OrderBy(x => x.Path)
+               .Take(limit)
+               .ToArray();
 
-            /*
-            // GROUP DISTINCT FOLDERS 
-            var folderList = fileList
-               .Where(x => x.parentReference != null)
-               .GroupBy(x => x.parentReference.id)
-               .Select(x => x.FirstOrDefault().parentReference)
-               .ToList();
+         }
+         catch (Exception) { throw; }
+      }
 
-            // NORMALIZE FOLDER's PATHS
-            foreach(var folder in folderList)
+      private async Task<bool> SearchFiles(DirectoryVM directory, string[] searchPatterns, Func<FileVM[], bool> addFilesUntilLimit)
+      {
+         try
+         {
+
+            // SERACH FILE ON FOLDER
+            var fileList = (await this.GetFiles(directory))?.ToList();
+            fileList.RemoveAll(x => searchPatterns.Any(ext => x.Name.EndsWith(ext, StringComparison.InvariantCultureIgnoreCase)));
+            if (!addFilesUntilLimit(fileList.ToArray())) { return false; }
+
+            // LOCATE SUB DIRECTORIES
+            var childFolders = await this.GetDirectories(directory);
+            if (childFolders == null || childFolders.Length == 0) { return true; }
+
+            // LOOP SUB DIRECTORIES 
+            foreach (var childFolder in childFolders)
             {
-               var sep = folder.FilePath.IndexOf(":");
-               if (sep != -1)
-               { folder.FilePath = folder.FilePath.Substring(sep + 1); }
-               folder.FilePath = Uri.UnescapeDataString(folder.FilePath);
+               if (!await SearchFiles(childFolder, searchPatterns, addFilesUntilLimit)) { return false; }
             }
 
-            // APPLY FOLDER's PATHS TO FILES
-            foreach (var file in fileList)
-            {
-               if (file.parentReference == null) { continue; }
-               file.parentID = file.parentReference.id;
-               file.FilePath = folderList
-                  .Where(folder => folder.id == file.parentReference.id)
-                  .Select(folder => folder.FilePath)
-                  .FirstOrDefault();
-               var createdDateTime = DateTime.MinValue;
-               if (DateTime.TryParse(file.CreatedDateTimeText, out createdDateTime))
-               { file.CreatedDateTime = createdDateTime; }
-            }
-
-            // RESULT
-            fileList = fileList
-               .OrderBy(x => x.FilePath)
-               .ThenBy(x => x.FileName)
-               .ToList();
-
-             */
-
-            return fileList.ToArray();
+            return true;
          }
          catch (Exception) { throw; }
       }
