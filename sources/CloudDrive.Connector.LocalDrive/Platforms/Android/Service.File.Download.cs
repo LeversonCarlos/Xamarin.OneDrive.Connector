@@ -11,6 +11,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
       {
          try
          {
+            if (!await this.CheckConnectionAsync()) { return null; }
             using (var fileStream = new FileStream(fileID, FileMode.Open, FileAccess.Read))
             {
                var fileLength = (int)fileStream.Length;

@@ -12,6 +12,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
       {
          try
          {
+            if (!await this.CheckConnectionAsync()) { return null; }
 
             var driveList = Storages.GetStorages()
                .Select(x => new DirectoryVM

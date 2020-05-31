@@ -13,8 +13,9 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
       {
          try
          {
-            System.IO.SearchOption searchOption = System.IO.SearchOption.AllDirectories;
+            if (!await this.CheckConnectionAsync()) { return null; }
 
+            System.IO.SearchOption searchOption = System.IO.SearchOption.AllDirectories;
             var fileQuery = System.IO.Directory
                .EnumerateFiles(directory.ID, searchPattern, searchOption)
                .Where(x => !string.IsNullOrEmpty(x))

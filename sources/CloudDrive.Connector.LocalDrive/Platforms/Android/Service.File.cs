@@ -13,9 +13,10 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
       {
          try
          {
+            if (!await this.CheckConnectionAsync()) { return null; }
+
             string searchPattern = "*.*";
             System.IO.SearchOption searchOption = System.IO.SearchOption.TopDirectoryOnly;
-
             var fileQuery = System.IO.Directory
                .EnumerateFiles(directory.ID, searchPattern, searchOption)
                .Where(x => !string.IsNullOrEmpty(x))
@@ -39,8 +40,9 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
       {
          try
          {
-            var fileInfo = await Task.FromResult(new System.IO.FileInfo(fileID));
+            if (!await this.CheckConnectionAsync()) { return null; }
 
+            var fileInfo = await Task.FromResult(new System.IO.FileInfo(fileID));
             var fileData = new FileVM
             {
                ID = fileInfo.FullName,
