@@ -45,7 +45,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
 
             // SERACH FILE ON FOLDER
             var fileList = (await this.GetFiles(directory))?.ToList();
-            fileList.RemoveAll(x => searchPatterns.Any(ext => x.Name.EndsWith(ext, StringComparison.InvariantCultureIgnoreCase)));
+            fileList.RemoveAll(x => !searchPatterns.Any(ext => x.Name.EndsWith(ext, StringComparison.InvariantCultureIgnoreCase)));
             if (!addFilesUntilLimit(fileList.ToArray())) { return false; }
 
             // LOCATE SUB DIRECTORIES
