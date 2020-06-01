@@ -1,6 +1,7 @@
 using Android.App;
 using Android.Content;
 using Microsoft.Identity.Client;
+using System;
 
 namespace Xamarin.CloudDrive.Connector.OneDrive
 {
@@ -13,6 +14,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
          Common.DependencyProvider.Add(() => activity);
          Common.DependencyProvider.Add(() =>
          {
+            if (string.IsNullOrEmpty(clientID) || clientID == "{YOUR_MICROSOFT_APPLICATION_ID}") { throw new ArgumentNullException("The application ID argument for the onedrive client must be set"); }
             var redirectUri = $"msal{clientID}://auth";
             var identity = Token.CreateIdentity(clientID, redirectUri, () => activity);
             var token = new Token(identity, scopes);
