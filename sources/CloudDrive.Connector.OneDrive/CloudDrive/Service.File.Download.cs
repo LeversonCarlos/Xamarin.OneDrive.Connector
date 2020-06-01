@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector.OneDrive
@@ -6,7 +7,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
    partial class OneDriveService
    {
 
-      public async Task<byte[]> Download(string fileID)
+      public async Task<Stream> Download(string fileID)
       {
          try
          {
@@ -14,7 +15,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
 
             var httpMessage = await this.Client.GetAsync(httpPath);
             if (!httpMessage.IsSuccessStatusCode) throw new Exception(await httpMessage.Content.ReadAsStringAsync());
-            var httpContent = await httpMessage.Content.ReadAsByteArrayAsync();
+            var httpContent = await httpMessage.Content.ReadAsStreamAsync();
 
             return httpContent;
          }

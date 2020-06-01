@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector.Common
@@ -12,7 +13,7 @@ namespace Xamarin.CloudDrive.Connector.Common
       Task<FileVM> Upload(string fileID, byte[] fileContent);
       Task<FileVM> Upload(string directoryID, string fileName, byte[] fileContent);
       
-      Task<byte[]> Download(string fileID);
+      Task<Stream> Download(string fileID);
 
    }
 }
