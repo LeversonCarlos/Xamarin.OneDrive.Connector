@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector.LocalDrive
@@ -5,7 +6,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
    partial class LocalDriveService
    {
 
-      public Task<byte[]> Download(string fileID) => throw new System.NotImplementedException();
+      public Task<Stream> Download(string fileID) => throw new System.NotImplementedException();
 
    }
 }
