@@ -1,4 +1,5 @@
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Xamarin.CloudDrive.Connector.OneDrive
 {
@@ -9,7 +10,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
       {
          public Directory[] value { get; set; }
 
-         [DataMember(Name = "@odata.nextLink")]
+         [JsonPropertyName("@odata.nextLink")]
          public string nextLink { get; set; }
       }
 
