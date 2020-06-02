@@ -42,7 +42,6 @@
    <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.3" />
       <PackageReference Include="System.Text.Json" Version="4.7.1" />
-      <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
       <ProjectReference Include="..\CloudDrive.Connector.Common\CloudDrive.Connector.Common.csproj" />
 
       <!-- This None is here so the conditionally included files show up in the Solution Explorer -->
@@ -55,7 +54,7 @@
 
    <ItemGroup Condition=" '$(TargetFramework)' == '$(TargetFrameworkAndroid)' ">
       <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
-      <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
+      <PackageReference Include="Xamarin.Essentials" Version="1.5.1" />
       <Compile Include="Platforms\Android\**\*.cs" />
    </ItemGroup>
 

@@ -1,13 +1,13 @@
-using Plugin.Permissions;
-using Plugin.Permissions.Abstractions;
+using Xamarin.Essentials;
 using System;
 using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector.LocalDrive
 {
-   internal class Permissions
+   internal class PermissionHelper
    {
 
+      private static bool AlreadyAskedPermissions { get; set; } = false;
       internal static async Task<bool> StoragePermissionAlert()
       {
          var mainPage = Xamarin.Forms.Application.Current.MainPage;
@@ -20,7 +20,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
       {
          try
          {
-            var permissionStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+            var permissionStatus = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
             return (permissionStatus == PermissionStatus.Granted);
          }
          catch (Exception ex) { Console.WriteLine($"Exception:{ex}"); return false; }
@@ -30,18 +30,18 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
       {
          try
          {
-            var permissionStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+            var permissionStatus = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
 
             if (permissionStatus != PermissionStatus.Granted)
             {
-               if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
+
+               if (AlreadyAskedPermissions)
                {
                   if (!await StoragePermissionAlert()) { return false; }
                }
 
-               var requestPermissions = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
-               if (requestPermissions.ContainsKey(Permission.Storage))
-               { permissionStatus = requestPermissions[Permission.Storage]; }
+               permissionStatus = await Permissions.RequestAsync<Permissions.StorageWrite>();
+               AlreadyAskedPermissions = true;
             }
 
             return (permissionStatus == PermissionStatus.Granted);
