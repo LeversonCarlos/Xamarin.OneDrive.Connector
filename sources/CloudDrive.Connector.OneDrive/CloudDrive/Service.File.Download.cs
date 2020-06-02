@@ -19,7 +19,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
 
             return httpContent;
          }
-         catch (Exception) { throw; }
+         catch (Exception ex) { throw new Exception($"Error while downloading file [{fileID}] with oneDrive service", ex); }
       }
 
    }

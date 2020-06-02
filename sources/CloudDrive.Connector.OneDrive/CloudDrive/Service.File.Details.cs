@@ -24,7 +24,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
             return fileVM;
 
          }
-         catch (Exception) { throw; }
+         catch (Exception ex) { throw new Exception($"Error while loading details for file [{fileID}] with oneDrive service", ex); }
       }
 
       private FileVM GetDetails(DTOs.File fileDTO)

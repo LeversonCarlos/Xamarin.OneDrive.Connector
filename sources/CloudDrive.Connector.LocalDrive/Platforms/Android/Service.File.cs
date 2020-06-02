@@ -55,11 +55,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
 
             return fileData;
          }
-         catch (Exception ex)
-         {
-            Console.WriteLine($"fileID:{fileID}{Environment.NewLine}Exception:{ex}");
-            return null;
-         }
+         catch (Exception ex) { throw new Exception($"Error while loading details for file [{fileID}] with localDrive service", ex); }
       }
 
    }
