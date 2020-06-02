@@ -126,8 +126,7 @@ namespace Xamarin.CloudDrive.Connector.Example
             var isImage = this.CurrentItem.Path.ToLower().EndsWith(".jpg") || this.CurrentItem.Path.ToLower().EndsWith(".jpeg") || this.CurrentItem.Path.ToLower().EndsWith(".png");
             if (!isImage) { await this.DisplayAlert("Please, select an image file"); return; }
 
-            var imageBytes = await this.DriveService.Download(this.CurrentItem.ID);
-            var imageStream = new System.IO.MemoryStream(imageBytes);
+            var imageStream = await this.DriveService.Download(this.CurrentItem.ID);
             this.CurrentItemImage = ImageSource.FromStream(() => imageStream);
 
          }
