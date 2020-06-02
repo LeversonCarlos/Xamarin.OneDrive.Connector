@@ -9,6 +9,10 @@ You can add the library to your project using the [nuget](https://www.nuget.org/
    ```  
 *To use the onedrive implementation, you will need a microsoft application id that you can get following [this guide](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-v2-register-an-app).*
 
+## Example project
+There is an example project on the `example` directory. A simple file picker using both implementations (localDrive and oneDrive) to show how to configure and execute to whole thing.  
+Just replace `{YOUR_MICROSOFT_APPLICATION_ID}` with the microsoft application id that you received following the guide mentioned above.  
+
 ## How to use the OneDrive implementation
 Replace `{YOUR_MICROSOFT_APPLICATION_ID}` with the microsoft application id that you received following the guide mentioned above.
 
