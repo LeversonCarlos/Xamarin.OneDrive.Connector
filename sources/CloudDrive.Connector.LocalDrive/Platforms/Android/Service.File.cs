@@ -49,7 +49,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
                Name = fileInfo.Name,
                CreatedDateTime = fileInfo.CreationTime,
                SizeInBytes = fileInfo.Length,
-               Path = fileInfo.FullName,
+               Path = fileInfo.DirectoryName,
                ParentID = fileInfo.DirectoryName
             };
 
