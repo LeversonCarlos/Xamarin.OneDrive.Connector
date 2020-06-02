@@ -21,7 +21,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
             }
             return await this.GetDetails(fileID);
          }
-         catch (Exception) { throw; }
+         catch (Exception ex) { throw new Exception($"Error while uploading file [{fileID}] with localDrive service", ex); }
       }
 
       public Task<FileVM> Upload(string directoryID, string fileName, byte[] fileContent)

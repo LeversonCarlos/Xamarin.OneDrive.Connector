@@ -24,7 +24,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
             return fileVM;
 
          }
-         catch (Exception) { throw; }
+         catch (Exception ex) { throw new Exception($"Error while loading details for file [{fileID}] with oneDrive service", ex); }
       }
 
       private FileVM GetDetails(DTOs.File fileDTO)
@@ -60,7 +60,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
          var fullPath = fileDTO.parentReference.path;
          fullPath = System.Uri.UnescapeDataString(fullPath);
          fullPath = fullPath.Replace("/drive/root:", "");
-         return $"{fullPath}/{fileDTO.name}";
+         return $"{fullPath}"; ///{fileDTO.name}
       }
 
    }

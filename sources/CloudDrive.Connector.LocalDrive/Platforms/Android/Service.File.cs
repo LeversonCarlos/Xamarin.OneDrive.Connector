@@ -49,17 +49,13 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
                Name = fileInfo.Name,
                CreatedDateTime = fileInfo.CreationTime,
                SizeInBytes = fileInfo.Length,
-               Path = fileInfo.FullName,
+               Path = fileInfo.DirectoryName,
                ParentID = fileInfo.DirectoryName
             };
 
             return fileData;
          }
-         catch (Exception ex)
-         {
-            Console.WriteLine($"fileID:{fileID}{Environment.NewLine}Exception:{ex}");
-            return null;
-         }
+         catch (Exception ex) { throw new Exception($"Error while loading details for file [{fileID}] with localDrive service", ex); }
       }
 
    }
