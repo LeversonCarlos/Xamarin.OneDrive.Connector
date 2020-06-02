@@ -55,7 +55,7 @@
    </ItemGroup>
 
    <ItemGroup Condition=" '$(TargetFramework)' == '$(TargetFrameworkAndroid)' ">
-      <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
+      <PackageReference Include="Xamarin.Forms" Version="4.2.0.910310" />
       <Compile Include="Platforms\Android\**\*.cs" />
    </ItemGroup>
 
