@@ -16,7 +16,10 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
             var folderList = new List<DirectoryVM>();
 
             var httpPath = $"me/drive/items/{directory.ID}/children";
-            httpPath += "?select=id,name,folder,parentReference&$top=1000";
+            httpPath += "?";
+            httpPath += "$filter=folder ne null&";
+            httpPath += "$select=id,name,folder,parentReference&";
+            httpPath += "$top=1000";
 
             // AUXILIARY FUNCTIONS
             var getFullPath = new Func<DTOs.Directory, string>(item =>

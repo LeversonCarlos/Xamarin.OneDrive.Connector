@@ -16,7 +16,10 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
             var fileList = new List<FileVM>();
 
             var httpPath = $"me/drive/items/{directory.ID}/children";
-            httpPath += "?select=id,name,createdDateTime,size,@microsoft.graph.downloadUrl,file,parentReference&$top=1000";
+            httpPath += "?";
+            httpPath += "$filter=file ne null&";
+            httpPath += "$select=id,name,createdDateTime,size,@microsoft.graph.downloadUrl,file,parentReference&";
+            httpPath += "$top=1000";
 
             while (!string.IsNullOrEmpty(httpPath))
             {
