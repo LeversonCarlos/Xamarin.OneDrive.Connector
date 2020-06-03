@@ -53,12 +53,14 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
             if (childFolders == null || childFolders.Length == 0) { return true; }
 
             // LOOP SUB DIRECTORIES 
+            var childTasks = new List<Task<bool>>();
             foreach (var childFolder in childFolders)
             {
-               if (!await SearchFiles(childFolder, searchPatterns, addFilesUntilLimit)) { return false; }
+               childTasks.Add(this.SearchFiles(childFolder, searchPatterns, addFilesUntilLimit));
             }
+            var childsResult = await Task.WhenAll(childTasks.ToArray());
 
-            return true;
+            return childsResult.All(x => x == true);
          }
          catch (Exception) { throw; }
       }
