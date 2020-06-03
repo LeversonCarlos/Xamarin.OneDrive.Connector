@@ -2,8 +2,8 @@ name: Release [alpha]
 
 on:
   push:
-    branches: 
-      - refactoring
+    # branches: 
+    #  - refactoring
   
 jobs:
 
