@@ -60,7 +60,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
          var fullPath = fileDTO.parentReference.path;
          fullPath = System.Uri.UnescapeDataString(fullPath);
          fullPath = fullPath.Replace("/drive/root:", "");
-         return $"{fullPath}/{fileDTO.name}";
+         return $"{fullPath}"; ///{fileDTO.name}
       }
 
    }

@@ -11,13 +11,14 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
       {
          Common.DependencyProvider.Add(() => activity);
          Common.DependencyProvider.Add(() => new LocalDriveService());
-         Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(activity, bundle);
+         Xamarin.Essentials.Platform.Init(activity, bundle);
       }
 
       public static void SetLocalDrivePermissionsResult(this Activity activity,
          int requestCode, string[] permissions, Permission[] grantResults)
       {
-         Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+         Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+         // Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
       }
 
    }
