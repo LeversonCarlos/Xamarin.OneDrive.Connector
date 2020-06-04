@@ -29,11 +29,11 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
 
             await this.SearchFiles(directory, searchPatterns, addFilesUntilLimit);
 
-            return fileList
-               .OrderBy(x => x.Path)
-               .Take(limit)
-               .ToArray();
+            var filesArray = fileList
+               ?.OrderBy(x => x.Path)
+               ?.ToArray();
 
+            return filesArray;
          }
          catch (Exception) { throw; }
       }
