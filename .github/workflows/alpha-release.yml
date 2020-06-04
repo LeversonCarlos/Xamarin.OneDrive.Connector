@@ -19,10 +19,10 @@ jobs:
       - name: Setup MsBuild
         uses: microsoft/setup-msbuild@v1
         
-      # - name: Dump GitHub context
-      #   env:
-      #     GITHUB_CONTEXT: ${{ toJson(github) }}
-      #   run: echo "$GITHUB_CONTEXT"          
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"          
                     
       - name: Build and Pack the Common Interfaces
         run: msbuild ./sources/CloudDrive.Connector.Common -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /p:SuffixVersion=-alpha /t:pack 
