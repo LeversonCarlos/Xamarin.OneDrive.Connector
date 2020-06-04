@@ -27,7 +27,7 @@ jobs:
       - name: Define release type
         id: release_type
         run: |
-          if ($REF == 'refs/heads/master') {
+          if ($REF -eq 'refs/heads/master') {
               echo "::set-output name=suffixVersion::''"
           }
           else {
