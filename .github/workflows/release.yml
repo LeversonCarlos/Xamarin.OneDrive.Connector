@@ -1,10 +1,12 @@
-name: Release
+name: Release [alpha]
 
 on:
   push:
-    branches: [ master ]
+    # branches: 
+    #  - refactoring
   
 jobs:
+
   build:
     name: Build Packages
     runs-on: windows-latest
@@ -21,33 +23,42 @@ jobs:
       #   env:
       #     GITHUB_CONTEXT: ${{ toJson(github) }}
       #   run: echo "$GITHUB_CONTEXT"          
+
+      - name: Define release type
+        id: release_type
+        run: |
+          if ($REF -eq 'refs/heads/master') {
+              echo "::set-output name=suffixVersion::''"
+          }
+          else {
+              echo "::set-output name=suffixVersion::'-alpha'"
+          }
+        env:
+          REF: ${{ github.ref }}        
                     
-      - name: Build and Pack the Connector
-        run: msbuild ./srcs/Xamarin.OneDrive.Connector -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /t:pack 
-          
-      - name: Store the Connector Artifact
+      - name: Build and Pack the Common Interfaces
+        run: msbuild ./sources/CloudDrive.Connector.Common -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /p:SuffixVersion=${{ steps.release_type.outputs.suffixVersion }} /t:pack 
+      - name: Store the Common Interfaces
         uses: actions/upload-artifact@v1.0.0
         with:
-          name: connector-artifact
-          path: ./srcs/Xamarin.OneDrive.Connector/bin/Release 
+          name: common-artifact
+          path: ./sources/CloudDrive.Connector.Common/bin/Release 
 
-      - name: Build and Pack the Profiles Plugin
-        run: msbuild ./srcs/Xamarin.OneDrive.Connector.Profile -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /t:pack 
-          
-      - name: Store the Profiles Artifact
+      - name: Build and Pack the OneDrive Connector
+        run: msbuild ./sources/CloudDrive.Connector.OneDrive -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /p:SuffixVersion=${{ steps.release_type.outputs.suffixVersion }} /t:pack 
+      - name: Store the OneDrive Connector
         uses: actions/upload-artifact@v1.0.0
         with:
-          name: profiles-artifact
-          path: ./srcs/Xamarin.OneDrive.Connector.Profile/bin/Release 
+          name: onedrive-artifact
+          path: ./sources/CloudDrive.Connector.OneDrive/bin/Release 
 
-      - name: Build and Pack the Files Plugin
-        run: msbuild ./srcs/Xamarin.OneDrive.Connector.Files -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /t:pack 
-          
-      - name: Store the Files Artifact
+      - name: Build and Pack the LocalDrive Connector
+        run: msbuild ./sources/CloudDrive.Connector.LocalDrive -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /p:SuffixVersion=${{ steps.release_type.outputs.suffixVersion }} /t:pack 
+      - name: Store the LocalDrive Connector
         uses: actions/upload-artifact@v1.0.0
         with:
-          name: files-artifact
-          path: ./srcs/Xamarin.OneDrive.Connector.Files/bin/Release 
+          name: localdrive-artifact
+          path: ./sources/CloudDrive.Connector.LocalDrive/bin/Release 
           
   deploy: 
     needs: [build]
@@ -61,26 +72,23 @@ jobs:
         with:
           dotnet-version: 3.1.101
               
-      - name: Retrieve Connector Artifacts
+      - name: Retrieve the Common Artifacts
         uses: actions/download-artifact@v1.0.0
         with:
-          name: connector-artifact
-        
-      - name: Publish Connector Artifact to NuGet
-        run: dotnet nuget push connector-artifact/*.nupkg --api-key ${{ secrets.NUGET_TOKEN_FOR_GITHUB }} --source https://nuget.org --skip-duplicate --no-symbols true 
+          name: common-artifact
+      - name: Publish Common Artifact to NuGet
+        run: dotnet nuget push common-artifact/*.nupkg --api-key ${{ secrets.NUGET_TOKEN_FOR_GITHUB }} --source https://nuget.org --skip-duplicate --no-symbols true 
 
-      - name: Retrieve Profiles Artifacts
+      - name: Retrieve the OneDrive Artifacts
         uses: actions/download-artifact@v1.0.0
         with:
-          name: profiles-artifact
-        
-      - name: Publish Connector Profiles to NuGet
-        run: dotnet nuget push profiles-artifact/*.nupkg --api-key ${{ secrets.NUGET_TOKEN_FOR_GITHUB }} --source https://nuget.org --skip-duplicate --no-symbols true 
+          name: onedrive-artifact
+      - name: Publish OneDrive Artifact to NuGet
+        run: dotnet nuget push onedrive-artifact/*.nupkg --api-key ${{ secrets.NUGET_TOKEN_FOR_GITHUB }} --source https://nuget.org --skip-duplicate --no-symbols true 
 
-      - name: Retrieve Files Artifacts
+      - name: Retrieve the LocalDrive Artifacts
         uses: actions/download-artifact@v1.0.0
         with:
-          name: files-artifact
-        
-      - name: Publish Connector Files to NuGet
-        run: dotnet nuget push files-artifact/*.nupkg --api-key ${{ secrets.NUGET_TOKEN_FOR_GITHUB }} --source https://nuget.org --skip-duplicate --no-symbols true 
+          name: localdrive-artifact
+      - name: Publish the LocalDrive Artifacts to NuGet
+        run: dotnet nuget push localdrive-artifact/*.nupkg --api-key ${{ secrets.NUGET_TOKEN_FOR_GITHUB }} --source https://nuget.org --skip-duplicate --no-symbols true 
