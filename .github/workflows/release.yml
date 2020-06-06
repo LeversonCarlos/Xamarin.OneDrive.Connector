@@ -2,7 +2,7 @@ name: Release
 
 on:
   push:
-    # branches: [ master, refactoring, dev ]
+    branches: [ master, refactoring, dev ]
   
 jobs:
 
