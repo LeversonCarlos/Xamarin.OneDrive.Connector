@@ -12,7 +12,12 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
          try
          {
             if (!await this.CheckConnectionAsync()) { return null; }
-            return new FileStream(fileID, FileMode.Open, FileAccess.Read);
+            var fileStream = System.IO.File.OpenRead(fileID);
+            var memoryStream = new MemoryStream();
+            await fileStream.CopyToAsync(memoryStream);
+            await memoryStream.FlushAsync();
+            memoryStream.Position = 0;
+            return memoryStream;
          }
          catch (Exception ex) { throw new Exception($"Error while downloading file [{fileID}] with localDrive service", ex); }
       }

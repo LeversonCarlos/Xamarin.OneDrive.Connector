@@ -1546,7 +1546,6 @@ namespace Xamarin.CloudDrive.Connector.Example.Droid
 			global::Xamarin.CloudDrive.Connector.LocalDrive.Resource.Style.CardView_Dark = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Style.CardView_Dark;
 			global::Xamarin.CloudDrive.Connector.LocalDrive.Resource.Style.CardView_Light = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Style.CardView_Light;
 			global::Xamarin.CloudDrive.Connector.LocalDrive.Resource.Style.collectionViewStyle = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Style.collectionViewStyle;
-			global::Xamarin.CloudDrive.Connector.LocalDrive.Resource.Style.NestedScrollBarStyle = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Style.NestedScrollBarStyle;
 			global::Xamarin.CloudDrive.Connector.LocalDrive.Resource.Style.Platform_AppCompat = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Style.Platform_AppCompat;
 			global::Xamarin.CloudDrive.Connector.LocalDrive.Resource.Style.Platform_AppCompat_Light = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Style.Platform_AppCompat_Light;
 			global::Xamarin.CloudDrive.Connector.LocalDrive.Resource.Style.Platform_MaterialComponents = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Style.Platform_MaterialComponents;
@@ -2601,6 +2600,7 @@ namespace Xamarin.CloudDrive.Connector.Example.Droid
 			global::Xamarin.CloudDrive.Connector.LocalDrive.Resource.Styleable.View_paddingEnd = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Styleable.View_paddingEnd;
 			global::Xamarin.CloudDrive.Connector.LocalDrive.Resource.Styleable.View_paddingStart = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Styleable.View_paddingStart;
 			global::Xamarin.CloudDrive.Connector.LocalDrive.Resource.Styleable.View_theme = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Styleable.View_theme;
+			global::Xamarin.CloudDrive.Connector.LocalDrive.Resource.Xml.xamarin_essentials_fileprovider_file_paths = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Xml.xamarin_essentials_fileprovider_file_paths;
 			global::Xamarin.CloudDrive.Connector.OneDrive.Resource.Animation.abc_fade_in = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Animation.abc_fade_in;
 			global::Xamarin.CloudDrive.Connector.OneDrive.Resource.Animation.abc_fade_out = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Animation.abc_fade_out;
 			global::Xamarin.CloudDrive.Connector.OneDrive.Resource.Animation.abc_grow_fade_in_from_bottom = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Animation.abc_grow_fade_in_from_bottom;
@@ -4122,7 +4122,6 @@ namespace Xamarin.CloudDrive.Connector.Example.Droid
 			global::Xamarin.CloudDrive.Connector.OneDrive.Resource.Style.CardView_Dark = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Style.CardView_Dark;
 			global::Xamarin.CloudDrive.Connector.OneDrive.Resource.Style.CardView_Light = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Style.CardView_Light;
 			global::Xamarin.CloudDrive.Connector.OneDrive.Resource.Style.collectionViewStyle = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Style.collectionViewStyle;
-			global::Xamarin.CloudDrive.Connector.OneDrive.Resource.Style.NestedScrollBarStyle = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Style.NestedScrollBarStyle;
 			global::Xamarin.CloudDrive.Connector.OneDrive.Resource.Style.Platform_AppCompat = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Style.Platform_AppCompat;
 			global::Xamarin.CloudDrive.Connector.OneDrive.Resource.Style.Platform_AppCompat_Light = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Style.Platform_AppCompat_Light;
 			global::Xamarin.CloudDrive.Connector.OneDrive.Resource.Style.Platform_MaterialComponents = global::Xamarin.CloudDrive.Connector.Example.Droid.Resource.Style.Platform_MaterialComponents;
