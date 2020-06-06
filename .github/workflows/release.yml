@@ -89,5 +89,5 @@ jobs:
         uses: actions/download-artifact@v1.0.0
         with:
           name: localdrive-artifact
-      - name: Publish the LocalDrive Artifacts to NuGet
+      - name: Publish LocalDrive Artifacts to NuGet
         run: dotnet nuget push localdrive-artifact/*.nupkg --api-key ${{ secrets.NUGET_TOKEN_FOR_GITHUB }} --source https://nuget.org --skip-duplicate --no-symbols true 
