@@ -13,12 +13,11 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
          try
          {
             if (!await this.ConnectAsync()) { return null; }
-            using (var fileStream = new FileStream(fileID, FileMode.OpenOrCreate, FileAccess.Write))
-            {
-               await fileStream.WriteAsync(fileContent, 0, fileContent.Length);
-               await fileStream.FlushAsync();
-               fileStream.Close();
-            }
+
+            if (File.Exists(fileID)) { File.Delete(fileID); }
+            await Task.Run(() => File.WriteAllBytes(fileID, fileContent));
+
+            if (!File.Exists(fileID)) { return null; }
             return await this.GetDetails(fileID);
          }
          catch (Exception ex) { throw new Exception($"Error while uploading file [{fileID}] with localDrive service", ex); }
