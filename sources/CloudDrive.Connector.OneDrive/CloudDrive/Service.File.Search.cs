@@ -30,6 +30,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
             await this.SearchFiles(directory, searchPatterns, addFilesUntilLimit);
 
             var filesArray = fileList
+               ?.Where(x => x != null)
                ?.Where(x => !string.IsNullOrEmpty(x.Path))
                ?.OrderBy(x => x.Path)
                ?.ToArray();
