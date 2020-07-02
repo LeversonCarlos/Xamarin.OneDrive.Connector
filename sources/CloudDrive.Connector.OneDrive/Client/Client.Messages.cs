@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector.OneDrive
 {
-   partial class Client
+   partial class OneDriveClient
    {
 
       public async Task<T> GetAsync<T>(string httpPath)

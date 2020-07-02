@@ -17,7 +17,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
             var redirectUri = $"msal{clientID}://auth";
             var identity = Token.CreateIdentity(clientID, redirectUri, () => activity);
             var token = new Token(identity, scopes);
-            var client = new Client(token);
+            var client = new OneDriveClient(token);
             return new OneDriveService(client);
          });
       }
