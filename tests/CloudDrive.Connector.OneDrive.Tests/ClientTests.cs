@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
+namespace Xamarin.CloudDrive.Connector.OneDriveTests
 {
    public class Client
    {
