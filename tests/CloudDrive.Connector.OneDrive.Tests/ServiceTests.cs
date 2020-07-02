@@ -9,7 +9,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       [Fact]
       public void ConstructorArgumentsMustBeSet()
       {
-         var creator = new Action(() => new OneDrive.OneDriveService(null));
+         var creator = new Action(() => new OneDriveService(null));
 
          var expected = "The client argument for the OneDrive service must be set";
          var value = Assert.Throws<ArgumentException>(creator);
