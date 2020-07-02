@@ -3,7 +3,6 @@ using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
-using Xamarin.CloudDrive.Connector.LocalDrive;
 using Xamarin.CloudDrive.Connector.OneDrive;
 
 namespace Xamarin.CloudDrive.Connector.Example.Droid
@@ -20,16 +19,15 @@ namespace Xamarin.CloudDrive.Connector.Example.Droid
          base.OnCreate(savedInstanceState);
 
          Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+         Xamarin.CloudDrive.Connector.LocalDrive.Init(this, savedInstanceState);
          global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
          this.AddOneDriveConnector("{YOUR_MICROSOFT_APPLICATION_ID}", "User.Read", "Files.ReadWrite");
-         this.AddLocalDriveConnector(savedInstanceState);
          LoadApplication(new App());
       }
 
       public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
       {
          Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-         this.SetLocalDrivePermissionsResult(requestCode, permissions, grantResults);
          base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
       }
 

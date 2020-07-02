@@ -1,14 +1,14 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Xamarin.CloudDrive.Connector.LocalDrive
+namespace Xamarin.CloudDrive.Connector
 {
-   partial class Startup
+   public static class LocalDriveExtention
    {
 
       public static IServiceCollection AddLocalDriveConnector(this IServiceCollection serviceCollection)
       {
          return serviceCollection
-            .AddScoped<LocalDriveService>();
+            .AddSingleton<LocalDriveService>();
       }
 
    }
