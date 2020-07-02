@@ -2,7 +2,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Xamarin.CloudDrive.Connector.OneDrive
+namespace Xamarin.CloudDrive.Connector
 {
    partial class OneDriveClient
    {

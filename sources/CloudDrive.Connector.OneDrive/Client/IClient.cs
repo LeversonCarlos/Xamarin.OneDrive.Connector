@@ -1,9 +1,9 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Xamarin.CloudDrive.Connector.OneDrive
+namespace Xamarin.CloudDrive.Connector
 {
-   public interface IClient
+   public interface IOneDriveClient
    {
 
       Task<bool> ConnectAsync();
