@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Xamarin.CloudDrive.Connector.Common
+namespace Xamarin.CloudDrive.Connector
 {
    public class FileVM 
    {
