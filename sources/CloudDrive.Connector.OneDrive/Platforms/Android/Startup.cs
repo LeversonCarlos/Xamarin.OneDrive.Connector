@@ -11,8 +11,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
       public static void AddOneDriveConnector(this Activity activity,
          string clientID, params string[] scopes)
       {
-         Common.DependencyProvider.Add(() => activity);
-         Common.DependencyProvider.Add(() =>
+         ImplementationProvider.Add(() =>
          {
             if (string.IsNullOrEmpty(clientID) || clientID == "{YOUR_MICROSOFT_APPLICATION_ID}") { throw new ArgumentNullException("The application ID argument for the onedrive client must be set"); }
             var redirectUri = $"msal{clientID}://auth";

@@ -83,9 +83,9 @@ namespace Xamarin.CloudDrive.Connector.Example
          switch (this.SelectedCloundDrive)
          {
             case "LocalDrive":
-               this.DriveService = Common.DependencyProvider.Get<LocalDrive.LocalDriveService>(); break;
+               this.DriveService = ImplementationProvider.Get<LocalDrive.LocalDriveService>(); break;
             case "OneDrive":
-               this.DriveService = Common.DependencyProvider.Get<OneDrive.OneDriveService>(); break;
+               this.DriveService = ImplementationProvider.Get<OneDrive.OneDriveService>(); break;
             default:
                await this.DisplayAlert("Select the drive implementation first"); return;
          }

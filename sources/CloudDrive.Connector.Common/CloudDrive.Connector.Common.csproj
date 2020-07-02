@@ -14,7 +14,7 @@
       <RootNamespace>Xamarin.CloudDrive.Connector.Common</RootNamespace>  
       <PackageId>Xamarin.CloudDrive.Connector.Common</PackageId>
       <Product>Xamarin.CloudDrive.Connector</Product>
-      <Title>CloudDrive Connector for LocalDrive on Xamarin</Title>
+      <Title>CloudDrive Common Libraries on Xamarin</Title>
       <Description>A base interface for the Xamarin.CloudDrive.Connector implementations</Description>
       <Authors>Leverson Carlos;lcjohnny</Authors>
       <Company>Leverson Carlos</Company>

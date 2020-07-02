@@ -9,8 +9,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
 
       public static void AddLocalDriveConnector(this Activity activity, Bundle bundle)
       {
-         Common.DependencyProvider.Add(() => activity);
-         Common.DependencyProvider.Add(() => new LocalDriveService());
+         ImplementationProvider.Add(() => new LocalDriveService());
          Xamarin.Essentials.Platform.Init(activity, bundle);
       }
 
