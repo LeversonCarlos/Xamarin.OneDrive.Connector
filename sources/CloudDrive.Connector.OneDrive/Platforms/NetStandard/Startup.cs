@@ -9,7 +9,7 @@ namespace Xamarin.CloudDrive.Connector
          string clientID, string redirectUri, string clientSecret, params string[] scopes)
       {
          return serviceCollection
-            .AddScoped<OneDriveService>(serviceProvier =>
+            .AddSingleton<OneDriveService>(serviceProvier =>
             {
                var identity = OneDriveToken.CreateIdentity(clientID, redirectUri, clientSecret);
                var token = new OneDriveToken(identity, scopes);
