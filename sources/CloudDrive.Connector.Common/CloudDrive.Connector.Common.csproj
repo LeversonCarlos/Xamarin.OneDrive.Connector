@@ -11,7 +11,7 @@
    </PropertyGroup>
 
    <PropertyGroup>
-      <RootNamespace>Xamarin.CloudDrive.Connector</RootNamespace>  
+      <RootNamespace>Xamarin.CloudDrive.Connector.Common</RootNamespace>  
       <PackageId>Xamarin.CloudDrive.Connector.Common</PackageId>
       <Product>Xamarin.CloudDrive.Connector</Product>
       <Title>CloudDrive Common Libraries on Xamarin</Title>

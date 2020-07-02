@@ -16,7 +16,7 @@
    </PropertyGroup>
 
    <PropertyGroup>
-      <RootNamespace>Xamarin.CloudDrive.Connector</RootNamespace>
+      <RootNamespace>Xamarin.CloudDrive.Connector.LocalDrive</RootNamespace>
       <PackageId>Xamarin.CloudDrive.Connector.LocalDrive</PackageId>
       <Product>Xamarin.CloudDrive.Connector</Product>
       <Title>CloudDrive Connector for LocalDrive on Xamarin</Title>
