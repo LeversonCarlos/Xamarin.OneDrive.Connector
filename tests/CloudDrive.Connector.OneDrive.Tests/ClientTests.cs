@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
+namespace Xamarin.CloudDrive.Connector.OneDriveTests
 {
    public class Client
    {
@@ -9,7 +9,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
       [Fact]
       public void ConstructorArgumentsMustBeSet()
       {
-         var creator = new Action(() => new OneDrive.Client(null));
+         var creator = new Action(() => new OneDriveClient(null));
 
          var expected = "The token argument for the http client must be set";
          var value = Assert.Throws<ArgumentException>(creator);
@@ -20,7 +20,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
       [Fact]
       public void BaseAddressMustBePointingToCorrectUri()
       {
-         var client = new OneDrive.Client(TokenBuilder.Create().Builder());
+         var client = new OneDriveClient(TokenBuilder.Create().Builder());
 
          var expected = "https://graph.microsoft.com/v1.0/";
          var value = client.BaseAddress.AbsoluteUri;
@@ -35,7 +35,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
             .Create()
             .WithConnectionState(false)
             .Builder();
-         var client = new OneDrive.Client(token);
+         var client = new OneDriveClient(token);
 
          var expected = false;
          var value = await client.CheckConnectionAsync();
@@ -50,7 +50,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
             .Create()
             .WithConnectExecution(true)
             .Builder();
-         var client = new OneDrive.Client(token);
+         var client = new OneDriveClient(token);
 
          var expected = true;
          var value = await client.ConnectAsync();

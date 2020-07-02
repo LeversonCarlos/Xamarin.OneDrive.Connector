@@ -1,8 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using Xamarin.CloudDrive.Connector.Common;
 
-namespace Xamarin.CloudDrive.Connector.LocalDrive
+namespace Xamarin.CloudDrive.Connector
 {
    partial class LocalDriveService
    {

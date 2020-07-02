@@ -1,6 +1,4 @@
-using Xamarin.CloudDrive.Connector.Common;
-
-namespace Xamarin.CloudDrive.Connector.LocalDrive
+namespace Xamarin.CloudDrive.Connector
 {
    public partial class LocalDriveService : ICloudDriveService
    {

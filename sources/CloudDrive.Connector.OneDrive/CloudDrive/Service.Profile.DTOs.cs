@@ -1,4 +1,4 @@
-namespace Xamarin.CloudDrive.Connector.OneDrive
+namespace Xamarin.CloudDrive.Connector
 {
    namespace DTOs
    {

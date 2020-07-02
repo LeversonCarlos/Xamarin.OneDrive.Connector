@@ -1,9 +1,8 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Xamarin.CloudDrive.Connector.Common;
 
-namespace Xamarin.CloudDrive.Connector.LocalDrive
+namespace Xamarin.CloudDrive.Connector
 {
    partial class LocalDriveService
    {
@@ -14,7 +13,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDrive
          {
             if (!await this.CheckConnectionAsync()) { return null; }
 
-            var driveList = Storages.GetStorages()
+            var driveList = Helpers.StorageHelper.GetStorages()
                .Select(x => new DirectoryVM
                {
                   ID = x,

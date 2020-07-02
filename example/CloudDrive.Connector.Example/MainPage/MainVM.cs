@@ -8,7 +8,7 @@ namespace Xamarin.CloudDrive.Connector.Example
 {
    public class MainVM : ObservableObject
    {
-      Common.ICloudDriveService DriveService;
+      ICloudDriveService DriveService;
 
       public MainVM()
       {
@@ -83,9 +83,9 @@ namespace Xamarin.CloudDrive.Connector.Example
          switch (this.SelectedCloundDrive)
          {
             case "LocalDrive":
-               this.DriveService = Common.DependencyProvider.Get<LocalDrive.LocalDriveService>(); break;
+               this.DriveService = ImplementationProvider.Get<LocalDriveService>(); break;
             case "OneDrive":
-               this.DriveService = Common.DependencyProvider.Get<OneDrive.OneDriveService>(); break;
+               this.DriveService = ImplementationProvider.Get<OneDriveService>(); break;
             default:
                await this.DisplayAlert("Select the drive implementation first"); return;
          }
@@ -123,7 +123,7 @@ namespace Xamarin.CloudDrive.Connector.Example
             this.CurrentItem = await Selector.GetFolder(this.DriveService);
             if (this.CurrentItem == null) return;
 
-            var isImage = this.CurrentItem.Path.ToLower().EndsWith(".jpg") || this.CurrentItem.Path.ToLower().EndsWith(".jpeg") || this.CurrentItem.Path.ToLower().EndsWith(".png");
+            var isImage = this.CurrentItem.Name.ToLower().EndsWith(".jpg") || this.CurrentItem.Name.ToLower().EndsWith(".jpeg") || this.CurrentItem.Name.ToLower().EndsWith(".png");
             if (!isImage) { await this.DisplayAlert("Please, select an image file"); return; }
 
             var imageStream = await this.DriveService.Download(this.CurrentItem.ID);

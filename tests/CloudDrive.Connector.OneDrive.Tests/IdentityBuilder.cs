@@ -1,7 +1,7 @@
 using Microsoft.Identity.Client;
 using Moq;
 
-namespace Xamarin.CloudDrive.Connector.OneDrive.Tests
+namespace Xamarin.CloudDrive.Connector.OneDriveTests
 {
    internal class IdentityBuilder
    {

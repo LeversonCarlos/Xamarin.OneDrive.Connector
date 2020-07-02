@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Xamarin.CloudDrive.Connector.Common
+namespace Xamarin.CloudDrive.Connector
 {
    partial interface ICloudDriveService
    {

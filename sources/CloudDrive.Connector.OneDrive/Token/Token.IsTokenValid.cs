@@ -1,8 +1,8 @@
 using System;
 
-namespace Xamarin.CloudDrive.Connector.OneDrive
+namespace Xamarin.CloudDrive.Connector
 {
-   partial class Token
+   partial class OneDriveToken
    {
 
       bool IsTokenValid()

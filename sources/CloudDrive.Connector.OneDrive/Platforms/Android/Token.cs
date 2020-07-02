@@ -3,16 +3,16 @@ using Microsoft.Identity.Client;
 using System;
 using System.Threading.Tasks;
 
-namespace Xamarin.CloudDrive.Connector.OneDrive
+namespace Xamarin.CloudDrive.Connector
 {
-   partial class Token
+   partial class OneDriveToken
    {
 
       internal static IClientApplicationBase CreateIdentity(string clientID, string redirectUri, Func<Activity> parentWindow)
       {
          return PublicClientApplicationBuilder
             .Create(clientID)
-            .WithAuthority(Token.GetAuthorityUri())
+            .WithAuthority(OneDriveToken.GetAuthorityUri())
             .WithRedirectUri(redirectUri)
             .WithParentActivityOrWindow(parentWindow)
             .Build();

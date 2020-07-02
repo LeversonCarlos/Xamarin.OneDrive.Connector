@@ -2,15 +2,15 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Xamarin.CloudDrive.Connector.OneDrive
+namespace Xamarin.CloudDrive.Connector
 {
-   public partial class Client : HttpClient, IClient
+   public partial class OneDriveClient : HttpClient, IOneDriveClient
    {
 
       const string BaseURL = "https://graph.microsoft.com/v1.0/";
-      readonly IToken Token;
+      readonly IOneDriveToken Token;
 
-      public Client(IToken token) : base(new ClientHandler(() => token))
+      public OneDriveClient(IOneDriveToken token) : base(new OneDriveClientHandler(() => token))
       {
          if (token == null) throw new ArgumentException("The token argument for the http client must be set");
          this.Token = token;

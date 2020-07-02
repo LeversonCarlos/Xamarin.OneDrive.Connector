@@ -1,8 +1,8 @@
 using Microsoft.Identity.Client;
 
-namespace Xamarin.CloudDrive.Connector.OneDrive
+namespace Xamarin.CloudDrive.Connector
 {
-   partial class Token
+   partial class OneDriveToken
    {
 
       AuthenticationResult AuthResult { get; set; }

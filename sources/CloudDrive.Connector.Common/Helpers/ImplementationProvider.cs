@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Xamarin.CloudDrive.Connector.Common
+namespace Xamarin.CloudDrive.Connector
 {
-   public class DependencyProvider
+   public class ImplementationProvider
    {
 
       static Dictionary<Type, object> Implementations = new Dictionary<Type, object>();

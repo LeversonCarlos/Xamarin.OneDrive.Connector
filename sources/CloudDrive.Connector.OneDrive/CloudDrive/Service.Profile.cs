@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Xamarin.CloudDrive.Connector.Common;
 
-namespace Xamarin.CloudDrive.Connector.OneDrive
+namespace Xamarin.CloudDrive.Connector
 {
    partial class OneDriveService
    {
@@ -34,8 +33,8 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
             var message = await this.Client.GetAsync("me/photo/$value");
             if (!message.IsSuccessStatusCode)
             { throw new Exception(await message.Content.ReadAsStringAsync()); }
-            var profilePicure = await message.Content.ReadAsByteArrayAsync();
-            return profilePicure;
+            var profilePicture = await message.Content.ReadAsByteArrayAsync();
+            return profilePicture;
          }
          catch (Exception) { throw; }
       }

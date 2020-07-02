@@ -2,7 +2,7 @@ using Xamarin.Essentials;
 using System;
 using System.Threading.Tasks;
 
-namespace Xamarin.CloudDrive.Connector.LocalDrive
+namespace Xamarin.CloudDrive.Connector.Helpers
 {
    internal class PermissionHelper
    {

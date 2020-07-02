@@ -1,14 +1,13 @@
 using System;
-using Xamarin.CloudDrive.Connector.Common;
 
-namespace Xamarin.CloudDrive.Connector.OneDrive
+namespace Xamarin.CloudDrive.Connector
 {
    public partial class OneDriveService : ICloudDriveService
    {
 
-      readonly IClient Client;
+      readonly IOneDriveClient Client;
 
-      public OneDriveService(IClient client)
+      public OneDriveService(IOneDriveClient client)
       {
          if (client == null) throw new ArgumentException("The client argument for the OneDrive service must be set");
          this.Client = client;
