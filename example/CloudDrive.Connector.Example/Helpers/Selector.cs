@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Xamarin.CloudDrive.Connector.Common;
 using Xamarin.CloudDrive.Connector.Example.FolderDialog;
 
 namespace Xamarin.CloudDrive.Connector.Example.Helpers
@@ -9,9 +8,9 @@ namespace Xamarin.CloudDrive.Connector.Example.Helpers
 
    public class Selector
    {
-      static Common.ICloudDriveService DriveService { get; set; }
+      static ICloudDriveService DriveService { get; set; }
 
-      public static async Task<SelectorItem> GetFolder(Common.ICloudDriveService driveService)
+      public static async Task<SelectorItem> GetFolder(ICloudDriveService driveService)
       {
          try
          {

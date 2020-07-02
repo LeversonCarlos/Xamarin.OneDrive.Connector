@@ -8,7 +8,7 @@ namespace Xamarin.CloudDrive.Connector.Example
 {
    public class MainVM : ObservableObject
    {
-      Common.ICloudDriveService DriveService;
+      ICloudDriveService DriveService;
 
       public MainVM()
       {
@@ -83,9 +83,9 @@ namespace Xamarin.CloudDrive.Connector.Example
          switch (this.SelectedCloundDrive)
          {
             case "LocalDrive":
-               this.DriveService = ImplementationProvider.Get<LocalDrive.LocalDriveService>(); break;
+               this.DriveService = ImplementationProvider.Get<LocalDriveService>(); break;
             case "OneDrive":
-               this.DriveService = ImplementationProvider.Get<OneDrive.OneDriveService>(); break;
+               this.DriveService = ImplementationProvider.Get<OneDriveService>(); break;
             default:
                await this.DisplayAlert("Select the drive implementation first"); return;
          }
