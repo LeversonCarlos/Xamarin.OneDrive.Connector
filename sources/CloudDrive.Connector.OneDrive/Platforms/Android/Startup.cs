@@ -5,7 +5,7 @@ using System;
 
 namespace Xamarin.CloudDrive.Connector
 {
-   public class OneDrive
+   partial class OneDriveService
    {
 
       public static void Init(Activity activity, string clientID, string redirectUri, params string[] scopes)

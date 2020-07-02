@@ -3,7 +3,7 @@ using Android.OS;
 
 namespace Xamarin.CloudDrive.Connector
 {
-   public class LocalDrive
+   partial class LocalDriveService
    {
 
       public static void Init(Activity activity, Bundle bundle)
