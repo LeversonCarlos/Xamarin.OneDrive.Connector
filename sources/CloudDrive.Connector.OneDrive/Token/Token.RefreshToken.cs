@@ -2,9 +2,9 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Xamarin.CloudDrive.Connector.OneDrive
+namespace Xamarin.CloudDrive.Connector
 {
-   partial class Token
+   partial class OneDriveToken
    {
 
       async Task<bool> RefreshTokenAsync()
