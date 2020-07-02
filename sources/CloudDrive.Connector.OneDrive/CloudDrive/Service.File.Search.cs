@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Xamarin.CloudDrive.Connector.Common;
 
-namespace Xamarin.CloudDrive.Connector.OneDrive
+namespace Xamarin.CloudDrive.Connector
 {
    partial class OneDriveService
    {
@@ -45,7 +44,7 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
          try
          {
 
-            // SERACH FILE ON FOLDER
+            // SEARCH FILE ON FOLDER
             var fileList = (await this.GetFiles(directory))?.ToList();
             fileList.RemoveAll(x => !searchPatterns.Any(ext => x.Name.EndsWith(ext, StringComparison.InvariantCultureIgnoreCase)));
             if (!addFilesUntilLimit(fileList.ToArray())) { return false; }

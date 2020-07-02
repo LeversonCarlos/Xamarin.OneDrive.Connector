@@ -1,8 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Xamarin.CloudDrive.Connector.OneDrive
+namespace Xamarin.CloudDrive.Connector
 {
-   partial class Startup
+   public static class OneDriveExtention
    {
 
       public static IServiceCollection AddOneDriveConnector(this IServiceCollection serviceCollection,
@@ -11,8 +11,8 @@ namespace Xamarin.CloudDrive.Connector.OneDrive
          return serviceCollection
             .AddScoped<OneDriveService>(serviceProvier =>
             {
-               var identity = Token.CreateIdentity(clientID, redirectUri, clientSecret);
-               var token = new Token(identity, scopes);
+               var identity = OneDriveToken.CreateIdentity(clientID, redirectUri, clientSecret);
+               var token = new OneDriveToken(identity, scopes);
                var client = new OneDriveClient(token);
                return new OneDriveService(client);
             });
