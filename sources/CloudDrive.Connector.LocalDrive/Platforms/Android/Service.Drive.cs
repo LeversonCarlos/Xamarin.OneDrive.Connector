@@ -13,7 +13,7 @@ namespace Xamarin.CloudDrive.Connector
          {
             if (!await this.CheckConnectionAsync()) { return null; }
 
-            var driveList = Storages.GetStorages()
+            var driveList = Helpers.StorageHelper.GetStorages()
                .Select(x => new DirectoryVM
                {
                   ID = x,
