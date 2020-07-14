@@ -7,10 +7,16 @@ namespace Xamarin.CloudDrive.Connector
    {
 
       public Task<FileVM> Upload(string fileID, byte[] content)
-      { return this.UploadContent($"me/drive/items/{fileID}/content", content); }
+      {
+         var IDs = GetIDs(fileID);
+         return this.UploadContent($"drives/{IDs.DriveID}/items/{IDs.ID}/content", content);
+      }
 
       public Task<FileVM> Upload(string folderID, string fileName, byte[] content)
-      { return this.UploadContent($"me/drive/items/{folderID}:/{fileName}:/content", content); }
+      {
+         var IDs = GetIDs(folderID);
+         return this.UploadContent($"drives/{IDs.DriveID}/items/{IDs.ID}:/{fileName}:/content", content);
+      }
 
       private async Task<FileVM> UploadContent(string httpPath, byte[] content)
       {
@@ -34,7 +40,8 @@ namespace Xamarin.CloudDrive.Connector
       {
          try
          {
-            var httpPath = $"me/drive/items/{fileVM.ID}/thumbnails/0/source/content";
+            var IDs = GetIDs(fileVM.ID);
+            var httpPath = $"drives/{IDs.DriveID}/items/{IDs.ID}/thumbnails/0/source/content";
 
             var httpData = new System.Net.Http.StreamContent(image);
             var httpMessage = await this.Client.PutAsync(httpPath, httpData);

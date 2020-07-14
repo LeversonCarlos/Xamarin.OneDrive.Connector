@@ -14,7 +14,8 @@ namespace Xamarin.CloudDrive.Connector
          {
             var folderList = new List<DirectoryVM>();
 
-            var httpPath = $"me/drive/items/{directory.ID}/children";
+            var IDs = GetIDs(directory.ID);
+            var httpPath = $"drives/{IDs.DriveID}/items/{IDs.ID}/children";
             httpPath += "?";
             httpPath += "$filter=folder ne null&";
             httpPath += "$select=id,name,folder,parentReference&";
@@ -23,10 +24,7 @@ namespace Xamarin.CloudDrive.Connector
             // AUXILIARY FUNCTIONS
             var getFullPath = new Func<DTOs.Directory, string>(item =>
             {
-               if (item.parentReference == null || string.IsNullOrEmpty(item.parentReference.path)) { return ""; }
-               var fullPath = item.parentReference.path;
-               fullPath = System.Uri.UnescapeDataString(fullPath);
-               fullPath = fullPath.Replace("/drive/root:", "");
+               var fullPath = GetPath(item?.parentReference?.path);
                return $"{fullPath}/{item.name}";
             });
 

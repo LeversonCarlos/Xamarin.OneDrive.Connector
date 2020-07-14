@@ -11,7 +11,8 @@ namespace Xamarin.CloudDrive.Connector
       {
          try
          {
-            var httpPath = $"me/drive/items/{fileID}/content";
+            var IDs = GetIDs(fileID);
+            var httpPath = $"drives/{IDs.DriveID}/items/{IDs.ID}/content";
 
             var httpMessage = await this.Client.GetAsync(httpPath);
             if (!httpMessage.IsSuccessStatusCode) throw new Exception(await httpMessage.Content.ReadAsStringAsync());
