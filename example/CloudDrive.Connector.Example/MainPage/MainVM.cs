@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.CloudDrive.Connector.Example.Helpers;
 using Xamarin.Forms;
@@ -120,14 +121,46 @@ namespace Xamarin.CloudDrive.Connector.Example
          try
          {
             this.IsBusy = true;
+
+            var isImage = new Func<SelectorItem, bool>(item =>
+              item.Name.ToLower().EndsWith(".jpg") ||
+              item.Name.ToLower().EndsWith(".jpeg") ||
+              item.Name.ToLower().EndsWith(".png"));
+
+            var getImageSource = new Func<SelectorItem, Task<ImageSource>>(async item =>
+            {
+               var imageStream = await this.DriveService.Download(this.CurrentItem.ID);
+               return ImageSource.FromStream(() => imageStream);
+            });
+
             this.CurrentItem = await Selector.GetFolder(this.DriveService);
             if (this.CurrentItem == null) return;
 
-            var isImage = this.CurrentItem.Name.ToLower().EndsWith(".jpg") || this.CurrentItem.Name.ToLower().EndsWith(".jpeg") || this.CurrentItem.Name.ToLower().EndsWith(".png");
-            if (!isImage) { await this.DisplayAlert("Please, select an image file"); return; }
+            if (isImage(this.CurrentItem))
+            {
+               this.CurrentItemImage = await getImageSource(this.CurrentItem);
+               return;
+            }
 
-            var imageStream = await this.DriveService.Download(this.CurrentItem.ID);
-            this.CurrentItemImage = ImageSource.FromStream(() => imageStream);
+            var searchDirectory = new DirectoryVM { ID = this.CurrentItem.ID };
+            var filesList = await this.DriveService.SearchFiles(searchDirectory, "*.jpg", 10000);
+
+            this.CurrentItem = filesList
+               .Select(x => new SelectorItem
+               {
+                  ID = x.ID,
+                  Name = x.Name,
+                  Path = x.Path,
+                  Type = enSelectorItemType.File
+               })
+               .FirstOrDefault();
+            if (this.CurrentItem == null) return;
+
+            if (isImage(this.CurrentItem))
+            {
+               this.CurrentItemImage = await getImageSource(this.CurrentItem);
+               return;
+            }
 
          }
          catch (Exception ex) { await this.DisplayAlert(ex.ToString()); }
