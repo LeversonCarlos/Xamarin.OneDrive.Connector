@@ -43,14 +43,15 @@ namespace Xamarin.CloudDrive.Connector
             if (messageContent == null || messageContent.value == null) return null;
 
             var sharedDrives = messageContent.value
-               .Where(v => !string.IsNullOrEmpty(v.remoteItem?.shared?.owner?.user?.id))
-               .Select(v => new DirectoryVM
+               ?.Where(v => !string.IsNullOrEmpty(v.remoteItem?.shared?.owner?.user?.id))
+               ?.Where(v => v.remoteItem.folder != null)
+               ?.Select(v => new DirectoryVM
                {
                   ID = v.remoteItem.id,
                   Name = $"{v.remoteItem.name}",
                   Path = "/"
                })
-               .ToArray();
+               ?.ToArray();
 
             return sharedDrives;
 
