@@ -22,7 +22,7 @@ namespace Xamarin.CloudDrive.Connector
             }
             return this.IsTokenValid();
          }
-         catch (Exception) { throw; }
+         catch (Exception) { return false; }
       }
 
    }
