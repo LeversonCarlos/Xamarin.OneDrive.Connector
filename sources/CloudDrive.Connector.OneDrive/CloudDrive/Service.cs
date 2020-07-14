@@ -36,9 +36,6 @@ namespace Xamarin.CloudDrive.Connector
          if (splitIndex != -1 && (fullPath.StartsWith($"/drives/") || fullPath.StartsWith($"/drive/")))
             fullPath = fullPath.Substring(splitIndex + 1);
 
-         if (fullPath.StartsWith("/"))
-            fullPath = fullPath.Substring(1);
-
          return fullPath;
       }
 

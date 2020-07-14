@@ -23,6 +23,7 @@ namespace Xamarin.CloudDrive.Connector
       {
          public string id { get; set; }
          public string name { get; set; }
+         public DirectoryDetails folder { get; set; }
          public SharedDriveDetailsShared shared { get; set; }
       }
 
