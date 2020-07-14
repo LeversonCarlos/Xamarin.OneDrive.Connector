@@ -12,7 +12,8 @@ namespace Xamarin.CloudDrive.Connector
          try
          {
 
-            var httpPath = $"me/drive/items/{fileID}";
+            var IDs = GetIDs(fileID);
+            var httpPath = $"drives/{IDs.DriveID}/items/{IDs.ID}";
             httpPath += "?select=id,name,createdDateTime,size,@microsoft.graph.downloadUrl,file,parentReference";
 
             // REQUEST DATA FROM SERVER
@@ -47,19 +48,16 @@ namespace Xamarin.CloudDrive.Connector
          catch (Exception) { throw; }
       }
 
-      private DateTime GetDetails_CreatedDateTime(string createdDateTimeText)
+      DateTime GetDetails_CreatedDateTime(string createdDateTimeText)
       {
          DateTime.TryParse(createdDateTimeText, out DateTime createdDateTime);
          return createdDateTime;
       }
 
-      private string GetDetails_FullPath(DTOs.File fileDTO)
+      string GetDetails_FullPath(DTOs.File fileDTO)
       {
-         if (fileDTO.parentReference == null || string.IsNullOrEmpty(fileDTO.parentReference.path)) { return ""; }
-         var fullPath = fileDTO.parentReference.path;
-         fullPath = System.Uri.UnescapeDataString(fullPath);
-         fullPath = fullPath.Replace("/drive/root:", "");
-         return $"{fullPath}"; ///{fileDTO.name}
+         var fullPath = GetPath(fileDTO?.parentReference?.path);
+         return $"{fullPath}";
       }
 
    }

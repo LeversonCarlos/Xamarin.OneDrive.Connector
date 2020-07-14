@@ -14,7 +14,8 @@ namespace Xamarin.CloudDrive.Connector
          {
             var fileList = new List<FileVM>();
 
-            var httpPath = $"me/drive/items/{directory.ID}/children";
+            var IDs = GetIDs(directory.ID);
+            var httpPath = $"drives/{IDs.DriveID}/items/{IDs.ID}/children";
             httpPath += "?";
             httpPath += "$filter=file ne null&";
             httpPath += "$select=id,name,createdDateTime,size,@microsoft.graph.downloadUrl,file,parentReference&";
