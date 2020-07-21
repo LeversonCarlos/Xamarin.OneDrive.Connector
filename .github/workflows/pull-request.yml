@@ -17,7 +17,6 @@ jobs:
         
       - name: Tests for LocalDrive
         working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
-        run: dotnet test tests/CloudDrive.Connector.LocalDrive.Tests/CloudDrive.Connector.LocalDrive.Tests.csproj 
         run: msbuild -r -p:Configuration=Release -v n /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
   build:
