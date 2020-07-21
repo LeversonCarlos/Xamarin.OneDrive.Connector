@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{33BFDEE9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudDrive.Connector.OneDrive.Tests", "..\tests\CloudDrive.Connector.OneDrive.Tests\CloudDrive.Connector.OneDrive.Tests.csproj", "{381BE8B3-AB32-427C-B307-68B98441849C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudDrive.Connector.LocalDriveTests", "..\tests\CloudDrive.Connector.LocalDriveTests\CloudDrive.Connector.LocalDriveTests.csproj", "{7897E7CA-946E-46BE-ACE1-DF2C70D0DB96}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{381BE8B3-AB32-427C-B307-68B98441849C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{381BE8B3-AB32-427C-B307-68B98441849C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{381BE8B3-AB32-427C-B307-68B98441849C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7897E7CA-946E-46BE-ACE1-DF2C70D0DB96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7897E7CA-946E-46BE-ACE1-DF2C70D0DB96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7897E7CA-946E-46BE-ACE1-DF2C70D0DB96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7897E7CA-946E-46BE-ACE1-DF2C70D0DB96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{93F7E9E8-EC97-40BE-A756-0D62C3BDA76A} = {AC517391-2536-4A35-89FA-52F89A2DE2D2}
 		{1B2A830B-0E73-40CA-9033-17F12F11958D} = {AC517391-2536-4A35-89FA-52F89A2DE2D2}
 		{381BE8B3-AB32-427C-B307-68B98441849C} = {33BFDEE9-BF04-45BF-AAED-70B4ACE6B271}
+		{7897E7CA-946E-46BE-ACE1-DF2C70D0DB96} = {33BFDEE9-BF04-45BF-AAED-70B4ACE6B271}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2F0D7C80-7D3A-4E6F-BDF6-CE97BF71E4FC}
