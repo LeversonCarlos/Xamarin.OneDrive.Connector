@@ -3,6 +3,23 @@ name: Pull Request
 on: [pull_request]
   
 jobs:
+  tests:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Source Repository
+        uses: actions/checkout@v2
+      
+      - name: Setup MsBuild
+        uses: microsoft/setup-msbuild@v1
+        
+      - name: Tests for LocalDrive
+        working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
+        run: dotnet test tests/CloudDrive.Connector.LocalDrive.Tests/CloudDrive.Connector.LocalDrive.Tests.csproj 
+        run: msbuild -r -p:Configuration=Release -v n /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+
   build:
     name: Build Packages
     runs-on: windows-latest
