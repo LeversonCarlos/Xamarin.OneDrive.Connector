@@ -5,10 +5,10 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
 {
    public class ProfileTests
    {
+
       [Fact]
-      public async void Test1()
+      public async void ProfileHasTheSpectedContent()
       {
-         // var service = new LocalDriveService();
          var service = ServiceBuilder.Create().Build();
 
          var expectedID = Environment.CommandLine;
@@ -18,5 +18,6 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
          Assert.Equal(expectedID, value.ID);
          Assert.Equal(expectedDescription, value.Description);
       }
+
    }
 }
