@@ -15,19 +15,19 @@ jobs:
       - name: Setup MsBuild
         uses: microsoft/setup-msbuild@v1
 
-      - name: Build the Common Connector
-        working-directory: 'sources/CloudDrive.Connector.Common/'
-        run: msbuild -r -p:Configuration=Release
+      # - name: Build the Common Connector
+      #   working-directory: 'sources/CloudDrive.Connector.Common/'
+      #   run: msbuild -r -p:Configuration=Release
         
       - name: Build the LocalDrive Connector
         working-directory: 'sources/CloudDrive.Connector.LocalDrive/'
-        run: msbuild -r -p:Configuration=Release
+        run: msbuild -restore -p:Configuration=Release -p:TargetFrameworks=netstandard2.0
         
       - name: Build the LocalDrive Tester
         working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
-        run: msbuild -r -p:Configuration=Release 
+        run: msbuild -restore -p:Configuration=Release -p:TargetFrameworks=netstandard2.0
         
       - name: Run the Tests
         working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
-        run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+        run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
           
