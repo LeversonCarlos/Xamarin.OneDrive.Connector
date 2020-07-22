@@ -19,9 +19,9 @@ jobs:
       #   working-directory: 'sources/CloudDrive.Connector.Common/'
       #   run: msbuild -r -p:Configuration=Release
         
-      - name: Build the LocalDrive Connector
-        working-directory: 'sources/CloudDrive.Connector.LocalDrive/'
-        run: msbuild -restore -p:Configuration=Debug -p:TargetFrameworks=netstandard2.0
+      # - name: Build the LocalDrive Connector
+      #   working-directory: 'sources/CloudDrive.Connector.LocalDrive/'
+      #   run: msbuild -restore -p:Configuration=Debug -p:TargetFrameworks=netstandard2.0
         
       - name: Build the LocalDrive Tester
         working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
