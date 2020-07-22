@@ -25,7 +25,7 @@ jobs:
         
       - name: Build the LocalDrive Tester
         working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
-        run: msbuild -restore -p:Configuration=Debug 
+        run: msbuild -restore -p:Configuration=Debug /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
         
       - name: Run the Tests
         working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
