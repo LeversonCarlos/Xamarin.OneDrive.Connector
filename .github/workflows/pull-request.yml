@@ -32,7 +32,8 @@ jobs:
         run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
       - name: Send report to codecov.io
-        run: bash <(curl -s https://codecov.io/bash)
+        run: |
+          curl -s https://codecov.io/bash | bash
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
           
