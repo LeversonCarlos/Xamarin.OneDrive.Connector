@@ -4,7 +4,7 @@ on: [pull_request]
   
 jobs:
   tests:
-    name: Run Tests
+    name: Test LocalDrive
     runs-on: windows-latest
 
     steps:
@@ -14,34 +14,20 @@ jobs:
       
       - name: Setup MsBuild
         uses: microsoft/setup-msbuild@v1
-        
-      - name: Tests for LocalDrive
-        working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
-        run: msbuild -r -p:Configuration=Release -v n /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
-  build:
-    name: Build Packages
-    runs-on: windows-latest
-
-    steps:
-    
-      - name: Checkout Source Repository
-        uses: actions/checkout@v2
-      
-      - name: Setup MsBuild
-        uses: microsoft/setup-msbuild@v1
-        
-      # - name: Dump GitHub context
-      #   env:
-      #     GITHUB_CONTEXT: ${{ toJson(github) }}
-      #   run: echo "$GITHUB_CONTEXT"          
-                    
       - name: Build the Common Connector
-        run: msbuild ./sources/CloudDrive.Connector.Common -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /p:SuffixVersion=-alpha
-          
-      - name: Build the OneDrive Connector
-        run: msbuild ./sources/CloudDrive.Connector.OneDrive -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /p:SuffixVersion=-alpha
-          
+        working-directory: 'sources/CloudDrive.Connector.Common/'
+        run: msbuild -r -p:Configuration=Release
+        
       - name: Build the LocalDrive Connector
-        run: msbuild ./sources/CloudDrive.Connector.LocalDrive -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /p:SuffixVersion=-alpha
+        working-directory: 'sources/CloudDrive.Connector.LocalDrive/'
+        run: msbuild -r -p:Configuration=Release
+        
+      - name: Build the LocalDrive Tester
+        working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
+        run: msbuild -r -p:Configuration=Release 
+        
+      - name: Run the Tests
+        working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
+        run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
           
