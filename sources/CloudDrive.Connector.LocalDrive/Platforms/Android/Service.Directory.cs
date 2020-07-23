@@ -24,8 +24,7 @@ namespace Xamarin.CloudDrive.Connector
             {
                try
                { return new System.IO.DirectoryInfo(path); }
-               catch (Exception ex)
-               { Console.WriteLine($"Path:{path}{Environment.NewLine}Exception:{ex}"); return null; }
+               catch { return null; }
             });
 
             var folderList = folderQueryResult
