@@ -14,9 +14,9 @@ namespace Xamarin.CloudDrive.Connector
          {
             if (!await CheckConnectionAsync()) return null;
 
-            var folderQueryResult = await GetDirectoryList(directory.ID);
+            var directoryList = await GetDirectoryList(directory.ID);
 
-            var folderList = folderQueryResult
+            var resultList = directoryList
                .Select(x => GetDirectoryInfo(x))
                .Where(x => x != null)
                .Select(x => new DirectoryVM
@@ -28,7 +28,7 @@ namespace Xamarin.CloudDrive.Connector
                })
                .ToArray();
 
-            return folderList;
+            return resultList;
          }
          catch (Exception) { throw; }
       }
