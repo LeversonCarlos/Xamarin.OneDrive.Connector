@@ -351,3 +351,4 @@ MigrationBackup/
 
 # specifics
 appsettings.Development.json
+coverage.opencover.xml

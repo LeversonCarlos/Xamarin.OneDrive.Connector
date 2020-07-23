@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector
 {
-   partial class LocalDriveService 
+   internal class LocalDriveConnection : IConnection
    {
 
       public Task<bool> ConnectAsync() => Task.FromResult(true);
