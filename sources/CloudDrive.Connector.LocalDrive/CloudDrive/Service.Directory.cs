@@ -1,4 +1,6 @@
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector
 {
@@ -11,6 +13,16 @@ namespace Xamarin.CloudDrive.Connector
             return new DirectoryInfo(path);
          else
             return null;
+      }
+
+      internal Task<string[]> GetDirectoryList(string path)
+      {
+         var folderQuery = Directory
+            .EnumerateDirectories(path)
+            .Where(x => !string.IsNullOrEmpty(x))
+            .OrderBy(x => x)
+            .AsQueryable();
+         return Task.FromResult(folderQuery.ToArray());
       }
 
    }

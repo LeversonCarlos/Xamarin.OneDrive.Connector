@@ -12,14 +12,9 @@ namespace Xamarin.CloudDrive.Connector
       {
          try
          {
-            if (!await this.CheckConnectionAsync()) { return null; }
+            if (!await CheckConnectionAsync()) return null;
 
-            var folderQuery = System.IO.Directory
-               .EnumerateDirectories(directory.ID)
-               .Where(x => !string.IsNullOrEmpty(x))
-               .OrderBy(x => x)
-               .AsQueryable();
-            var folderQueryResult = await Task.FromResult(folderQuery.ToList());
+            var folderQueryResult = await GetDirectoryList(directory.ID);
 
             var folderList = folderQueryResult
                .Select(x => GetDirectoryInfo(x))
