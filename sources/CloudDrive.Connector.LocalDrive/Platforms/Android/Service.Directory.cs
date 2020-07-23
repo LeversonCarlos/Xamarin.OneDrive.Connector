@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,15 +21,8 @@ namespace Xamarin.CloudDrive.Connector
                .AsQueryable();
             var folderQueryResult = await Task.FromResult(folderQuery.ToList());
 
-            var getFolder = new Func<string, System.IO.DirectoryInfo>(path =>
-            {
-               try
-               { return new System.IO.DirectoryInfo(path); }
-               catch { return null; }
-            });
-
             var folderList = folderQueryResult
-               .Select(x => getFolder(x))
+               .Select(x => GetDirectoryInfo(x))
                .Where(x => x != null)
                .Select(x => new DirectoryVM
                {
