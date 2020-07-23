@@ -10,10 +10,20 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       {
          var service = new LocalDriveConnection();
 
-         var expected = true;
          var value = await service.ConnectAsync();
 
-         Assert.Equal(expected, value);
+         Assert.True(value);
+      }
+
+      [Fact]
+      public async void DisconnectShouldBeTrue()
+      {
+         var service = new LocalDriveConnection();
+
+         var expected = true;
+         await service.DisconnectAsync();
+
+         Assert.True(expected);
       }
 
       [Fact]
@@ -21,10 +31,9 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       {
          var service = new LocalDriveConnection();
 
-         var expected = true;
          var value = await service.CheckConnectionAsync();
 
-         Assert.Equal(expected, value);
+         Assert.True(value);
       }
 
    }
