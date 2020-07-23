@@ -1,14 +1,14 @@
-using Xamarin.Essentials;
 using System;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
-namespace Xamarin.CloudDrive.Connector.Helpers
+namespace Xamarin.CloudDrive.Connector
 {
-   internal class PermissionHelper
+   internal class LocalDriveConnection : IConnection
    {
 
-      private static bool AlreadyAskedPermissions { get; set; } = false;
-      internal static async Task<bool> StoragePermissionAlert()
+      static bool _AlreadyAskedPermissions { get; set; } = false;
+      static async Task<bool> _StoragePermissionAlert()
       {
          var mainPage = Xamarin.Forms.Application.Current.MainPage;
          var message = "Will need storage permission to browser for files";
@@ -16,17 +16,17 @@ namespace Xamarin.CloudDrive.Connector.Helpers
          return response;
       }
 
-      internal static async Task<bool> HasStoragePermission()
+      public async Task<bool> CheckConnectionAsync()
       {
          try
          {
             var permissionStatus = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
             return (permissionStatus == PermissionStatus.Granted);
          }
-         catch (Exception ex) { Console.WriteLine($"Exception:{ex}"); return false; }
+         catch (Exception) { return false; }
       }
 
-      internal static async Task<bool> AskStoragePermission()
+      public async Task<bool> ConnectAsync()
       {
          try
          {
@@ -35,19 +35,21 @@ namespace Xamarin.CloudDrive.Connector.Helpers
             if (permissionStatus != PermissionStatus.Granted)
             {
 
-               if (AlreadyAskedPermissions)
+               if (_AlreadyAskedPermissions)
                {
-                  if (!await StoragePermissionAlert()) { return false; }
+                  if (!await _StoragePermissionAlert()) { return false; }
                }
 
                permissionStatus = await Permissions.RequestAsync<Permissions.StorageWrite>();
-               AlreadyAskedPermissions = true;
+               _AlreadyAskedPermissions = true;
             }
 
             return (permissionStatus == PermissionStatus.Granted);
          }
-         catch (Exception ex) { Console.WriteLine($"Exception:{ex}"); return false; }
+         catch (Exception) { return false; }
       }
+
+      public Task DisconnectAsync() => Task.CompletedTask;
 
    }
 }
