@@ -1,41 +1,37 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
-namespace Xamarin.CloudDrive.Connector.Helpers
+namespace Xamarin.CloudDrive.Connector
 {
-   internal class StorageHelper
+   internal class LocalDriveStorage : IStorage
    {
 
-      internal static List<string> GetStorages()
+      public Task<string[]> GetStorageList()
       {
-         try
-         {
+         var externalStorages = GetStorageList_FromProcMounts();
+         if (externalStorages == null) { externalStorages = new List<string>(); }
 
-            var externalStorages = GetStoragesFromProcMounts();
-            if (externalStorages == null) { externalStorages = new List<string>(); }
+         externalStorages.Add(global::Android.OS.Environment.ExternalStorageDirectory.AbsolutePath);
 
-            externalStorages.Add(global::Android.OS.Environment.ExternalStorageDirectory.AbsolutePath);
+         externalStorages = externalStorages
+            .GroupBy(x => x)
+            .Select(x => x.Key)
+            .OrderBy(x => x)
+            .ToList();
 
-            externalStorages = externalStorages
-               .GroupBy(x => x)
-               .Select(x => x.Key)
-               .OrderBy(x => x)
-               .ToList();
-
-            return externalStorages;
-         }
-         catch (Exception) { throw; }
+         return Task.FromResult(externalStorages.ToArray());
       }
 
-      private static List<string> GetStoragesFromProcMounts()
+      static List<string> GetStorageList_FromProcMounts()
       {
          try
          {
 
             // ATTEMPTING TO READ '/proc/mounts' TO SEE IF THERE'S AN EXTERNAL SD CARD REFERENCE
             string procMountsContent = System.IO.File.ReadAllText("/proc/mounts");
-            if (string.IsNullOrEmpty(procMountsContent)) { return null; }
+            if (string.IsNullOrEmpty(procMountsContent)) return null;
 
             var procMountsStorages = procMountsContent
                .Split('\n', '\r')
@@ -59,7 +55,7 @@ namespace Xamarin.CloudDrive.Connector.Helpers
 
             return procMountsResult;
          }
-         catch (Exception ex) { Console.WriteLine($"Exception:{ex}"); return null; }
+         catch (Exception) { return null; }
       }
 
    }
