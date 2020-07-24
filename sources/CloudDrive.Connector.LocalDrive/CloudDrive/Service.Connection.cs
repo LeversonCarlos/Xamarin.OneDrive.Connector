@@ -5,7 +5,10 @@ namespace Xamarin.CloudDrive.Connector
    partial class LocalDriveService
    {
 
-      IConnection _Connection { get; } = new LocalDriveConnection();
+      internal LocalDriveService(IConnection connection) =>
+         _Connection = connection;
+
+      IConnection _Connection { get; }
 
       public Task<bool> ConnectAsync() => _Connection.ConnectAsync();
       public Task DisconnectAsync() => _Connection.DisconnectAsync();

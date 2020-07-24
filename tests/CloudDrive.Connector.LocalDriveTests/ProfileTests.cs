@@ -9,7 +9,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       [Fact]
       public async void ProfileHasTheSpectedContent()
       {
-         var service = ServiceBuilder.Create().Build();
+         var service = new LocalDriveService();
 
          var expectedID = Environment.CommandLine;
          var expectedDescription = $"{Environment.UserName} on {Environment.MachineName}";

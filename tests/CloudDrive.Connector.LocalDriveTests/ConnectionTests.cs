@@ -6,31 +6,65 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
    {
 
       [Fact]
-      public async void ConnectShouldBeTrue()
+      public async void Connection_Connect_MustReturnTrue()
       {
-         var service = ConnectionBuilder
-            .Create()
-            .WithConnectValue(true)
-            .Build();
+         var service = new LocalDriveConnection();
 
-         var expected = true;
          var value = await service.ConnectAsync();
 
-         Assert.Equal(expected, value);
+         Assert.True(value);
       }
 
       [Fact]
-      public async void CheckConnectionShouldBeTrue()
+      public async void Service_Connect_MustReturnTrue()
       {
-         var service = ConnectionBuilder
-            .Create()
-            .WithCheckConnectionValue(true)
-            .Build();
+         var service = new LocalDriveService();
+
+         var value = await service.ConnectAsync();
+
+         Assert.True(value);
+      }
+
+      [Fact]
+      public async void Connection_Disconnect_MustExists()
+      {
+         var service = new LocalDriveConnection();
 
          var expected = true;
+         await service.DisconnectAsync();
+
+         Assert.True(expected);
+      }
+
+      [Fact]
+      public async void Service_Disconnect_MustExists()
+      {
+         var service = new LocalDriveService();
+
+         var expected = true;
+         await service.DisconnectAsync();
+
+         Assert.True(expected);
+      }
+
+      [Fact]
+      public async void Connection_CheckConnection_MustReturnTrue()
+      {
+         var service = new LocalDriveConnection();
+
          var value = await service.CheckConnectionAsync();
 
-         Assert.Equal(expected, value);
+         Assert.True(value);
+      }
+
+      [Fact]
+      public async void Service_CheckConnection_MustReturnTrue()
+      {
+         var service = new LocalDriveService();
+
+         var value = await service.CheckConnectionAsync();
+
+         Assert.True(value);
       }
 
    }

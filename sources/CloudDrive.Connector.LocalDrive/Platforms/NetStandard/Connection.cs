@@ -2,6 +2,13 @@ using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector
 {
+
+   partial class LocalDriveService
+   {
+      internal LocalDriveService() =>
+         _Connection = new LocalDriveConnection();
+   }
+
    internal class LocalDriveConnection : IConnection
    {
 
@@ -10,4 +17,5 @@ namespace Xamarin.CloudDrive.Connector
       public Task<bool> CheckConnectionAsync() => Task.FromResult(true);
 
    }
+
 }

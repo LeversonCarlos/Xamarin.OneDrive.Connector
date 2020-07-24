@@ -19,7 +19,7 @@ namespace Xamarin.CloudDrive.Connector.Example.Droid
 
          Xamarin.Essentials.Platform.Init(this, savedInstanceState);
          Xamarin.CloudDrive.Connector.LocalDriveService.Init(this, savedInstanceState);
-         Xamarin.CloudDrive.Connector.OneDriveService.Init(this, "{YOUR_MICROSOFT_APPLICATION_ID}", "msal{YOUR_MICROSOFT_APPLICATION_ID}://auth", "User.Read", "Files.ReadWrite");
+         Xamarin.CloudDrive.Connector.OneDriveService.Init(this, "{YOUR_MICROSOFT_APPLICATION_ID}", "msal{YOUR_MICROSOFT_APPLICATION_ID}://auth", "User.Read", "Files.Read.All");
          Xamarin.Forms.Forms.Init(this, savedInstanceState);
          LoadApplication(new App());
       }
