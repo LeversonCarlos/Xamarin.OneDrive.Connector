@@ -10,7 +10,7 @@ namespace Xamarin.CloudDrive.Connector
          _Storage = storage;
       IStorage _Storage { get; }
 
-      public async Task<DirectoryVM[]> GetDrivers()
+      public async Task<DirectoryVM[]> GetDrives()
       {
          if (!await CheckConnectionAsync()) return null;
 

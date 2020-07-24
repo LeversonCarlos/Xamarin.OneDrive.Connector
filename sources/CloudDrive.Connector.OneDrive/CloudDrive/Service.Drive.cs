@@ -8,7 +8,7 @@ namespace Xamarin.CloudDrive.Connector
    partial class OneDriveService
    {
 
-      public async Task<DirectoryVM[]> GetDrivers()
+      public async Task<DirectoryVM[]> GetDrives()
       {
          try
          {
