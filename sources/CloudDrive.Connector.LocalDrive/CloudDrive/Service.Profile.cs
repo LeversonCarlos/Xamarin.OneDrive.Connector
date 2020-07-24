@@ -13,7 +13,6 @@ namespace Xamarin.CloudDrive.Connector
             ID = $"{Environment.CommandLine}",
             Description = $"{Environment.UserName} on {Environment.MachineName}"
          };
-         ;
          return Task.FromResult(profile);
       }
 
