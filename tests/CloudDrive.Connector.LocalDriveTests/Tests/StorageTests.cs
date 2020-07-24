@@ -22,6 +22,16 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       }
 
       [Fact]
+      public async void Service_WithoutConnection_MustReturnNull()
+      {
+         var connection = ConnectionBuilder.Create().WithCheckConnectionValue(false).Build();
+         var service = new LocalDriveService(connection);
+
+         var value = await service.GetDrives();
+
+         Assert.Null(value);
+      }
+      [Fact]
       public async void Service_GetStorageList_MustReturnSpectedValue()
       {
          var service = new LocalDriveService();
