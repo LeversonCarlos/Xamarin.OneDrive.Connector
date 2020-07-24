@@ -18,10 +18,16 @@ namespace Xamarin.CloudDrive.Connector
             if (string.IsNullOrEmpty(directory.ID)) return null;
             if (!Directory.Exists(directory.ID)) return null;
 
-            var directoryList = await GetDirectoryList(directory.ID);
+            var directoryListQuery = Directory
+               .EnumerateDirectories(directory.ID)
+               .Where(dir => !string.IsNullOrEmpty(dir))
+               .AsQueryable();
+            var directoryList = await Task.FromResult(directoryListQuery.ToArray());
 
             var resultList = directoryList
-               .Select(dir => GetDirectoryInfo(dir))
+               .Where(dir => Directory.Exists(dir))
+               .OrderBy(dir => dir)
+               .Select(dir => new DirectoryInfo(dir))
                .Where(dirInfo => dirInfo != null)
                .Select(dirInfo => new DirectoryVM
                {
@@ -35,24 +41,6 @@ namespace Xamarin.CloudDrive.Connector
             return resultList;
          }
          catch (Exception) { throw; }
-      }
-
-      internal DirectoryInfo GetDirectoryInfo(string path)
-      {
-         if (Directory.Exists(path))
-            return new DirectoryInfo(path);
-         else
-            return null;
-      }
-
-      internal Task<string[]> GetDirectoryList(string path)
-      {
-         var folderQuery = Directory
-            .EnumerateDirectories(path)
-            .Where(dir => !string.IsNullOrEmpty(dir))
-            .OrderBy(dir => dir)
-            .AsQueryable();
-         return Task.FromResult(folderQuery.ToArray());
       }
 
    }

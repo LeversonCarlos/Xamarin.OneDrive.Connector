@@ -1,7 +1,6 @@
 using System.IO;
 using System.Linq;
 using Xunit;
-using Xunit.Sdk;
 
 namespace Xamarin.CloudDrive.Connector.LocalDriveTests
 {
@@ -9,47 +8,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
    {
 
       [Fact]
-      public void ValidDirectoryShouldHasValidName()
-      {
-         var service = new LocalDriveService();
-
-         var currentDirectory = Directory.GetCurrentDirectory();
-         var directoryName = Path.GetFileName(currentDirectory);
-         var value = service.GetDirectoryInfo(currentDirectory);
-
-         Assert.Equal(directoryName, value.Name);
-      }
-
-      [Fact]
-      public void InvalidDirectoryShouldReturnNull()
-      {
-         var service = new LocalDriveService();
-
-         var currentDirectory = Directory.GetCurrentDirectory()
-            .Replace(Path.DirectorySeparatorChar.ToString(), ":,^");
-         var value = service.GetDirectoryInfo(currentDirectory);
-
-         Assert.Null(value);
-      }
-
-      [Fact]
-      public async void ChlidDirectoriesMustBeAsSpected()
-      {
-         var service = new LocalDriveService();
-
-         var currentDirectory = Directory.GetCurrentDirectory();
-         var expectedValue = Directory
-            .EnumerateDirectories(currentDirectory)
-            .Where(x => !string.IsNullOrEmpty(x))
-            .OrderBy(x => x)
-            .ToArray();
-         var value = await service.GetDirectoryList(currentDirectory);
-
-         Assert.Equal(expectedValue, value);
-      }
-
-      [Fact]
-      public async void WithoutConnectionMustReturnNull()
+      public async void WithoutConnection_MustReturnNull()
       {
          var connection = ConnectionBuilder.Create().WithCheckConnectionValue(false).Build();
          var service = new LocalDriveService(connection);
@@ -61,7 +20,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       }
 
       [Fact]
-      public async void NullDirectoryMustReturnNull()
+      public async void NullParameter_MustReturnNull()
       {
          var service = new LocalDriveService();
 
@@ -72,7 +31,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       }
 
       [Fact]
-      public async void EmptyDirectoryIDMustReturnNull()
+      public async void EmptyParameterID_MustReturnNull()
       {
          var service = new LocalDriveService();
 
@@ -83,7 +42,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       }
 
       [Fact]
-      public async void InvalidDirectoryIDMustReturnNull()
+      public async void InvalidParameterID_MustReturnNull()
       {
          var service = new LocalDriveService();
 
@@ -96,18 +55,16 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       }
 
       [Fact]
-      public async void CurrentDirectoryIDMustReturnSpectedValue()
+      public async void CurrentDirectory_MustReturnSpectedChildren()
       {
          var service = new LocalDriveService();
 
          var currentDirectory = Directory.GetCurrentDirectory();
-         DirectoryVM directoryVM = new DirectoryVM { ID = currentDirectory };
-
          var expectedValue = Directory
             .EnumerateDirectories(currentDirectory)
             .Where(x => !string.IsNullOrEmpty(x))
-            .OrderBy(x => x)
-            .Select(dir => service.GetDirectoryInfo(dir))
+            .OrderBy(dir => dir)
+            .Select(dir => new DirectoryInfo(dir))
             .Where(dirInfo => dirInfo != null)
             .Select(dirInfo => new DirectoryVM
             {
@@ -117,9 +74,10 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
                ParentID = currentDirectory
             })
             .ToArray();
+         var directoryVM = new DirectoryVM { ID = currentDirectory };
          var value = await service.GetDirectories(directoryVM);
 
-         Assert.Equal(expectedValue?.Length, value?.Length);         
+         Assert.Equal(expectedValue?.Length, value?.Length);
       }
 
    }
