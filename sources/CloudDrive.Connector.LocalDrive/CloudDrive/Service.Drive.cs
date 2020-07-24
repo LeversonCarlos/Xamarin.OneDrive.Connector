@@ -6,8 +6,6 @@ namespace Xamarin.CloudDrive.Connector
    partial class LocalDriveService
    {
 
-      internal LocalDriveService(IStorage storage) =>
-         _Storage = storage;
       IStorage _Storage { get; }
 
       public async Task<DirectoryVM[]> GetDrives()
