@@ -4,6 +4,13 @@ using Xamarin.Essentials;
 
 namespace Xamarin.CloudDrive.Connector
 {
+
+   partial class LocalDriveService
+   {
+      LocalDriveService() =>
+         _Connection = new LocalDriveConnection();
+   }
+
    internal class LocalDriveConnection : IConnection
    {
 
@@ -52,4 +59,5 @@ namespace Xamarin.CloudDrive.Connector
       }
 
    }
+
 }
