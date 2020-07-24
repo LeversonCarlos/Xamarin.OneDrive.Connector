@@ -4,7 +4,7 @@ on: [pull_request]
   
 jobs:
   tests:
-    name: Test LocalDrive
+    name: Validate running the tests
     runs-on: windows-latest
 
     steps:
@@ -12,22 +12,14 @@ jobs:
       - name: Checkout Source Repository
         uses: actions/checkout@v2
       
-      - name: Setup MsBuild
+      - name: Setup MsBuild Tooling
         uses: microsoft/setup-msbuild@v1
 
-      # - name: Build the Common Connector
-      #   working-directory: 'sources/CloudDrive.Connector.Common/'
-      #   run: msbuild -r -p:Configuration=Release
-        
-      # - name: Build the LocalDrive Connector
-      #   working-directory: 'sources/CloudDrive.Connector.LocalDrive/'
-      #   run: msbuild -restore -p:Configuration=Debug -p:TargetFrameworks=netstandard2.0
-        
-      - name: Build the LocalDrive Tester
+      - name: Build the LocalDrive Test Project
         working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
         run: msbuild -restore -p:Configuration=Debug /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
         
-      - name: Run the Tests
+      - name: Run the LocalDrive Tests
         working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
         run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 

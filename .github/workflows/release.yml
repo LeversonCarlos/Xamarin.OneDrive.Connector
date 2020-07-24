@@ -6,23 +6,50 @@ on:
   
 jobs:
 
+  tests:
+    name: Validate running the tests
+    runs-on: windows-latest
+
+    steps:
+
+      - name: Checkout Source Repository
+        uses: actions/checkout@v2
+      
+      - name: Setup MsBuild Tooling
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Build the LocalDrive Test Project
+        working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
+        run: msbuild -restore -p:Configuration=Debug /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+        
+      - name: Run the LocalDrive Tests
+        working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
+        run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+
+      - name: Send report to codecov.io
+        run: |
+          curl -s https://codecov.io/bash | bash
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}          
+
   build:
+    needs: [tests]
     name: Build Packages
     runs-on: windows-latest
 
     steps:
     
-      - name: Checkout Source Repository
-        uses: actions/checkout@v2
-      
-      - name: Setup MsBuild
-        uses: microsoft/setup-msbuild@v1
-        
       # - name: Dump GitHub context
       #   env:
       #     GITHUB_CONTEXT: ${{ toJson(github) }}
       #   run: echo "$GITHUB_CONTEXT"          
 
+      - name: Checkout Source Repository
+        uses: actions/checkout@v2
+      
+      - name: Setup MsBuild Tooling
+        uses: microsoft/setup-msbuild@v1
+                          
       - name: Define release type
         id: release_type
         run: |
