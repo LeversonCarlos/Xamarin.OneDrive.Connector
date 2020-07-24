@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using Xunit;
+using Xunit.Sdk;
 
 namespace Xamarin.CloudDrive.Connector.LocalDriveTests
 {
@@ -92,6 +93,33 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
          var value = await service.GetDirectories(directoryVM);
 
          Assert.Null(value);
+      }
+
+      [Fact]
+      public async void CurrentDirectoryIDMustReturnSpectedValue()
+      {
+         var service = new LocalDriveService();
+
+         var currentDirectory = Directory.GetCurrentDirectory();
+         DirectoryVM directoryVM = new DirectoryVM { ID = currentDirectory };
+
+         var expectedValue = Directory
+            .EnumerateDirectories(currentDirectory)
+            .Where(x => !string.IsNullOrEmpty(x))
+            .OrderBy(x => x)
+            .Select(dir => service.GetDirectoryInfo(dir))
+            .Where(dirInfo => dirInfo != null)
+            .Select(dirInfo => new DirectoryVM
+            {
+               ID = dirInfo.FullName,
+               Name = dirInfo.Name,
+               Path = dirInfo.FullName,
+               ParentID = currentDirectory
+            })
+            .ToArray();
+         var value = await service.GetDirectories(directoryVM);
+
+         Assert.Equal(expectedValue?.Length, value?.Length);         
       }
 
    }
