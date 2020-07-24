@@ -352,3 +352,4 @@ MigrationBackup/
 # specifics
 appsettings.Development.json
 coverage.opencover.xml
+example/CloudDrive.Connector.Example.Android/Resources/Resource.designer.cs
