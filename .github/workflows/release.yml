@@ -7,7 +7,7 @@ on:
 jobs:
 
   tests:
-    name: Validate running the tests
+    name: Validate Pull Reuest
     runs-on: windows-latest
 
     steps:
