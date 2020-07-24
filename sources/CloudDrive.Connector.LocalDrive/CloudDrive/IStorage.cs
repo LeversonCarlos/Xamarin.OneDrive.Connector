@@ -2,8 +2,8 @@ using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector
 {
-   internal interface IDrives
+   internal interface IStorage
    {
-      Task<string[]> GetDriveList();
+      Task<string[]> GetStorageList();
    }
 }
