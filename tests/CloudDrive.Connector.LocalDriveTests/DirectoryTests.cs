@@ -8,7 +8,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
    {
 
       [Fact]
-      public async void WithoutConnection_MustReturnNull()
+      public async void Service_WithoutConnection_MustReturnNull()
       {
          var connection = ConnectionBuilder.Create().WithCheckConnectionValue(false).Build();
          var service = new LocalDriveService(connection);
@@ -20,7 +20,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       }
 
       [Fact]
-      public async void NullParameter_MustReturnNull()
+      public async void GetDirectories_WithNullParameter_MustReturnNull()
       {
          var service = new LocalDriveService();
 
@@ -31,7 +31,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       }
 
       [Fact]
-      public async void EmptyParameterID_MustReturnNull()
+      public async void GetDirectories_WithEmptyID_MustReturnNull()
       {
          var service = new LocalDriveService();
 
@@ -42,7 +42,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       }
 
       [Fact]
-      public async void InvalidParameterID_MustReturnNull()
+      public async void GetDirectories_WithInvalidID_MustReturnNull()
       {
          var service = new LocalDriveService();
 
@@ -55,7 +55,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       }
 
       [Fact]
-      public async void CurrentDirectory_MustReturnSpectedChildren()
+      public async void GetDirectories_WithCurrentDirectory_MustReturnSpectedChildren()
       {
          var service = new LocalDriveService();
 
