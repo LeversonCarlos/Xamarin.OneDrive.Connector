@@ -12,7 +12,7 @@ namespace Xamarin.CloudDrive.Connector
       {
          try
          {
-            if (!await this.CheckConnectionAsync()) { return null; }
+            if (!await CheckConnectionAsync()) return null;
 
             string searchPattern = "*.*";
             System.IO.SearchOption searchOption = System.IO.SearchOption.TopDirectoryOnly;
