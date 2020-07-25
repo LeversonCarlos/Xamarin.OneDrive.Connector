@@ -48,7 +48,7 @@ namespace Xamarin.CloudDrive.Connector
          {
             if (!await CheckConnectionAsync()) return null;
 
-            var fileInfo = await Task.FromResult(new System.IO.FileInfo(fileID));
+            var fileInfo = await Task.FromResult(new FileInfo(fileID));
             var fileData = new FileVM
             {
                ID = fileInfo.FullName,
@@ -61,7 +61,7 @@ namespace Xamarin.CloudDrive.Connector
 
             return fileData;
          }
-         catch (Exception ex) { throw new Exception($"Error while loading details for file [{fileID}] with localDrive service", ex); }
+         catch (Exception) { throw; }
       }
 
    }
