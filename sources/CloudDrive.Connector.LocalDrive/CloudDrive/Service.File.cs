@@ -48,7 +48,11 @@ namespace Xamarin.CloudDrive.Connector
          {
             if (!await CheckConnectionAsync()) return null;
 
+            if (string.IsNullOrEmpty(fileID)) return null;
+            if (!File.Exists(fileID)) return null;
+
             var fileInfo = await Task.FromResult(new FileInfo(fileID));
+
             var fileData = new FileVM
             {
                ID = fileInfo.FullName,
