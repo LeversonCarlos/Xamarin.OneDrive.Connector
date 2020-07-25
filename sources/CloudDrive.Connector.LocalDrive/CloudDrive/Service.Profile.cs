@@ -6,13 +6,12 @@ namespace Xamarin.CloudDrive.Connector
    partial class LocalDriveService
    {
 
-      public Task<ProfileVM> GetProfile()
-      {
-         var profile = new ProfileVM();
-         profile.ID = Environment.CommandLine;
-         profile.Description = $"{Environment.UserName} on {Environment.MachineName}";
-         return Task.FromResult(profile);
-      }
+      public Task<ProfileVM> GetProfile() =>
+         Task.FromResult(new ProfileVM
+         {
+            ID = Environment.CommandLine,
+            Description = $"{Environment.UserName} on {Environment.MachineName}"
+         });
 
    }
 }
