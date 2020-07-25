@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.IO;
 using Xunit;
 
 namespace Xamarin.CloudDrive.Connector.LocalDriveTests
@@ -20,6 +18,40 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
          Assert.Null(value);
       }
 
+      [Fact]
+      public async void GetFiles_WithNullParameter_MustReturnNull()
+      {
+         var service = new LocalDriveService();
+
+         DirectoryVM directoryVM = null;
+         var value = await service.GetFiles(directoryVM);
+
+         Assert.Null(value);
+      }
+
+      [Fact]
+      public async void GetFiles_WithEmptyID_MustReturnNull()
+      {
+         var service = new LocalDriveService();
+
+         DirectoryVM directoryVM = new DirectoryVM { };
+         var value = await service.GetFiles(directoryVM);
+
+         Assert.Null(value);
+      }
+
+      [Fact]
+      public async void GetFiles_WithInvalidID_MustReturnNull()
+      {
+         var service = new LocalDriveService();
+
+         var invalidDirectoryPath = Directory.GetCurrentDirectory()
+            .Replace(Path.DirectorySeparatorChar.ToString(), ":,^");
+         DirectoryVM directoryVM = new DirectoryVM { ID = invalidDirectoryPath };
+         var value = await service.GetFiles(directoryVM);
+
+         Assert.Null(value);
+      }
 
    }
 }

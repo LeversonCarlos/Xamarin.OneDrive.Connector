@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,6 +14,10 @@ namespace Xamarin.CloudDrive.Connector
          try
          {
             if (!await CheckConnectionAsync()) return null;
+
+            if (directory == null) return null;
+            if (string.IsNullOrEmpty(directory.ID)) return null;
+            if (!Directory.Exists(directory.ID)) return null;
 
             string searchPattern = "*.*";
             System.IO.SearchOption searchOption = System.IO.SearchOption.TopDirectoryOnly;
