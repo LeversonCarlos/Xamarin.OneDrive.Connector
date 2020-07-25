@@ -98,5 +98,36 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
          Assert.Null(value);
       }
 
+      [Fact]
+      public async void GetDetails_WithValidFile_MustReturnSpectedData()
+      {
+         var service = new LocalDriveService();
+
+         var currentDirectory = Directory.GetCurrentDirectory();
+         var sampleFile = Directory
+            .EnumerateFiles(currentDirectory, "*.*", SearchOption.AllDirectories)
+            .Where(file => !string.IsNullOrEmpty(file))
+            .Where(file => File.Exists(file))
+            .OrderBy(file => file)
+            .Take(1)
+            .FirstOrDefault();
+         var expectedValue = (new string[] { sampleFile })
+            .Select(file => new FileInfo(file))
+            .Where(fileInfo => fileInfo != null)
+            .Select(fileInfo => new FileVM
+            {
+               ID = fileInfo.FullName,
+               Name = fileInfo.Name,
+               CreatedDateTime = fileInfo.CreationTime,
+               SizeInBytes = fileInfo.Length,
+               Path = fileInfo.DirectoryName,
+               ParentID = fileInfo.DirectoryName
+            })
+            .FirstOrDefault();
+         var value = await service.GetDetails(sampleFile);
+
+         Assert.Equal(expectedValue?.ID, value?.ID);
+      }
+
    }
 }
