@@ -50,7 +50,7 @@ namespace Xamarin.CloudDrive.Connector.Example.Helpers
       {
          if (item == null || string.IsNullOrEmpty(item.ID))
          {
-            var driveList = await DriveService.GetDrivers();
+            var driveList = await DriveService.GetDrives();
             return driveList
                .Select(x => new SelectorItem
                {
