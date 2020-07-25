@@ -13,14 +13,19 @@ namespace Xamarin.CloudDrive.Connector
          {
             if (!await CheckConnectionAsync()) return null;
 
-            var fileStream = System.IO.File.OpenRead(fileID);
+            if (string.IsNullOrEmpty(fileID)) return null;
+            if (!File.Exists(fileID)) return null;
+
             var memoryStream = new MemoryStream();
-            await fileStream.CopyToAsync(memoryStream);
-            await memoryStream.FlushAsync();
-            memoryStream.Position = 0;
+            using (var fileStream = System.IO.File.OpenRead(fileID))
+            {
+               await fileStream.CopyToAsync(memoryStream);
+               await memoryStream.FlushAsync();
+               memoryStream.Position = 0;
+            }
             return memoryStream;
          }
-         catch (Exception ex) { throw new Exception($"Error while downloading file [{fileID}] with localDrive service", ex); }
+         catch (Exception) { throw; }
       }
 
    }
