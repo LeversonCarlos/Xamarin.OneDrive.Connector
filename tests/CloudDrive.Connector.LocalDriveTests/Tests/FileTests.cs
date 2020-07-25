@@ -8,7 +8,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
    {
 
       [Fact]
-      public async void Service_WithoutConnection_MustReturnNull()
+      public async void GetFiles_WithoutConnection_MustReturnNull()
       {
          var connection = ConnectionBuilder.Create().WithCheckConnectionValue(false).Build();
          var service = new LocalDriveService(connection);
@@ -80,8 +80,21 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
          var directoryVM = new DirectoryVM { ID = currentDirectory };
          var value = await service.GetFiles(directoryVM);
 
-         Assert.Equal(expectedValue?.Select(x=> x.ID)?.ToArray(), value?.Select(x => x.ID)?.ToArray());
+         Assert.Equal(expectedValue?.Select(x => x.ID)?.ToArray(), value?.Select(x => x.ID)?.ToArray());
       }
+
+      [Fact]
+      public async void GetDetails_WithoutConnection_MustReturnNull()
+      {
+         var connection = ConnectionBuilder.Create().WithCheckConnectionValue(false).Build();
+         var service = new LocalDriveService(connection);
+
+         var fileID = (string)null;
+         var value = await service.GetDetails(fileID);
+
+         Assert.Null(value);
+      }
+
 
    }
 }
