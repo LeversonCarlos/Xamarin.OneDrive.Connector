@@ -11,7 +11,8 @@ namespace Xamarin.CloudDrive.Connector
       {
          try
          {
-            if (!await this.CheckConnectionAsync()) { return null; }
+            if (!await CheckConnectionAsync()) return null;
+
             var fileStream = System.IO.File.OpenRead(fileID);
             var memoryStream = new MemoryStream();
             await fileStream.CopyToAsync(memoryStream);
