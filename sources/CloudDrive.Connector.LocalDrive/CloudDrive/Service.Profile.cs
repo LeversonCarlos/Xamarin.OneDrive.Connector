@@ -9,7 +9,7 @@ namespace Xamarin.CloudDrive.Connector
       public Task<ProfileVM> GetProfile()
       {
          var profile = new ProfileVM();
-         profile.ID = $"{Environment.CommandLine}";
+         profile.ID = Environment.CommandLine;
          profile.Description = $"{Environment.UserName} on {Environment.MachineName}";
          return Task.FromResult(profile);
       }
