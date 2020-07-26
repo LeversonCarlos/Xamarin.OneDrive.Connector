@@ -20,7 +20,6 @@ namespace Xamarin.CloudDrive.Connector
             if (File.Exists(fileID)) File.Delete(fileID);
 
             await Task.Run(() => File.WriteAllBytes(fileID, fileContent));
-            if (!File.Exists(fileID)) return null;
 
             var fileDetails = await GetDetails(fileID);
             return fileDetails;

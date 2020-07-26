@@ -75,24 +75,20 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
          }
       }
 
-      /*
       [Fact]
-      public void Download_WithLockedFile_MustThrowException()
+      public async void Upload_WithValidContentButInvalidFileName_MustReturnNull()
       {
-         var service = new LocalDriveService();
-
-         var sampleFile = Helpers.FileSystem.SampleFile;
-         var sampleFileCopy = $"{sampleFile}.sample";
-         File.Copy(sampleFile, sampleFileCopy, true);
-         var value = new Action(async () => await service.Download(sampleFileCopy));
-
-         using (var stream = File.Open(sampleFileCopy, FileMode.Open, FileAccess.Read, FileShare.None))
+         using (var sampleClone = new Helpers.SampleClone())
          {
-            Assert.Throws<Exception>(value);
+            var service = new LocalDriveService();
+
+            var directoryID = Path.GetDirectoryName(sampleClone.FilePath);
+            var fileName = "#,.*%";
+            var value = await service.Upload(directoryID, fileName, sampleClone.FileContent);
+
+            Assert.Null(value);
          }
-         File.Delete(sampleFileCopy);
       }
-      */
 
    }
 }
