@@ -11,19 +11,25 @@ namespace Xamarin.CloudDrive.Connector
       {
          try
          {
-            if (!await this.ConnectAsync()) { return null; }
+            if (!await ConnectAsync()) return null;
 
-            if (File.Exists(fileID)) { File.Delete(fileID); }
+            if (string.IsNullOrEmpty(fileID)) return null;
+            if (fileContent == null) return null;
+            if (fileContent.Length == 0) return null;
+
+            if (File.Exists(fileID)) File.Delete(fileID);
+
             await Task.Run(() => File.WriteAllBytes(fileID, fileContent));
+            if (!File.Exists(fileID)) return null;
 
-            if (!File.Exists(fileID)) { return null; }
-            return await this.GetDetails(fileID);
+            var fileDetails = await GetDetails(fileID);
+            return fileDetails;
          }
-         catch (Exception ex) { throw new Exception($"Error while uploading file [{fileID}] with localDrive service", ex); }
+         catch (Exception) { return null; }
       }
 
-      public Task<FileVM> Upload(string directoryID, string fileName, byte[] fileContent)
-      { return this.Upload($"{directoryID}{Path.DirectorySeparatorChar}{fileName}", fileContent); }
+      public Task<FileVM> Upload(string directoryID, string fileName, byte[] fileContent) =>
+         Upload($"{directoryID}{Path.DirectorySeparatorChar}{fileName}", fileContent);
 
    }
 }
