@@ -36,14 +36,16 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       [Fact]
       public async void Download_WithValidFile_MustReturnSpectedData()
       {
-         var service = new LocalDriveService();
+         using (var sampleClone = new Helpers.SampleClone())
+         {
+            var service = new LocalDriveService();
 
-         var sampleFile = Helpers.FileSystem.SampleFile;
-         var expectedValue = new MemoryStream();
-         File.OpenRead(sampleFile)?.CopyToAsync(expectedValue);
-         var value = await service.Download(sampleFile);
+            sampleClone.WriteFile();
+            var expectedValue = sampleClone.FileContent.Length;
+            var value = await service.Download(sampleClone.FilePath);
 
-         Assert.Equal(expectedValue?.Length, value?.Length);
+            Assert.Equal(expectedValue, value?.Length);
+         }
       }
 
       /*
