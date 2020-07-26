@@ -45,7 +45,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       }
 
       [Fact]
-      public async void Upload_WithValidFile_MustReturnSpectedData()
+      public async void Upload_WithValidExistingFile_MustReturnSpectedData()
       {
          using (var sampleClone = new Helpers.SampleClone())
          {
@@ -54,6 +54,22 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
             sampleClone.WriteFile();
             var expectedValue = await service.GetDetails(sampleClone.FilePath);
             var value = await service.Upload(sampleClone.FilePath, sampleClone.FileContent);
+
+            Assert.Equal(expectedValue?.SizeInBytes, value?.SizeInBytes);
+         }
+      }
+
+      [Fact]
+      public async void Upload_WithValidNonExistingFile_MustReturnSpectedData()
+      {
+         using (var sampleClone = new Helpers.SampleClone())
+         {
+            var service = new LocalDriveService();
+
+            var directoryID = Path.GetDirectoryName(sampleClone.FilePath);
+            var fileName = Path.GetFileName(sampleClone.FilePath);
+            var value = await service.Upload(directoryID, fileName, sampleClone.FileContent);
+            var expectedValue = await service.GetDetails($"{directoryID}{Path.DirectorySeparatorChar}{fileName}");
 
             Assert.Equal(expectedValue?.SizeInBytes, value?.SizeInBytes);
          }
