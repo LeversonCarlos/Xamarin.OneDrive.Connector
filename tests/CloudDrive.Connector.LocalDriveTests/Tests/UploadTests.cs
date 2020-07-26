@@ -44,20 +44,20 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
          Assert.Null(value);
       }
 
-      /*
       [Fact]
-      public async void Download_WithValidFile_MustReturnSpectedData()
+      public async void Upload_WithValidFile_MustReturnSpectedData()
       {
-         var service = new LocalDriveService();
+         using (var sampleClone = new Helpers.SampleClone())
+         {
+            var service = new LocalDriveService();
 
-         var sampleFile = Helpers.FileSystem.SampleFile;
-         var expectedValue = new MemoryStream();
-         File.OpenRead(sampleFile)?.CopyToAsync(expectedValue);
-         var value = await service.Download(sampleFile);
+            sampleClone.WriteFile();
+            var expectedValue = await service.GetDetails(sampleClone.FilePath);
+            var value = await service.Upload(sampleClone.FilePath, sampleClone.FileContent);
 
-         Assert.Equal(expectedValue?.Length, value?.Length);
+            Assert.Equal(expectedValue?.SizeInBytes, value?.SizeInBytes);
+         }
       }
-      */
 
       /*
       [Fact]
