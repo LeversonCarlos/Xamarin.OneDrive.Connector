@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -9,17 +8,19 @@ namespace Xamarin.CloudDrive.Connector
 
       public async Task<Stream> Download(string fileID)
       {
-         try
+         if (!await CheckConnectionAsync()) return null;
+
+         if (string.IsNullOrEmpty(fileID)) return null;
+         if (!File.Exists(fileID)) return null;
+
+         var memoryStream = new MemoryStream();
+         using (var fileStream = System.IO.File.OpenRead(fileID))
          {
-            if (!await this.CheckConnectionAsync()) { return null; }
-            var fileStream = System.IO.File.OpenRead(fileID);
-            var memoryStream = new MemoryStream();
             await fileStream.CopyToAsync(memoryStream);
             await memoryStream.FlushAsync();
             memoryStream.Position = 0;
-            return memoryStream;
          }
-         catch (Exception ex) { throw new Exception($"Error while downloading file [{fileID}] with localDrive service", ex); }
+         return memoryStream;
       }
 
    }

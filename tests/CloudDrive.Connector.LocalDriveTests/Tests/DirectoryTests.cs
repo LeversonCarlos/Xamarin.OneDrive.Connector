@@ -59,7 +59,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       {
          var service = new LocalDriveService();
 
-         var currentDirectory = Directory.GetCurrentDirectory();
+         var currentDirectory = Helpers.FileSystem.CurrentDirectory;
          var expectedValue = Directory
             .EnumerateDirectories(currentDirectory)
             .Where(x => !string.IsNullOrEmpty(x))

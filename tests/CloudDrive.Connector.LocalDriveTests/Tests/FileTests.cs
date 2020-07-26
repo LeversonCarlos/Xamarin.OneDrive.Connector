@@ -49,7 +49,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       {
          var service = new LocalDriveService();
 
-         var currentDirectory = Directory.GetCurrentDirectory();
+         var currentDirectory = Helpers.FileSystem.CurrentDirectory;
          var expectedValue = Directory
             .EnumerateFiles(currentDirectory, "*.*", SearchOption.TopDirectoryOnly)
             .Where(file => !string.IsNullOrEmpty(file))
@@ -103,14 +103,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       {
          var service = new LocalDriveService();
 
-         var currentDirectory = Directory.GetCurrentDirectory();
-         var sampleFile = Directory
-            .EnumerateFiles(currentDirectory, "*.*", SearchOption.AllDirectories)
-            .Where(file => !string.IsNullOrEmpty(file))
-            .Where(file => File.Exists(file))
-            .OrderBy(file => file)
-            .Take(1)
-            .FirstOrDefault();
+         var sampleFile = Helpers.FileSystem.SampleFile;
          var expectedValue = (new string[] { sampleFile })
             .Select(file => new FileInfo(file))
             .Where(fileInfo => fileInfo != null)
