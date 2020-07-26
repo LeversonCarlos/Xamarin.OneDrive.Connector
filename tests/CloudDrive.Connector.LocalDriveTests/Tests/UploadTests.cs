@@ -22,11 +22,24 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
       [Theory]
       [InlineData((string)null)]
       [InlineData("")]
-      public async void Upload_WithInvalidParameter_MustReturnNull(string fileID)
+      public async void Upload_WithInvalidFileID_MustReturnNull(string fileID)
       {
          var service = new LocalDriveService();
 
          var value = await service.Upload(fileID, null);
+
+         Assert.Null(value);
+      }
+
+      [Theory]
+      [InlineData((byte[])null)]
+      [InlineData(new byte[] { })]
+      public async void Upload_WithInvalidFileContent_MustReturnNull(byte[] fileContent)
+      {
+         var service = new LocalDriveService();
+
+         var fileID = Helpers.FileSystem.SampleFile;
+         var value = await service.Upload(fileID, fileContent);
 
          Assert.Null(value);
       }
