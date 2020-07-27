@@ -27,7 +27,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests.Helpers
       public SampleClone()
       {
          var sampleFile = FileSystem.SampleFile;
-         FilePath = $"{sampleFile}.clone";
+         FilePath = $"{sampleFile}.{Path.GetRandomFileName()}";
          FileContent = File.ReadAllBytes(sampleFile);
       }
 
