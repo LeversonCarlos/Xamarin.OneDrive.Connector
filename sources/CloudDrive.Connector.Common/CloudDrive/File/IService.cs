@@ -6,7 +6,9 @@ namespace Xamarin.CloudDrive.Connector
    partial interface ICloudDriveService
    {
 
+      Task<FileVM[]> SearchFiles(DirectoryVM directory, string searchPattern);
       Task<FileVM[]> SearchFiles(DirectoryVM directory, string searchPattern, int limit);
+
       Task<FileVM[]> GetFiles(DirectoryVM directory);
       Task<FileVM> GetDetails(string fileID);
 

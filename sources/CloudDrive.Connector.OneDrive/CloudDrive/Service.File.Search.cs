@@ -8,6 +8,9 @@ namespace Xamarin.CloudDrive.Connector
    partial class OneDriveService
    {
 
+      public Task<FileVM[]> SearchFiles(DirectoryVM directory, string searchPattern) =>
+         SearchFiles(directory, searchPattern, int.MaxValue);
+
       public async Task<FileVM[]> SearchFiles(DirectoryVM directory, string searchPattern, int limit)
       {
          try
