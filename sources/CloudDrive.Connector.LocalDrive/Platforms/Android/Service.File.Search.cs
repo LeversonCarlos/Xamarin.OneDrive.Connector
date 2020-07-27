@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,26 +12,33 @@ namespace Xamarin.CloudDrive.Connector
       {
          try
          {
-            if (!await this.ConnectAsync()) { return null; }
-            if (limit == 0) { limit = int.MaxValue; }
+            if (!await ConnectAsync()) return null;
 
-            System.IO.SearchOption searchOption = System.IO.SearchOption.AllDirectories;
-            var fileQuery = System.IO.Directory
+            if (directory == null) return null;
+            if (string.IsNullOrEmpty(directory.ID)) return null;
+            if (!Directory.Exists(directory.ID)) return null;
+            if (limit == 0) limit = int.MaxValue;
+
+            var searchOption = SearchOption.AllDirectories;
+
+            var fileListQuery = Directory
                .EnumerateFiles(directory.ID, searchPattern, searchOption)
-               .Where(x => !string.IsNullOrEmpty(x))
-               .OrderBy(x => x)
+               .Where(file => !string.IsNullOrEmpty(file))
+               .Where(file => File.Exists(file))
+               .OrderBy(file => file)
                .Take(limit)
                .AsQueryable();
-            var fileQueryResult = await Task.FromResult(fileQuery.ToList());
+            var fileList = await Task.FromResult(fileListQuery.ToArray());
 
-            var fileList = new List<FileVM>();
-            foreach (var filePath in fileQueryResult)
-            {
-               var fileItem = await this.GetDetails(filePath);
-               if (fileItem != null) { fileList.Add(fileItem); }
-            }
+            var fileTasks = fileList
+               .Select(file => GetDetails(file))
+               .ToArray();
+            var fileTasksResult = await Task.WhenAll(fileTasks);
+            var fileResult = fileTasksResult
+               .Where(fileVM => fileVM != null)
+               .ToArray();
 
-            return fileList.ToArray();
+            return fileResult;
          }
          catch (Exception) { throw; }
       }
