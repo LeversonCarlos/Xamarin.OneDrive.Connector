@@ -8,6 +8,9 @@ namespace Xamarin.CloudDrive.Connector
    partial class LocalDriveService
    {
 
+      public Task<FileVM[]> SearchFiles(DirectoryVM directory, string searchPattern) =>
+         SearchFiles(directory, searchPattern, int.MaxValue);
+
       public async Task<FileVM[]> SearchFiles(DirectoryVM directory, string searchPattern, int limit)
       {
          try
@@ -17,7 +20,7 @@ namespace Xamarin.CloudDrive.Connector
             if (directory == null) return null;
             if (string.IsNullOrEmpty(directory.ID)) return null;
             if (!Directory.Exists(directory.ID)) return null;
-            if (limit == 0) limit = int.MaxValue;
+            if (limit <= 0) return null;
 
             var searchOption = SearchOption.AllDirectories;
 
