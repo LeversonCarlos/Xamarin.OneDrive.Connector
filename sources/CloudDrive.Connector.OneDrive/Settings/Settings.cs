@@ -7,36 +7,68 @@ using System.Runtime.CompilerServices;
 
 namespace Xamarin.CloudDrive.Connector
 {
-   internal class OneDriveSettings
+   internal partial class OneDriveSettings
    {
 
       internal OneDriveSettings(string clientID, string clientSecret, string redirectUri, string[] scopes) : this(clientID, redirectUri, scopes)
       {
-         if (string.IsNullOrEmpty(clientSecret) || clientSecret == "{YOUR_MICROSOFT_APPLICATION_SECRET}")
-            throw new ArgumentException("The clientSecret argument for the onedrive client must be set");
          ClientSecret = clientSecret;
       }
 
       internal OneDriveSettings(string clientID, string redirectUri, string[] scopes)
       {
-
-         if (string.IsNullOrEmpty(clientID) || clientID == "{YOUR_MICROSOFT_APPLICATION_ID}")
-            throw new ArgumentException("The clientID argument for the onedrive client must be set");
          ClientID = clientID;
-
-         if (string.IsNullOrEmpty(redirectUri) || redirectUri == "msal{YOUR_MICROSOFT_APPLICATION_ID}://auth")
-            throw new ArgumentException("The redirectUri argument for the onedrive client must be set");
          RedirectUri = redirectUri;
-
-         if (scopes == null || scopes?.Where(scope => !string.IsNullOrEmpty(scope)).Count() == 0)
-            throw new ArgumentException("The scopes argument for the onedrive client must be set");
          Scopes = scopes;
       }
 
-      public string ClientID { get; }
-      public string RedirectUri { get; }
-      public string ClientSecret { get; }
-      public string[] Scopes { get; }
+      string _ClientID;
+      public string ClientID
+      {
+         get => _ClientID;
+         private set
+         {
+            if (string.IsNullOrEmpty(value) || value == "{YOUR_MICROSOFT_APPLICATION_ID}")
+               throw new ArgumentException("The clientID argument for the onedrive client must be set");
+            _ClientID = value;
+         }
+      }
+
+      string _ClientSecret;
+      public string ClientSecret
+      {
+         get => _ClientSecret;
+         private set
+         {
+            if (string.IsNullOrEmpty(value) || value == "{YOUR_MICROSOFT_APPLICATION_SECRET}")
+               throw new ArgumentException("The clientSecret argument for the onedrive client must be set");
+            _ClientSecret = value;
+         }
+      }
+
+      string _RedirectUri;
+      public string RedirectUri
+      {
+         get => _RedirectUri;
+         private set
+         {
+            if (string.IsNullOrEmpty(value) || value == "msal{YOUR_MICROSOFT_APPLICATION_ID}://auth")
+               throw new ArgumentException("The redirectUri argument for the onedrive client must be set");
+            _RedirectUri = value;
+         }
+      }
+
+      string[] _Scopes;
+      public string[] Scopes
+      {
+         get => _Scopes;
+         private set
+         {
+            if (value == null || value?.Where(scope => !string.IsNullOrEmpty(scope)).Count() == 0)
+               throw new ArgumentException("The scopes argument for the onedrive client must be set");
+            _Scopes = value;
+         }
+      }
 
    }
 }
