@@ -58,6 +58,21 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          Assert.Equal(message, exception.Message);
       }
 
+      [Fact]
+      public void Constructor_WithValidParameters_MustResultSpectedProperties()
+      {
+         var clientID = "clientID";
+         var clientSecret = "clientSecret";
+         var redirectUri = "redirectUri";
+         var scopes = new string[] { "scopes" };
+         var value = new OneDriveSettings(clientID, clientSecret, redirectUri, scopes);
+
+         Assert.NotNull(value);
+         Assert.Equal(clientID, value.ClientID);
+         Assert.Equal(clientSecret, value.ClientSecret);
+         Assert.Equal(redirectUri, value.RedirectUri);
+         Assert.Equal(scopes, value.Scopes);
+      }
 
    }
 }
