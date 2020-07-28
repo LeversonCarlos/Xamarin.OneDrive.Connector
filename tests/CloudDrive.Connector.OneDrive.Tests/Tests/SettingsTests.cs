@@ -6,31 +6,58 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
    public class SettingsTests
    {
 
-      const string clientIDException = "The clientID argument for the onedrive client must be set";
-      const string clientSecretException = "The clientSecret argument for the onedrive client must be set";
-      const string redirectUriException = "The redirectUri argument for the onedrive client must be set";
-      const string scopesException = "The scopes argument for the onedrive client must be set";
       [Theory]
-      [InlineData((string)null, null, null, null, clientIDException)]
-      [InlineData("", null, null, null, clientIDException)]
-      [InlineData("{YOUR_MICROSOFT_APPLICATION_ID}", null, null, null, clientIDException)]
-      [InlineData("[test]", (string)null, "[test]", new string[] { "[test]" }, clientSecretException)]
-      [InlineData("[test]", "", "[test]", new string[] { "[test]" }, clientSecretException)]
-      [InlineData("[test]", "{YOUR_MICROSOFT_APPLICATION_SECRET}", "[test]", new string[] { "[test]" }, clientSecretException)]
-      [InlineData("[test]", "[test]", (string)null, null, redirectUriException)]
-      [InlineData("[test]", "[test]", "", null, redirectUriException)]
-      [InlineData("[test]", "[test]", "msal{YOUR_MICROSOFT_APPLICATION_ID}://auth", null, redirectUriException)]
-      [InlineData("[test]", "[test]", "[test]", null, scopesException)]
-      [InlineData("[test]", "[test]", "[test]", new string[] { }, scopesException)]
-      [InlineData("[test]", "[test]", "[test]", new string[] { "" }, scopesException)]
-      public void Constructor_WithInvalidParameters_MustThrowException(string clientID, string clientSecret, string redirectUri, string[] scopes, string exceptionMessage)
+      [InlineData((string)null)]
+      [InlineData("")]
+      [InlineData("{YOUR_MICROSOFT_APPLICATION_ID}")]
+      public void Constructor_WithInvalidClientID_MustThrowException(string clientID)
       {
-         var value = new Action(() => new OneDriveSettings(clientID, clientSecret, redirectUri, scopes));
+         var value = new Action(() => new OneDriveSettings(clientID, "[test]", "[test]", new string[] { "[test]" }));
 
          var exception = Assert.Throws<ArgumentException>(value);
          Assert.NotNull(exception);
-         Assert.Equal(exceptionMessage, exception.Message);
+         Assert.Equal("The clientID argument for the onedrive client must be set", exception.Message);
       }
+
+      [Theory]
+      [InlineData((string)null)]
+      [InlineData("")]
+      [InlineData("{YOUR_MICROSOFT_APPLICATION_SECRET}")]
+      public void Constructor_WithInvalidClientSecret_MustThrowException(string clientSecret)
+      {
+         var value = new Action(() => new OneDriveSettings("[test]", clientSecret, "[test]", new string[] { "[test]" }));
+
+         var exception = Assert.Throws<ArgumentException>(value);
+         Assert.NotNull(exception);
+         Assert.Equal("The clientSecret argument for the onedrive client must be set", exception.Message);
+      }
+
+      [Theory]
+      [InlineData((string)null)]
+      [InlineData("")]
+      [InlineData("msal{YOUR_MICROSOFT_APPLICATION_ID}://auth")]
+      public void Constructor_WithInvalidRedirectUri_MustThrowException(string redirectUri)
+      {
+         var value = new Action(() => new OneDriveSettings("[test]", "[test]", redirectUri, new string[] { "[test]" }));
+
+         var exception = Assert.Throws<ArgumentException>(value);
+         Assert.NotNull(exception);
+         Assert.Equal("The redirectUri argument for the onedrive client must be set", exception.Message);
+      }
+
+      [Theory]
+      [InlineData(null, "The scopes argument for the onedrive client must be set")]
+      [InlineData(new string[] { }, "The scopes argument for the onedrive client must be set")]
+      [InlineData(new string[] { "" }, "The scopes argument for the onedrive client must be set")]
+      public void Constructor_WithInvalidScopes_MustThrowException(string[] scopes, string message)
+      {
+         var value = new Action(() => new OneDriveSettings("[test]", "[test]", "[test]", scopes));
+
+         var exception = Assert.Throws<ArgumentException>(value);
+         Assert.NotNull(exception);
+         Assert.Equal(message, exception.Message);
+      }
+
 
    }
 }
