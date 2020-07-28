@@ -21,7 +21,7 @@ namespace Xamarin.CloudDrive.Connector
       {
 
          if (string.IsNullOrEmpty(clientID) || clientID == "{YOUR_MICROSOFT_APPLICATION_ID}")
-            throw new ArgumentException("The application ID argument for the onedrive client must be set");
+            throw new ArgumentException("The clientID argument for the onedrive client must be set");
          ClientID = clientID;
 
          if (string.IsNullOrEmpty(redirectUri) || redirectUri == "msal{YOUR_MICROSOFT_APPLICATION_ID}://auth")
