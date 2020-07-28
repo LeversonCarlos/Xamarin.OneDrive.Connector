@@ -10,15 +10,14 @@ namespace Xamarin.CloudDrive.Connector
    internal class OneDriveSettings
    {
 
-      public OneDriveSettings(string clientID, string clientSecret, string redirectUri, string[] scopes)
+      internal OneDriveSettings(string clientID, string clientSecret, string redirectUri, string[] scopes) : this(clientID, redirectUri, scopes)
       {
-         ClientID = clientID;
-         RedirectUri = redirectUri;
+         if (string.IsNullOrEmpty(clientSecret) || clientSecret == "{YOUR_MICROSOFT_APPLICATION_SECRET}")
+            throw new ArgumentException("The clientSecret argument for the onedrive client must be set");
          ClientSecret = clientSecret;
-         Scopes = scopes;
       }
 
-      public OneDriveSettings(string clientID, string redirectUri, string[] scopes)
+      internal OneDriveSettings(string clientID, string redirectUri, string[] scopes)
       {
 
          if (string.IsNullOrEmpty(clientID) || clientID == "{YOUR_MICROSOFT_APPLICATION_ID}")
@@ -29,7 +28,7 @@ namespace Xamarin.CloudDrive.Connector
             throw new ArgumentException("The redirectUri argument for the onedrive client must be set");
          RedirectUri = redirectUri;
 
-         if (scopes ==null || scopes?.Where(scope => !string.IsNullOrEmpty(scope)).Count() == 0)
+         if (scopes == null || scopes?.Where(scope => !string.IsNullOrEmpty(scope)).Count() == 0)
             throw new ArgumentException("The scopes argument for the onedrive client must be set");
          Scopes = scopes;
       }
