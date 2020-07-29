@@ -52,7 +52,7 @@ namespace Xamarin.CloudDrive.Connector
          get => _Scopes;
          private set
          {
-            if (value == null || value?.Where(scope => !string.IsNullOrEmpty(scope)).Count() == 0)
+            if (value == null || value.Where(scope => !string.IsNullOrEmpty(scope)).Count() == 0)
                throw new ArgumentException("The scopes argument for the onedrive client must be set");
             _Scopes = value;
          }
