@@ -1,4 +1,3 @@
-using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -6,16 +5,15 @@ using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector
 {
-   internal class OneDriveClientHandler : DelegatingHandler
+   internal partial class OneDriveClientHandler : DelegatingHandler
    {
 
-      readonly Func<IOneDriveToken> GetToken;
-      IOneDriveToken Token { get { return this.GetToken(); } }
+      readonly IOneDriveToken Token;
 
-      public OneDriveClientHandler(Func<IOneDriveToken> getToken)
+      public OneDriveClientHandler(IOneDriveToken token)
       {
-         this.GetToken = getToken;
-         this.InnerHandler = new HttpClientHandler();
+         Token = token;
+         InnerHandler = new HttpClientHandler();
       }
 
       protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
