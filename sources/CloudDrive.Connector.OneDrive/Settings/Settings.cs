@@ -10,18 +10,6 @@ namespace Xamarin.CloudDrive.Connector
    internal partial class OneDriveSettings
    {
 
-      internal OneDriveSettings(string clientID, string clientSecret, string redirectUri, string[] scopes) : this(clientID, redirectUri, scopes)
-      {
-         ClientSecret = clientSecret;
-      }
-
-      internal OneDriveSettings(string clientID, string redirectUri, string[] scopes)
-      {
-         ClientID = clientID;
-         RedirectUri = redirectUri;
-         Scopes = scopes;
-      }
-
       string _ClientID;
       public string ClientID
       {
