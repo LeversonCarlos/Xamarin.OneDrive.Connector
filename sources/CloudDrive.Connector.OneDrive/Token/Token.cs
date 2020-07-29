@@ -1,6 +1,5 @@
 using Microsoft.Identity.Client;
 using System;
-using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector
 {
@@ -10,7 +9,7 @@ namespace Xamarin.CloudDrive.Connector
       readonly string[] Scopes;
       readonly IClientApplicationBase Identity;
 
-      public OneDriveToken(IClientApplicationBase identity, params string[] scopes)
+      internal OneDriveToken(IClientApplicationBase identity, string[] scopes)
       {
          if (identity == null) throw new ArgumentException("The identity argument for the token client must be set");
          this.Identity = identity;
