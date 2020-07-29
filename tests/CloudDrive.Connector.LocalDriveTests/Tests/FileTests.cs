@@ -70,7 +70,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
          var directoryVM = new DirectoryVM { ID = currentDirectory };
          var value = await service.GetFiles(directoryVM);
 
-         Assert.Equal(expectedValue?.Select(x => x.ID)?.ToArray(), value?.Select(x => x.ID)?.ToArray());
+         Assert.Equal(expectedValue?.Select(x => x?.ID)?.ToArray(), value?.Select(x => x?.ID)?.ToArray());
       }
 
       [Fact]

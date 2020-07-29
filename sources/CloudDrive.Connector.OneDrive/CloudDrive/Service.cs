@@ -7,9 +7,10 @@ namespace Xamarin.CloudDrive.Connector
 
       readonly IOneDriveClient Client;
 
-      public OneDriveService(IOneDriveClient client)
+      internal OneDriveService(IOneDriveClient client)
       {
-         if (client == null) throw new ArgumentException("The client argument for the OneDrive service must be set");
+         if (client == null)
+            throw new ArgumentException("The client argument for the OneDrive service must be set");
          this.Client = client;
       }
 

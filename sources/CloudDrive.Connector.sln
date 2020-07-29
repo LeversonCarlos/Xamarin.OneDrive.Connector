@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sources", "sources", "{AC51
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{33BFDEE9-BF04-45BF-AAED-70B4ACE6B271}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudDrive.Connector.OneDrive.Tests", "..\tests\CloudDrive.Connector.OneDrive.Tests\CloudDrive.Connector.OneDrive.Tests.csproj", "{381BE8B3-AB32-427C-B307-68B98441849C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudDrive.Connector.OneDriveTests", "..\tests\CloudDrive.Connector.OneDriveTests\CloudDrive.Connector.OneDriveTests.csproj", "{381BE8B3-AB32-427C-B307-68B98441849C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudDrive.Connector.LocalDriveTests", "..\tests\CloudDrive.Connector.LocalDriveTests\CloudDrive.Connector.LocalDriveTests.csproj", "{7897E7CA-946E-46BE-ACE1-DF2C70D0DB96}"
 EndProject

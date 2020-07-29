@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector
 {
-   public interface IOneDriveClient
+   internal interface IOneDriveClient
    {
 
       Task<bool> ConnectAsync();

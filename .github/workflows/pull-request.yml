@@ -4,7 +4,7 @@ on: [pull_request]
   
 jobs:
   tests:
-    name: Validate Pull Reuest
+    name: Validate Pull Request
     runs-on: windows-latest
 
     steps:
@@ -23,7 +23,21 @@ jobs:
         working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
         run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
-      - name: Send report to codecov.io
+      - name: Send the LocalDrive Report to Codecov.IO
+        run: |
+          curl -s https://codecov.io/bash | bash
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Build the OneDrive Test Project
+        working-directory: 'tests/CloudDrive.Connector.OneDriveTests/'
+        run: msbuild -restore -p:Configuration=Debug /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+        
+      - name: Run the OneDrive Tests
+        working-directory: 'tests/CloudDrive.Connector.OneDriveTests/'
+        run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+
+      - name: Send the OneDrive Report to Codecov.IO
         run: |
           curl -s https://codecov.io/bash | bash
         env:
