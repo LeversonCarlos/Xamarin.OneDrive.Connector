@@ -7,7 +7,7 @@ namespace Xamarin.CloudDrive.Connector
    partial class LocalDriveService
    {
 
-      internal LocalDriveService()
+      public LocalDriveService()
       {
          _Connection = new LocalDriveConnection();
          _Storage = new LocalDriveStorage();

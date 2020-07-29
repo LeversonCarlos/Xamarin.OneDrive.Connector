@@ -3,7 +3,7 @@ using System;
 
 namespace Xamarin.CloudDrive.Connector
 {
-   public partial class OneDriveToken : IOneDriveToken
+   internal partial class OneDriveToken : IOneDriveToken
    {
 
       readonly string[] Scopes;

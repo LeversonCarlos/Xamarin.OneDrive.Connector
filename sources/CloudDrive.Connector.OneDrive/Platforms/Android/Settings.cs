@@ -5,7 +5,7 @@ namespace Xamarin.CloudDrive.Connector
    partial class OneDriveSettings
    {
 
-      internal OneDriveSettings() { }
+      public OneDriveSettings() { }
 
       internal void Init(Activity activity, string clientID, string redirectUri, string[] scopes)
       {

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector
 {
-   public partial class OneDriveClient : HttpClient, IOneDriveClient
+   internal partial class OneDriveClient : HttpClient, IOneDriveClient
    {
 
       const string BaseURL = "https://graph.microsoft.com/v1.0/";

@@ -7,7 +7,7 @@ namespace Xamarin.CloudDrive.Connector
    partial class OneDriveToken
    {
 
-      internal OneDriveToken(IServiceProvider serviceProvider)
+      public OneDriveToken(IServiceProvider serviceProvider)
       {
          var settings = Dependency.GetService<OneDriveSettings>(serviceProvider);
          if (settings == null)
