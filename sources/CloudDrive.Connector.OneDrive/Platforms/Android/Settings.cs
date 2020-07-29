@@ -1,3 +1,5 @@
+using Android.App;
+
 namespace Xamarin.CloudDrive.Connector
 {
    partial class OneDriveSettings
@@ -5,12 +7,15 @@ namespace Xamarin.CloudDrive.Connector
 
       internal OneDriveSettings() { }
 
-      internal void Init(string clientID, string redirectUri, string[] scopes)
+      internal void Init(Activity activity, string clientID, string redirectUri, string[] scopes)
       {
+         Activity = activity;
          ClientID = clientID;
          RedirectUri = redirectUri;
          Scopes = scopes;
       }
+
+      public Activity Activity { get; private set; }
 
    }
 }
