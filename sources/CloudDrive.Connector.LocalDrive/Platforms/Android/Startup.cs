@@ -15,7 +15,7 @@ namespace Xamarin.CloudDrive.Connector
 
       public static void Init(Activity activity, Bundle bundle)
       {
-         ImplementationProvider.Add<LocalDriveService>(() => new LocalDriveService());
+         Xamarin.Forms.DependencyService.Register<LocalDriveService>();
       }
 
    }
