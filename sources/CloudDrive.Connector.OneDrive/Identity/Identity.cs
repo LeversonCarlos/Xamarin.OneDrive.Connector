@@ -1,4 +1,5 @@
 using Microsoft.Identity.Client;
+using System;
 
 namespace Xamarin.CloudDrive.Connector
 {
@@ -7,6 +8,10 @@ namespace Xamarin.CloudDrive.Connector
 
       string[] _Scopes;
       IClientApplicationBase _Identity;
+
+      // tenants { common, organizations, consumers }
+      const string Authority = "https://login.microsoftonline.com/{tenant}";
+      static Uri _GetAuthorityUri() => new Uri(Authority.Replace("{tenant}", "common"));
 
    }
 }
