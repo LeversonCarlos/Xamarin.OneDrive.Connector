@@ -13,7 +13,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       public IdentityBuilder WithTokenForClient(string accessCode, DateTimeOffset expiresOn, string[] scopes)
       {
          var result = new AuthenticationResult(accessCode, false, null, expiresOn, expiresOn.AddMinutes(1), null, null, null, scopes, Guid.Empty);
-         this.Mock.Setup(m => m.AcquireTokenFromIdentity()).ReturnsAsync(result);
+         this.Mock.Setup(m => m.AcquireTokenFromIdentityAsync()).ReturnsAsync(result);
          return this;
       }
 

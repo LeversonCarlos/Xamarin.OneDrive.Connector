@@ -21,7 +21,7 @@ namespace Xamarin.CloudDrive.Connector
          _Scopes = settings.Scopes;
       }
 
-      public Task<AuthenticationResult> AcquireTokenFromIdentity() =>
+      public Task<AuthenticationResult> AcquireTokenFromIdentityAsync() =>
          (_Identity as IPublicClientApplication)
             ?.AcquireTokenInteractive(_Scopes)
             ?.ExecuteAsync();
