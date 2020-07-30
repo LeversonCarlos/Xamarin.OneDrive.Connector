@@ -16,7 +16,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       }
 
       [Fact]
-      public void InitialTokenMustBeEmpty()
+      public void Constructor_WithValidParameter_ShouldBeInitializedWithEmptyToken()
       {
          var identity = IdentityBuilder.Create().Build();
          var token = new OneDriveToken(identity);
