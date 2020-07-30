@@ -15,12 +15,16 @@ namespace Xamarin.CloudDrive.Connector
          return true;
       }
 
-      bool IsScopeValid()
+      internal bool IsScopeValid()
       {
          if (_AuthResult == null) return false;
          if (_AuthResult.Scopes == null) return false;
-         foreach (var scope in this.Identity.Scopes)
-            if (!_AuthResult.Scopes.Contains(scope.ToLower())) return false;
+         if (Identity.Scopes == null) return false;
+
+         var identityScopes = Identity.Scopes.OrderBy(x => x).ToArray();
+         var authScopes = _AuthResult.Scopes.OrderBy(x => x).ToArray();
+         if (!identityScopes.SequenceEqual(authScopes)) return false;
+
          return true;
       }
 
