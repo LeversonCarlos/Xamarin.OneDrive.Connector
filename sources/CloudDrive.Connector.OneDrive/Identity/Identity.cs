@@ -12,16 +12,21 @@ namespace Xamarin.CloudDrive.Connector
       const string Authority = "https://login.microsoftonline.com/{tenant}";
       static Uri _GetAuthorityUri() => new Uri(Authority.Replace("{tenant}", "common"));
 
-      string[] _Scopes;
+      public string[] Scopes { get; }
       IClientApplicationBase _Identity;
 
-      Task<IEnumerable<IAccount>> GetAccountsAsync() =>
-         _Identity.GetAccountsAsync();
-
-      Task<AuthenticationResult> AcquireTokenSilentAsync(IAccount account) =>
+      public Task<IEnumerable<IAccount>> GetAccountsAsync() =>
          _Identity
-            .AcquireTokenSilent(_Scopes, account)
+            .GetAccountsAsync();
+
+      public Task<AuthenticationResult> AcquireTokenSilentAsync(IAccount account) =>
+         _Identity
+            .AcquireTokenSilent(Scopes, account)
             .ExecuteAsync();
+
+      public Task RemoveAsync(IAccount account) =>
+         _Identity
+            .RemoveAsync(account);
 
    }
 }
