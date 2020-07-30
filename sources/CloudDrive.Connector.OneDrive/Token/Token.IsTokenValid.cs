@@ -19,7 +19,7 @@ namespace Xamarin.CloudDrive.Connector
       {
          if (AuthResult == null) return false;
          if (AuthResult.Scopes == null) return false;
-         foreach (var scope in Scopes)
+         foreach (var scope in this.Identity.Scopes)
             if (!AuthResult.Scopes.Contains(scope.ToLower())) return false;
          return true;
       }

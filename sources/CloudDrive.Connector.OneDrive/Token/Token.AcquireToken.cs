@@ -10,7 +10,7 @@ namespace Xamarin.CloudDrive.Connector
       {
          try
          {
-            this.AuthResult = await this.AcquireTokenFromIdentity();
+            this.AuthResult = await this.Identity.AcquireTokenFromIdentityAsync();
             if (!this.IsTokenValid()) { return false; }
             return true;
          }

@@ -18,12 +18,12 @@ namespace Xamarin.CloudDrive.Connector
             .WithRedirectUri(settings.RedirectUri)
             .WithClientSecret(settings.ClientSecret)
             .Build();
-         _Scopes = settings.Scopes;
+         Scopes = settings.Scopes;
       }
 
       public Task<AuthenticationResult> AcquireTokenFromIdentityAsync() =>
          (_Identity as IConfidentialClientApplication)
-            ?.AcquireTokenForClient(_Scopes)
+            ?.AcquireTokenForClient(Scopes)
             ?.ExecuteAsync();
 
    }
