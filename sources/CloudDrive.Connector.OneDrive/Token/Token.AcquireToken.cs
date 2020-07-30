@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector
@@ -8,13 +7,8 @@ namespace Xamarin.CloudDrive.Connector
 
       internal async Task<bool> AcquireTokenAsync()
       {
-         try
-         {
-            _AuthResult = await Identity.AcquireTokenFromIdentityAsync();
-            if (!IsTokenValid()) return false;
-            return true;
-         }
-         catch (Exception) { throw; }
+         _AuthResult = await Identity.AcquireTokenFromIdentityAsync();
+         return IsTokenValid();
       }
 
    }
