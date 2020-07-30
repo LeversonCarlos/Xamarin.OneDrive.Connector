@@ -6,7 +6,7 @@ namespace Xamarin.CloudDrive.Connector
    partial class OneDriveToken
    {
 
-      bool IsTokenValid()
+      internal bool IsTokenValid()
       {
          if (AuthResult == null) return false;
          if (string.IsNullOrEmpty(AuthResult.AccessToken)) return false;
