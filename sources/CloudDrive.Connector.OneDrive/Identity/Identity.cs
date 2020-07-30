@@ -1,6 +1,6 @@
 namespace Xamarin.CloudDrive.Connector
 {
-   internal class OneDriveIdentity : IOneDriveIdentity
+   internal partial class OneDriveIdentity : IOneDriveIdentity
    {
    }
 }
