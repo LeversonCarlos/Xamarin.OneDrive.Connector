@@ -21,6 +21,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
 
       [Theory]
       [InlineData(null, null, false)]
+      [InlineData(null, new string[] { "A" }, false)]
       [InlineData(new string[] { "A", "B" }, null, false)]
       [InlineData(new string[] { "A", "B" }, new string[] { }, false)]
       [InlineData(new string[] { "A", "B" }, new string[] { "" }, false)]
