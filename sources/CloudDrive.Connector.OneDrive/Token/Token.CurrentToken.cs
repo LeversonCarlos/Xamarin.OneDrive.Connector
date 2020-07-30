@@ -5,12 +5,12 @@ namespace Xamarin.CloudDrive.Connector
    partial class OneDriveToken
    {
 
-      AuthenticationResult AuthResult { get; set; }
+      AuthenticationResult _AuthResult { get; set; }
 
       public string GetToken()
       {
          if (!this.IsTokenValid()) { return ""; }
-         return this.AuthResult.AccessToken;
+         return this._AuthResult.AccessToken;
       }
 
    }

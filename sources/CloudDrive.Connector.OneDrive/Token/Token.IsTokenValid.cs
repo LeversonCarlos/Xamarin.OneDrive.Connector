@@ -8,19 +8,19 @@ namespace Xamarin.CloudDrive.Connector
 
       internal bool IsTokenValid()
       {
-         if (AuthResult == null) return false;
-         if (string.IsNullOrEmpty(AuthResult.AccessToken)) return false;
-         if (AuthResult.ExpiresOn < DateTimeOffset.UtcNow.AddMinutes(-1)) return false;
+         if (_AuthResult == null) return false;
+         if (string.IsNullOrEmpty(_AuthResult.AccessToken)) return false;
+         if (_AuthResult.ExpiresOn < DateTimeOffset.UtcNow.AddMinutes(-1)) return false;
          if (!IsScopeValid()) return false;
          return true;
       }
 
       bool IsScopeValid()
       {
-         if (AuthResult == null) return false;
-         if (AuthResult.Scopes == null) return false;
+         if (_AuthResult == null) return false;
+         if (_AuthResult.Scopes == null) return false;
          foreach (var scope in this.Identity.Scopes)
-            if (!AuthResult.Scopes.Contains(scope.ToLower())) return false;
+            if (!_AuthResult.Scopes.Contains(scope.ToLower())) return false;
          return true;
       }
 

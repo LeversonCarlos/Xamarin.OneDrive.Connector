@@ -17,7 +17,7 @@ namespace Xamarin.CloudDrive.Connector
                var account = accounts.FirstOrDefault();
                if (account != null)
                {
-                  this.AuthResult = await this.Identity.AcquireTokenSilentAsync(account);
+                  this._AuthResult = await this.Identity.AcquireTokenSilentAsync(account);
                }
             }
             return this.IsTokenValid();
