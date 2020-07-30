@@ -1,15 +1,28 @@
 using Microsoft.Identity.Client;
 using Moq;
+using System;
 
 namespace Xamarin.CloudDrive.Connector.OneDriveTests
 {
    internal class IdentityBuilder
    {
-
-      readonly Mock<IClientApplicationBase> Mock;
-      public IdentityBuilder() => this.Mock = new Mock<IClientApplicationBase>();
+      readonly Mock<IOneDriveIdentity> Mock;
+      public IdentityBuilder() => this.Mock = new Mock<IOneDriveIdentity>();
       public static IdentityBuilder Create() => new IdentityBuilder();
-      public IClientApplicationBase Builder() => this.Mock.Object;
 
+      public IdentityBuilder WithScopes(string[] scopes)
+      {
+         this.Mock.SetupGet(m => m.Scopes).Returns(scopes);
+         return this;
+      }
+
+      public IdentityBuilder WithAcquireTokenFromIdentity(string accessCode, DateTimeOffset expiresOn, string[] scopes)
+      {
+         var result = new AuthenticationResult(accessCode, false, null, expiresOn, expiresOn.AddMinutes(1), null, null, null, scopes, Guid.Empty);
+         this.Mock.Setup(m => m.AcquireTokenFromIdentityAsync()).ReturnsAsync(result);
+         return this;
+      }
+
+      public IOneDriveIdentity Build() => this.Mock.Object;
    }
 }

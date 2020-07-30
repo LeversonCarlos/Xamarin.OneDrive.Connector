@@ -3,21 +3,23 @@ using Xunit;
 
 namespace Xamarin.CloudDrive.Connector.OneDriveTests
 {
-   public class Token
+   public partial class Token
    {
 
       [Fact]
-      public void ConstructorArgumentsMustBeSet()
+      public void Constructor_WithNullParameter_MustThrowException()
       {
-         var ex = Assert.Throws<ArgumentException>(() => new OneDriveToken(null, null));
-         Assert.Equal("The identity argument for the token client must be set", ex.Message);
+         var exception = Assert.Throws<ArgumentException>(() => new OneDriveToken(identity: null));
+
+         Assert.NotNull(exception);
+         Assert.Equal("The identity argument for the token client must be set", exception.Message);
       }
 
       [Fact]
-      public void InitialTokenMustBeEmpty()
+      public void Constructor_WithValidParameter_ShouldBeInitializedWithEmptyToken()
       {
-         var identity = IdentityBuilder.Create().Builder();
-         var token = new OneDriveToken(identity, null);
+         var identity = IdentityBuilder.Create().Build();
+         var token = new OneDriveToken(identity);
 
          var expected = "";
          var actual = token.GetToken();

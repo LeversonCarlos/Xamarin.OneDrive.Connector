@@ -6,21 +6,25 @@ namespace Xamarin.CloudDrive.Connector
    partial class OneDriveToken
    {
 
-      bool IsTokenValid()
+      internal bool IsTokenValid()
       {
-         if (AuthResult == null) return false;
-         if (string.IsNullOrEmpty(AuthResult.AccessToken)) return false;
-         if (AuthResult.ExpiresOn < DateTimeOffset.UtcNow.AddMinutes(-1)) return false;
+         if (_AuthResult == null) return false;
+         if (string.IsNullOrEmpty(_AuthResult.AccessToken)) return false;
+         if (_AuthResult.ExpiresOn < DateTimeOffset.UtcNow.AddMinutes(-1)) return false;
          if (!IsScopeValid()) return false;
          return true;
       }
 
-      bool IsScopeValid()
+      internal bool IsScopeValid()
       {
-         if (AuthResult == null) return false;
-         if (AuthResult.Scopes == null) return false;
-         foreach (var scope in Scopes)
-            if (!AuthResult.Scopes.Contains(scope.ToLower())) return false;
+         if (_AuthResult == null) return false;
+         if (_AuthResult.Scopes == null) return false;
+         if (Identity.Scopes == null) return false;
+
+         var identityScopes = Identity.Scopes.OrderBy(x => x).ToArray();
+         var authScopes = _AuthResult.Scopes.OrderBy(x => x).ToArray();
+         if (!identityScopes.SequenceEqual(authScopes)) return false;
+
          return true;
       }
 
