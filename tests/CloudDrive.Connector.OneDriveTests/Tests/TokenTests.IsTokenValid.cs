@@ -19,10 +19,13 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       }
 
       [Fact]
-      public void IsTokenValid_WithEmptyAccessToken_MustResultFalse()
+      public async void IsTokenValid_WithEmptyAccessToken_MustResultFalse()
       {
-         var identity = IdentityBuilder.Create().With("").WithResult().Build();
+         var identity = IdentityBuilder.Create()
+            .WithAcquireTokenFromIdentity("", DateTimeOffset.UtcNow, null)
+            .Build();
          var token = new OneDriveToken(identity);
+         await token.AcquireTokenAsync();
 
          var expected = false;
          var actual = token.IsTokenValid();
@@ -33,17 +36,19 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       [Theory]
       [InlineData(-61)]
       [InlineData(-555.55)]
-      public void IsTokenValid_WithExpiredDate_MustResultFalse(double expiresSeconds)
+      public async void IsTokenValid_WithExpiredDate_MustResultFalse(double expiresSeconds)
       {
-         var identity = IdentityBuilder.Create().With("[test]").With(DateTimeOffset.UtcNow.AddSeconds(expiresSeconds)).WithResult().Build();
+         var identity = IdentityBuilder.Create()
+            .WithAcquireTokenFromIdentity("[test]", DateTimeOffset.UtcNow.AddSeconds(expiresSeconds), null)
+            .Build();
          var token = new OneDriveToken(identity);
+         await token.AcquireTokenAsync();
 
          var expected = false;
          var actual = token.IsTokenValid();
 
          Assert.Equal(expected, actual);
       }
-
 
    }
 }
