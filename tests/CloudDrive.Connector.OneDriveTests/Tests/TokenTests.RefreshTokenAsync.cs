@@ -45,12 +45,30 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       }
 
       [Fact]
-      public async void RefreshTokenAsync_WithValidAccount_ButFaileAUth_MustResultFalse()
+      public async void RefreshTokenAsync_WithValidAccount_ButFailedAuth_MustResultFalse()
       {
          var identity = IdentityBuilder.Create().WithGetAccounts("Dummy Username").Build();
          var token = new OneDriveToken(identity);
 
          var expected = false;
+         var actual = await token.RefreshTokenAsync();
+
+         Assert.Equal(expected, actual);
+      }
+
+      [Fact]
+      public async void RefreshTokenAsync_WithValidAccount_AndSuccessAuth_MustResultTrue()
+      {
+         var account = IdentityBuilder.GetAccount("Dummy Username");
+         var identity = IdentityBuilder
+            .Create()
+            .WithScopes(new string[] { "Dummy Scope" })
+            .WithGetAccounts(new IAccount[] { account })
+            .WithAcquireTokenSilent(account, "Dummy AccessCode", DateTimeOffset.UtcNow, new string[] { "Dummy Scope" })
+            .Build();
+         var token = new OneDriveToken(identity);
+
+         var expected = true;
          var actual = await token.RefreshTokenAsync();
 
          Assert.Equal(expected, actual);
