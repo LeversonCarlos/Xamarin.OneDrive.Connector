@@ -19,5 +19,33 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          Assert.Equal(ex.Message, actual.Message);
       }
 
+      [Fact]
+      public async void RemoveTokenAsync_WithNullAccounts_MustResultWithInvalidToken()
+      {
+         var identity = IdentityBuilder.Create().WithGetAccounts(accounts: null).Build();
+         var token = new OneDriveToken(identity);
+
+         await token.RemoveTokenAsync();
+
+         var expected = false;
+         var actual = token.IsTokenValid();
+
+         Assert.Equal(expected, actual);
+      }
+
+      [Fact]
+      public async void RemoveTokenAsync_WithAccounts_MustResultWithInvalidToken()
+      {
+         var identity = IdentityBuilder.Create().WithGetAccounts("Dummy Username").Build();
+         var token = new OneDriveToken(identity);
+
+         await token.RemoveTokenAsync();
+
+         var expected = false;
+         var actual = token.IsTokenValid();
+
+         Assert.Equal(expected, actual);
+      }
+
    }
 }
