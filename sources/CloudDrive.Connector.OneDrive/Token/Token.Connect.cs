@@ -12,13 +12,13 @@ namespace Xamarin.CloudDrive.Connector
          {
 
             // CHECK IF TOKEN IS STILL VALID
-            if (this.IsTokenValid()) { return true; }
+            if (IsTokenValid()) return true;
 
             // TRY TO REFRESH AN EXPIRED TOKEN 
-            if (await this.RefreshTokenAsync()) { return true; }
+            if (await RefreshTokenAsync()) return true;
 
             // ACQUIRE A NEW TOKEN THAT WILL ASK USER FOR AUTHENTICATION
-            if (await this.AcquireTokenAsync()) { return true; }
+            if (await AcquireTokenAsync()) return true;
 
             // OTHERWISE
             return false;
