@@ -10,7 +10,13 @@ namespace Xamarin.CloudDrive.Connector
       {
          try
          {
-            await this.RemoveTokenAsync();
+            var accounts = await Identity.GetAccountsAsync();
+            if (accounts != null)
+            {
+               foreach (var account in accounts)
+                  await Identity.RemoveAsync(account);
+            }
+            _AuthResult = null;
          }
          catch (Exception) { throw; }
       }
