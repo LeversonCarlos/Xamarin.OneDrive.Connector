@@ -4,7 +4,7 @@ namespace Xamarin.CloudDrive.Connector
    {
 
       public OneDriveToken() :
-         this(Dependency.GetService<OneDriveIdentity>())
+         this(Dependency.GetService<IOneDriveIdentity>())
       { }
 
    }

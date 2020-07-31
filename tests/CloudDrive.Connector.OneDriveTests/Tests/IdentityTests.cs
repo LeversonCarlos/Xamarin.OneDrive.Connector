@@ -32,7 +32,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
             .AddOneDriveConnector(clientID, "clientSecret", "redirectUri", scopes)
             .BuildServiceProvider();
 
-         var value = Assert.Throws<MsalClientException>(() => serviceProvider.GetService<OneDriveIdentity>());
+         var value = Assert.Throws<MsalClientException>(() => serviceProvider.GetService<IOneDriveIdentity>());
 
          Assert.NotNull(value);
          Assert.Equal("Error: ClientId is not a Guid.", value.Message);

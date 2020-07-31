@@ -11,9 +11,9 @@ namespace Xamarin.CloudDrive.Connector
       {
          Xamarin.Forms.DependencyService.Register<OneDriveSettings>();
          Xamarin.Forms.DependencyService.Get<OneDriveSettings>().Init(activity, clientID, redirectUri, scopes);
-         Xamarin.Forms.DependencyService.Register<OneDriveIdentity>();
-         Xamarin.Forms.DependencyService.Register<OneDriveToken>();
-         Xamarin.Forms.DependencyService.Register<OneDriveClient>();
+         Xamarin.Forms.DependencyService.Register<IOneDriveIdentity, OneDriveIdentity>();
+         Xamarin.Forms.DependencyService.Register<IOneDriveToken, OneDriveToken>();
+         Xamarin.Forms.DependencyService.Register<IOneDriveClient, OneDriveClient>();
          Xamarin.Forms.DependencyService.Register<OneDriveService>();
       }
 

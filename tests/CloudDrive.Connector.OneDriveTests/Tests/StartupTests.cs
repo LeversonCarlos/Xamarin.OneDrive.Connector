@@ -39,5 +39,21 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          Assert.Equal("Error: ClientId is not a Guid.", value.Message);
       }
 
+      [Fact]
+      public void ServiceInjected_WithDummyIdentity_MustNotBeNull()
+      {
+         var serviceCollection = new ServiceCollection();
+         var serviceProvider = serviceCollection
+            .AddSingleton(serviceProvider => IdentityBuilder.Create().Build())
+            .AddSingleton<IOneDriveToken, OneDriveToken>()
+            .AddSingleton<IOneDriveClient, OneDriveClient>()
+            .AddSingleton<OneDriveService>()
+            .BuildServiceProvider();
+
+         var value = serviceProvider.GetService<OneDriveService>();
+
+         Assert.NotNull(value);
+      }
+
    }
 }
