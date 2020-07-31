@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector
@@ -8,20 +7,16 @@ namespace Xamarin.CloudDrive.Connector
 
       public async Task<bool> CheckConnectionAsync()
       {
-         try
-         {
 
-            // CHECK IF TOKEN IS STILL VALID
-            if (this.IsTokenValid()) { return true; }
+         // CHECK IF TOKEN IS STILL VALID
+         if (IsTokenValid()) return true;
 
-            // TRY TO REFRESH AN EXPIRED TOKEN 
-            if (await this.RefreshTokenAsync()) { return true; }
+         // TRY TO REFRESH AN EXPIRED TOKEN 
+         if (await RefreshTokenAsync()) return true;
 
-            // OTHERWISE
-            return false;
+         // OTHERWISE
+         return false;
 
-         }
-         catch (Exception) { throw; }
       }
 
    }
