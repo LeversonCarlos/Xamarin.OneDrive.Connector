@@ -7,18 +7,16 @@ namespace Xamarin.CloudDrive.Connector
    partial class OneDriveToken
    {
 
-      async Task<bool> RefreshTokenAsync()
+      internal async Task<bool> RefreshTokenAsync()
       {
          try
          {
-            var accounts = await this.Identity.GetAccountsAsync();
-            if (accounts != null && accounts.Count() != 0)
+            var accounts = await Identity.GetAccountsAsync();
+            if (accounts?.Count() != 0)
             {
                var account = accounts.FirstOrDefault();
                if (account != null)
-               {
-                  this._AuthResult = await this.Identity.AcquireTokenSilentAsync(account);
-               }
+                  _AuthResult = await Identity.AcquireTokenSilentAsync(account);
             }
             return this.IsTokenValid();
          }
