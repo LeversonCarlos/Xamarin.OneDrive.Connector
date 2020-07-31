@@ -7,19 +7,33 @@ namespace Xamarin.CloudDrive.Connector
    internal partial class OneDriveClient : HttpClient, IOneDriveClient
    {
 
-      const string BaseURL = "https://graph.microsoft.com/v1.0/";
-      readonly IOneDriveToken Token;
-
-      internal OneDriveClient(IOneDriveToken token) : base(new OneDriveClientHandler(token))
+      internal OneDriveClient(IOneDriveToken token) :
+         base(new OneDriveClientHandler(token))
       {
-         if (token == null) throw new ArgumentException("The token argument for the http client must be set");
-         this.Token = token;
-         this.BaseAddress = new Uri(BaseURL);
+         Token = token;
+         BaseAddress = new Uri("https://graph.microsoft.com/v1.0/");
       }
 
-      public Task<bool> ConnectAsync() => this.Token.ConnectAsync();
-      public Task<bool> CheckConnectionAsync() => this.Token.CheckConnectionAsync();
-      public Task DisconnectAsync() => this.Token.DisconnectAsync();
+      IOneDriveToken _Token;
+      internal IOneDriveToken Token
+      {
+         get => _Token;
+         private set
+         {
+            if (value == null)
+               throw new ArgumentException("The token argument for the http client must be set");
+            _Token = value;
+         }
+      }
+
+      public Task<bool> ConnectAsync() =>
+         Token.ConnectAsync();
+
+      public Task<bool> CheckConnectionAsync() =>
+         Token.CheckConnectionAsync();
+
+      public Task DisconnectAsync() =>
+         Token.DisconnectAsync();
 
    }
 }

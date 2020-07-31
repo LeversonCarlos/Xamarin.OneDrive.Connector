@@ -7,13 +7,8 @@ namespace Xamarin.CloudDrive.Connector
    {
 
       public OneDriveClient(IServiceProvider serviceProvider) :
-         base(new OneDriveClientHandler(serviceProvider))
-      {
-         Token = Dependency.GetService<OneDriveToken>(serviceProvider);
-         if (Token == null)
-            throw new ArgumentException("The token argument for the http client must be set");
-         BaseAddress = new Uri(BaseURL);
-      }
+         this(Dependency.GetService<OneDriveToken>(serviceProvider))
+      { }
 
    }
 
