@@ -12,11 +12,4 @@ namespace Xamarin.CloudDrive.Connector
 
    }
 
-   partial class OneDriveClientHandler
-   {
-      public OneDriveClientHandler() :
-         this(Dependency.GetService<OneDriveToken>())
-      { }
-   }
-
 }
