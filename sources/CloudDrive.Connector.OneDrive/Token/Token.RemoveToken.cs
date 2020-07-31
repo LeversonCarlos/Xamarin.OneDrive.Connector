@@ -16,6 +16,7 @@ namespace Xamarin.CloudDrive.Connector
                foreach (var account in accounts)
                   await Identity.RemoveAsync(account);
             }
+            _AuthResult = null;
          }
          catch (Exception) { throw; }
       }
