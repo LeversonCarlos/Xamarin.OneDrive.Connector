@@ -21,9 +21,10 @@ namespace Xamarin.CloudDrive.Connector
          if (_AuthResult.Scopes == null) return false;
          if (Identity.Scopes == null) return false;
 
-         var identityScopes = Identity.Scopes.OrderBy(x => x).ToArray();
-         var authScopes = _AuthResult.Scopes.OrderBy(x => x).ToArray();
-         if (!identityScopes.SequenceEqual(authScopes)) return false;
+         var identityScopes = Identity.Scopes.Select(x => x.ToLower()).ToArray();
+         var authScopes = _AuthResult.Scopes.Select(x => x.ToLower()).ToArray();
+         foreach (var scope in identityScopes)
+            if (!authScopes.Contains(scope)) return false;
 
          return true;
       }
