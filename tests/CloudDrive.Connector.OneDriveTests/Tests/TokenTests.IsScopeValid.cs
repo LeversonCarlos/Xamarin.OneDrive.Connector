@@ -26,9 +26,9 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       [InlineData(new string[] { "A", "B" }, new string[] { }, false)]
       [InlineData(new string[] { "A", "B" }, new string[] { "" }, false)]
       [InlineData(new string[] { "A", "B" }, new string[] { "A" }, false)]
-      [InlineData(new string[] { "A", "B" }, new string[] { "A", "b" }, false)]
       [InlineData(new string[] { "A", "B" }, new string[] { "A", "B" }, true)]
       [InlineData(new string[] { "A", "B" }, new string[] { "B", "A" }, true)]
+      [InlineData(new string[] { "A" }, new string[] { "B", "A" }, true)]
       public async void IsScopeValid_WithSpecifiedParameters_MustResultSpecifiedValue(string[] identityScopes, string[] authScopes, bool expectedValue)
       {
          var identity = IdentityBuilder.Create()
