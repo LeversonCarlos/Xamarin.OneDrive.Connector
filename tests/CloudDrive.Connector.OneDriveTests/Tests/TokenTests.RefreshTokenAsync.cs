@@ -23,7 +23,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       public async void RefreshTokenAsync_WithException_MustResultFalse()
       {
          var ex = new Exception("Just a test exception");
-         var identity = IdentityBuilder.Create().WithGetAccounts(ex).Build();
+         var identity = IdentityBuilder.Create().WithGetAccounts(accounts: null).WithGetAccounts(ex).Build();
          var token = new OneDriveToken(identity);
 
          var expected = false;
