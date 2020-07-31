@@ -41,5 +41,20 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          Assert.Equal(expected, actual);
       }
 
+      [Fact]
+      public async void ConnectAsync_WithInvalidTokenThatGetsAcquired_MustResultTrue()
+      {
+         var identity = IdentityBuilder.Create()
+            .WithScopes(new string[] { "A" })
+            .WithAcquireTokenFromIdentity("[test]", DateTimeOffset.UtcNow, new string[] { "A" })
+            .Build();
+         var token = new OneDriveToken(identity);
+
+         var expected = true;
+         var actual = await token.ConnectAsync();
+
+         Assert.Equal(expected, actual);
+      }
+
    }
 }
