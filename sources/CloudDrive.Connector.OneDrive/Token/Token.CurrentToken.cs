@@ -9,8 +9,9 @@ namespace Xamarin.CloudDrive.Connector
 
       public string GetToken()
       {
-         if (!this.IsTokenValid()) { return ""; }
-         return this._AuthResult.AccessToken;
+         if (!IsTokenValid()) 
+            return "";
+         return _AuthResult.AccessToken;
       }
 
    }
