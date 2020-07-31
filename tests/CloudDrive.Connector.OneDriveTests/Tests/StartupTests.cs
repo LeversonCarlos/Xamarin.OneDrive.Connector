@@ -55,5 +55,20 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          Assert.NotNull(value);
       }
 
+      [Fact]
+      public void ServiceInjected_ForTheSecondTime_MustNotBeNull()
+      {
+         var serviceCollection = new ServiceCollection();
+         var serviceProvider = serviceCollection
+            .AddOneDriveConnector("clientID", "clientSecret", "redirectUri", new string[] { "scopes" })
+            .AddSingleton(serviceProvider => IdentityBuilder.Create().Build())
+            .AddSingleton<OneDriveService>()
+            .BuildServiceProvider();
+
+         var value = serviceProvider.GetService<OneDriveService>();
+
+         Assert.NotNull(value);
+      }
+
    }
 }
