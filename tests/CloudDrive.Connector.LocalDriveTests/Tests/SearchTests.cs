@@ -89,7 +89,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
          var directoryVM = new DirectoryVM { ID = currentDirectory };
          var value = await service.SearchFiles(directoryVM, "*.dll", limit);
 
-         Assert.Equal(expectedValue?.Select(x => x.ID)?.ToArray(), value?.Select(x => x.ID)?.ToArray());
+         Assert.Equal(expectedValue?.Select(x => x.Name)?.ToArray(), value?.Select(x => x.Name)?.ToArray());
          Assert.InRange(value.Length, 0, limit);
       }
 
@@ -139,7 +139,7 @@ namespace Xamarin.CloudDrive.Connector.LocalDriveTests
             .FirstOrDefault();
          var value = await service.GetDetails(sampleFile);
 
-         Assert.Equal(expectedValue?.ID, value?.ID);
+         Assert.Equal(expectedValue?.Name, value?.Name);
       }
 
    }
