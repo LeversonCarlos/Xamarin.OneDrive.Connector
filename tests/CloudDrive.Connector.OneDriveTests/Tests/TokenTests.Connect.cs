@@ -56,5 +56,18 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          Assert.Equal(expected, actual);
       }
 
+      [Fact]
+      public async void ConnectAsync_WithInvalidTokenThatDidntEvolve_MustResultFalse()
+      {
+         var identity = IdentityBuilder.Create()
+            .Build();
+         var token = new OneDriveToken(identity);
+
+         var expected = false;
+         var actual = await token.ConnectAsync();
+
+         Assert.Equal(expected, actual);
+      }
+
    }
 }
