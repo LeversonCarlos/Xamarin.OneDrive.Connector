@@ -23,6 +23,19 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          return this;
       }
 
+      public IdentityBuilder WithGetAccounts(string userName)
+      {
+         this.Mock.Setup(m => m.GetAccountsAsync()).ReturnsAsync(new IAccount[] { GetAccount(userName) });
+         return this;
+      }
+
+      static IAccount GetAccount(string userName)
+      {
+         var mock = new Mock<IAccount>();
+         mock.SetupGet(m => m.Username).Returns(userName);
+         return mock.Object;
+      }
+
       public IOneDriveIdentity Build() => this.Mock.Object;
    }
 }
