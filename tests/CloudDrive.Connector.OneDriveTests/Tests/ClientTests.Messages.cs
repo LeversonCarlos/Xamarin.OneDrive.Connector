@@ -97,5 +97,21 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          Assert.Equal(expected.ID, value.ID);
       }
 
+      [Fact]
+      public async void GetValueAsync_WithException_MustThrowException()
+      {
+         var token = TokenBuilder.Create().Build();
+         var exception = new Exception("Some dummy exception");
+         var httpClient = HandlerBuilder.Create().WithException(exception).Build();
+         var client = new OneDriveClient(token, httpClient);
+
+         var messageResponse = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
+         messageResponse.Content = new StringContent(exception.Message);
+         var value = await Assert.ThrowsAsync<Exception>(async () => await client.GetValueAsync<ProfileVM>(messageResponse));
+
+         Assert.NotNull(value);
+         Assert.Equal(exception.Message, value.Message);
+      }
+
    }
 }
