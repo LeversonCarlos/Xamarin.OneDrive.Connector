@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -8,13 +9,28 @@ namespace Xamarin.CloudDrive.Connector
    internal partial class OneDriveClientHandler : DelegatingHandler
    {
 
-      readonly IOneDriveToken Token;
-
       public OneDriveClientHandler(IOneDriveToken token)
       {
          Token = token;
          InnerHandler = new HttpClientHandler();
       }
+
+      IOneDriveToken _Token;
+      internal IOneDriveToken Token
+      {
+         get => _Token;
+         private set
+         {
+            if (value == null)
+               throw new ArgumentException("The token argument for the http client must be set");
+            _Token = value;
+         }
+      }
+
+
+      [Obsolete("This function is here just so we could call the protected function bellow from the tests project")]
+      internal Task<HttpResponseMessage> InternalSendAsync(HttpRequestMessage request, CancellationToken cancellationToken) =>
+         SendAsync(request, cancellationToken);
 
       protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
       {
