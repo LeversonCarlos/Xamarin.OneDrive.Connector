@@ -7,18 +7,18 @@ namespace Xamarin.CloudDrive.Connector
    partial class OneDriveClient
    {
 
-      public Task<HttpResponseMessage> GetAsync(string httpPath) =>
-         _HttpClient.GetAsync(httpPath);
+      public Task<HttpResponseMessage> GetAsync(string requestUri) =>
+         _HttpClient.GetAsync(requestUri);
 
-      public Task<HttpResponseMessage> PutAsync(string httpPath, HttpContent httpParameter) =>
-         _HttpClient.PutAsync(httpPath, httpParameter);
+      public Task<HttpResponseMessage> PutAsync(string requestUri, HttpContent httpParameter) =>
+         _HttpClient.PutAsync(requestUri, httpParameter);
 
-      public Task<HttpResponseMessage> PostAsync(string httpPath, HttpContent httpParameter) =>
-         _HttpClient.PostAsync(httpPath, httpParameter);
+      public Task<HttpResponseMessage> PostAsync(string requestUri, HttpContent httpParameter) =>
+         _HttpClient.PostAsync(requestUri, httpParameter);
 
-      public async Task<T> GetAsync<T>(string httpPath)
+      public async Task<T> GetAsync<T>(string requestUri)
       {
-         var httpMessage = await GetAsync(httpPath);
+         var httpMessage = await GetAsync(requestUri);
          var httpResult = await GetValueAsync<T>(httpMessage);
          return httpResult;
       }
