@@ -22,5 +22,19 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          Assert.Equal(expected.Message, value.Message);
       }
 
+      [Fact]
+      public async void GetAsync_WithSuccess_MustResultSpectedValue()
+      {
+         var token = TokenBuilder.Create().Build();
+         var requestUri = "someDummyUrl";
+         var expected = new ProfileVM { ID = "Some Test ID" };
+         var httpClient = HandlerBuilder.Create().WithGetAsync(expected).Build();
+         var client = new OneDriveClient(token, httpClient);
+
+         var value = await client.GetAsync<ProfileVM>(requestUri);
+
+         Assert.Equal(expected.ID, value.ID);
+      }
+
    }
 }
