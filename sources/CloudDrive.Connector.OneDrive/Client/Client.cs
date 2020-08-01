@@ -13,7 +13,7 @@ namespace Xamarin.CloudDrive.Connector
          { BaseAddress = new Uri("https://graph.microsoft.com/v1.0/") };
       }
 
-      readonly HttpClient _HttpClient;
+      internal readonly HttpClient _HttpClient;
 
       IOneDriveToken _Token;
       internal IOneDriveToken Token
