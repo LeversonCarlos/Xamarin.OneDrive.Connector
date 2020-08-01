@@ -6,10 +6,14 @@ namespace Xamarin.CloudDrive.Connector
    internal partial class OneDriveClient : IOneDriveClient
    {
 
-      internal OneDriveClient(IOneDriveToken token)
+      internal OneDriveClient(IOneDriveToken token) :
+         this(token, new OneDriveClientHandler(token))
+      { }
+
+      internal OneDriveClient(IOneDriveToken token, HttpMessageHandler messageHandler)
       {
          Token = token;
-         _HttpClient = new HttpClient(new OneDriveClientHandler(token))
+         _HttpClient = new HttpClient(messageHandler)
          { BaseAddress = new Uri("https://graph.microsoft.com/v1.0/") };
       }
 
