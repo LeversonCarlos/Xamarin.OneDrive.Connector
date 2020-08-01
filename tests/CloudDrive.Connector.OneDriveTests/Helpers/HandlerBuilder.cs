@@ -17,12 +17,12 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       ISetup<HttpMessageHandler, Task<HttpResponseMessage>> SendAsync() =>
          Mock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>());
 
-      public HandlerBuilder WithGetAsync(Exception ex)
+      public HandlerBuilder WithException(Exception ex)
       {
          SendAsync().ThrowsAsync(ex);
          return this;
       }
-      public HandlerBuilder WithGetAsync<T>(T value)
+      public HandlerBuilder WithResult<T>(T value)
       {
          SendAsync().ReturnsAsync(GetResponseMessage(value));
          return this;
