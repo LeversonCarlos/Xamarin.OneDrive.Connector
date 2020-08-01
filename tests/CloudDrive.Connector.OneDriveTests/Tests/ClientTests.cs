@@ -20,7 +20,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       [Fact]
       public void Constructor_BaseAddress_MustBeAsSpected()
       {
-         var client = new OneDriveClient(TokenBuilder.Create().Builder());
+         var client = new OneDriveClient(TokenBuilder.Create().Build());
 
          var expected = "https://graph.microsoft.com/v1.0/";
          var value = client._HttpClient.BaseAddress.AbsoluteUri;

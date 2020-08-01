@@ -8,7 +8,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       readonly Mock<IOneDriveToken> Mock;
       public TokenBuilder() => this.Mock = new Mock<IOneDriveToken>();
       public static TokenBuilder Create() => new TokenBuilder();
-      public IOneDriveToken Builder() => this.Mock.Object;
+      public IOneDriveToken Build() => this.Mock.Object;
 
       public TokenBuilder WithConnectionState(bool state)
       {

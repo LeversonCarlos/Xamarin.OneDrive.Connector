@@ -11,7 +11,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          var token = TokenBuilder
             .Create()
             .WithConnectionState(false)
-            .Builder();
+            .Build();
          var client = new OneDriveClient(token);
 
          var expected = false;
@@ -26,7 +26,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          var token = TokenBuilder
             .Create()
             .WithConnectExecution(true)
-            .Builder();
+            .Build();
          var client = new OneDriveClient(token);
 
          var expected = true;
@@ -41,7 +41,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          var token = TokenBuilder
             .Create()
             .WithConnectExecution(false)
-            .Builder();
+            .Build();
          var client = new OneDriveClient(token);
 
          await client.DisconnectAsync();
