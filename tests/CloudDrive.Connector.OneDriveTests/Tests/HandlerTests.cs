@@ -19,6 +19,34 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       }
 
       [Fact]
+      public async void CreateMessage_WithContent_MustResultAsSpected()
+      {
+         var token = TokenBuilder.Create().Build();
+         var handler = new OneDriveClientHandler(token);
+
+         var httpCode = System.Net.HttpStatusCode.BadRequest;
+         var httpContent = "Dummy Content";
+         var value = handler.CreateMessage(httpCode, httpContent);
+
+         Assert.Equal(httpCode, value.StatusCode);
+         Assert.Equal(httpContent, await value.Content.ReadAsStringAsync());
+      }
+
+      [Fact]
+      public void CreateMessage_WithoutContent_MustResultAsSpected()
+      {
+         var token = TokenBuilder.Create().Build();
+         var handler = new OneDriveClientHandler(token);
+
+         var httpCode = System.Net.HttpStatusCode.BadRequest;
+         var httpContent = "";
+         var value = handler.CreateMessage(httpCode, httpContent);
+
+         Assert.Equal(httpCode, value.StatusCode);
+         Assert.Null(value.Content);
+      }
+
+      [Fact]
       public async void SendAsync_WithoutTokenConnection_MustResultUnauthorized()
       {
          var token = TokenBuilder.Create().Build();
