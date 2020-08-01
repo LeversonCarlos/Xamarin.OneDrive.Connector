@@ -1,18 +1,19 @@
 using System;
 using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace Xamarin.CloudDrive.Connector
 {
-   internal partial class OneDriveClient : HttpClient, IOneDriveClient
+   internal partial class OneDriveClient : IOneDriveClient
    {
 
-      internal OneDriveClient(IOneDriveToken token) :
-         base(new OneDriveClientHandler(token))
+      internal OneDriveClient(IOneDriveToken token)
       {
          Token = token;
-         BaseAddress = new Uri("https://graph.microsoft.com/v1.0/");
+         _HttpClient = new HttpClient(new OneDriveClientHandler(token))
+         { BaseAddress = new Uri("https://graph.microsoft.com/v1.0/") };
       }
+
+      readonly HttpClient _HttpClient;
 
       IOneDriveToken _Token;
       internal IOneDriveToken Token
@@ -25,15 +26,6 @@ namespace Xamarin.CloudDrive.Connector
             _Token = value;
          }
       }
-
-      public Task<bool> ConnectAsync() =>
-         Token.ConnectAsync();
-
-      public Task<bool> CheckConnectionAsync() =>
-         Token.CheckConnectionAsync();
-
-      public Task DisconnectAsync() =>
-         Token.DisconnectAsync();
 
    }
 }
