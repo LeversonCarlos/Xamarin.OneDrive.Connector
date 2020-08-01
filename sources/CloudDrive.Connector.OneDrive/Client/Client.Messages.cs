@@ -23,24 +23,24 @@ namespace Xamarin.CloudDrive.Connector
          return httpResult;
       }
 
-      public async Task<T> PostAsync<T>(string httpPath, HttpContent parameter)
+      public async Task<T> PostAsync<T>(string requestUri, HttpContent parameter)
       {
          HttpContent httpParameter = (dynamic)parameter;
-         var httpMessage = await PostAsync(httpPath, httpParameter);
+         var httpMessage = await PostAsync(requestUri, httpParameter);
          var httpResult = await GetValueAsync<T>(httpMessage);
          return httpResult;
       }
 
-      public async Task<R> PostAsync<T, R>(string httpPath, T parameter)
+      public async Task<R> PostAsync<T, R>(string requestUri, T parameter)
       {
          var jsonParameter = System.Text.Json.JsonSerializer.Serialize(parameter, new System.Text.Json.JsonSerializerOptions { });
          HttpContent httpParameter = new StringContent(jsonParameter, System.Text.Encoding.UTF8, "application/json");
-         var httpMessage = await PostAsync(httpPath, httpParameter);
+         var httpMessage = await PostAsync(requestUri, httpParameter);
          var httpResult = await GetValueAsync<R>(httpMessage);
          return httpResult;
       }
 
-      async Task<T> GetValueAsync<T>(HttpResponseMessage httpMessage)
+      internal async Task<T> GetValueAsync<T>(HttpResponseMessage httpMessage)
       {
          if (!httpMessage.IsSuccessStatusCode)
             throw new Exception(await httpMessage.Content.ReadAsStringAsync());
