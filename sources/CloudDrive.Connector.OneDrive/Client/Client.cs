@@ -3,7 +3,7 @@ using System.Net.Http;
 
 namespace Xamarin.CloudDrive.Connector
 {
-   internal partial class OneDriveClient : IOneDriveClient
+   public partial class OneDriveClient : IOneDriveClient
    {
 
       internal OneDriveClient(IOneDriveToken token) :

@@ -5,7 +5,7 @@ namespace Xamarin.CloudDrive.Connector
    public partial class OneDriveService : ICloudDriveService
    {
 
-      readonly IOneDriveClient Client;
+      public readonly IOneDriveClient Client;
 
       internal OneDriveService(IOneDriveClient client)
       {

@@ -18,19 +18,20 @@ namespace Xamarin.CloudDrive.Connector
 
       protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
       {
-         if (!await this.Token.CheckConnectionAsync())
-         { return this.CreateMessage(HttpStatusCode.Unauthorized, "The token connect method has failed"); }
+         if (!await Token.CheckConnectionAsync())
+            return CreateMessage(HttpStatusCode.Unauthorized, "The token connect method has failed");
 
-         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", this.Token.GetToken());
-         return await base.SendAsync(request, cancellationToken);
+         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", Token.GetToken());
+
+         var responseMessage = await base.SendAsync(request, cancellationToken);
+         return responseMessage;
       }
 
-      public HttpResponseMessage CreateMessage(HttpStatusCode statusCode) => this.CreateMessage(statusCode, string.Empty);
-      public HttpResponseMessage CreateMessage(HttpStatusCode statusCode, string content)
+      internal HttpResponseMessage CreateMessage(HttpStatusCode statusCode, string content)
       {
          var responseMessage = new HttpResponseMessage(statusCode);
          if (!string.IsNullOrEmpty(content))
-         { responseMessage.Content = new StringContent(content); }
+            responseMessage.Content = new StringContent(content);
          return responseMessage;
       }
 
