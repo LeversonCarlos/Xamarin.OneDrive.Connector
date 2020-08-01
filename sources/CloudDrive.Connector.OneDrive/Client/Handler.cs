@@ -15,17 +15,7 @@ namespace Xamarin.CloudDrive.Connector
          InnerHandler = new HttpClientHandler();
       }
 
-      IOneDriveToken _Token;
-      internal IOneDriveToken Token
-      {
-         get => _Token;
-         private set
-         {
-            if (value == null)
-               throw new ArgumentException("The token argument for the http client must be set");
-            _Token = value;
-         }
-      }
+      readonly IOneDriveToken Token;
 
 
       [Obsolete("This function is here just so we could call the protected function bellow from the tests project")]
