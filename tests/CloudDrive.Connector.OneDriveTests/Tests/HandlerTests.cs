@@ -19,7 +19,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       }
 
       [Fact]
-      public async void SendAsync_WithoutConnection_MustResultUnauthorized()
+      public async void SendAsync_WithoutTokenConnection_MustResultUnauthorized()
       {
          var token = TokenBuilder.Create().Build();
          var handler = new OneDriveClientHandler(token);
@@ -31,6 +31,22 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          Assert.Equal(System.Net.HttpStatusCode.Unauthorized, value.StatusCode);
          Assert.Equal("The token connect method has failed", await value.Content.ReadAsStringAsync());
       }
+
+      [Fact]
+      public async void SendAsync_WithTokenConnection_MustResultSpected()
+      {
+         var token = TokenBuilder.Create().WithConnectionState(true).Build();
+         var handler = new OneDriveClientHandler(token);
+
+#pragma warning disable CS0618 // Type or member is obsolete
+         var request = new HttpRequestMessage(HttpMethod.Get, "http://www.google.com");
+         var value = await handler.InternalSendAsync(request, new System.Threading.CancellationToken());
+#pragma warning restore CS0618 // Type or member is obsolete
+
+         Assert.Equal(System.Net.HttpStatusCode.OK, value.StatusCode);
+         Assert.StartsWith("<!doctype html>", await value.Content.ReadAsStringAsync());
+      }
+
 
    }
 }

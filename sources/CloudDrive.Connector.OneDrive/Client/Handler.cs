@@ -31,7 +31,6 @@ namespace Xamarin.CloudDrive.Connector
       [Obsolete("This function is here just so we could call the protected function bellow from the tests project")]
       internal Task<HttpResponseMessage> InternalSendAsync(HttpRequestMessage request, CancellationToken cancellationToken) =>
          SendAsync(request, cancellationToken);
-
       protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
       {
          if (!await Token.CheckConnectionAsync())
