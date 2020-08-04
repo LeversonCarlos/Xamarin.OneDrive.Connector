@@ -1,6 +1,7 @@
 # Xamarin.CloudDrive.Connector
 A wrapper around some of the **most common cloud drivers** around to be easily used with **xamarin apps**. What started as a specific microsoft onedrive connector, now evolved to a generic library with **multiple implementations** *(including an onedrive one)*.  
 ![Release](https://github.com/LeversonCarlos/Xamarin.OneDrive.Connector/workflows/Release/badge.svg)
+![Nuget](https://img.shields.io/nuget/v/Xamarin.CloudDrive.Connector.Common?label=nuget&logo=nuget) 
 [![codecov](https://codecov.io/gh/LeversonCarlos/Xamarin.OneDrive.Connector/branch/refactoring/graph/badge.svg)](https://codecov.io/gh/LeversonCarlos/Xamarin.OneDrive.Connector)
 
 ## Install instructions
