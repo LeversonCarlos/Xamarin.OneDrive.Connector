@@ -4,7 +4,7 @@ on: [pull_request]
   
 jobs:
   tests:
-    name: Validate Pull Request
+    name: Validate
     runs-on: windows-latest
 
     steps:
