@@ -9,10 +9,8 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       [Fact]
       public async void GetProfile_WithException_MustThrowException()
       {
-         var token = TokenBuilder.Create().Build();
-         var exception = new Exception("");
-         var httpClient = HandlerBuilder.Create().WithException(exception).Build();
-         var client = new OneDriveClient(token, httpClient);
+         var exception = new Exception("Some Dummy Exception");
+         var client = ClientBuilder.Create().With(m => m.GetAsync("me?$select=id,displayName,userPrincipalName"), exception).Build();
          var service = new OneDriveService(client);
 
          var value = await Assert.ThrowsAsync<Exception>(async ()=> await service.GetProfile());
