@@ -28,7 +28,7 @@ namespace Xamarin.CloudDrive.Connector
             throw new ArgumentException("The directory ID for the onedrive client is invalid");
 
          var directoryParts = itemID.Split(new string[] { "!" }, StringSplitOptions.RemoveEmptyEntries);
-         if (directoryParts?.Length != 2)
+         if (directoryParts.Length != 2)
             throw new ArgumentException("The directory ID for the onedrive client is invalid");
 
          var driveID = (string)directoryParts.GetValue(0);
