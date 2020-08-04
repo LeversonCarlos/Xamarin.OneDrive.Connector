@@ -18,14 +18,18 @@ namespace Xamarin.CloudDrive.Connector
          {
             if (value == null)
                throw new ArgumentException("The client argument for the OneDrive service must be set");
-            Client = value;
+            _Client = value;
          }
       }
 
-      (string DriveID, string ID) GetIDs(string itemID)
+      internal (string DriveID, string ID) GetIDs(string itemID)
       {
+         if (string.IsNullOrEmpty(itemID))
+            throw new ArgumentException("The directory ID for the onedrive client is invalid");
+
          var directoryParts = itemID.Split(new string[] { "!" }, StringSplitOptions.RemoveEmptyEntries);
-         if (directoryParts?.Length != 2) throw new Exception("The directory ID for the onedrive client is invalid");
+         if (directoryParts?.Length != 2)
+            throw new ArgumentException("The directory ID for the onedrive client is invalid");
 
          var driveID = (string)directoryParts.GetValue(0);
          var ID = (string)directoryParts.GetValue(1);
