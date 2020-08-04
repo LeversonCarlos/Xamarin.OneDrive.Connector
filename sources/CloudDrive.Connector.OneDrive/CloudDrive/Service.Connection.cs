@@ -5,9 +5,14 @@ namespace Xamarin.CloudDrive.Connector
    partial class OneDriveService
    {
 
-      public Task<bool> ConnectAsync() => this.Client.ConnectAsync();
-      public Task<bool> CheckConnectionAsync() => this.Client.CheckConnectionAsync();
-      public Task DisconnectAsync() => this.Client.DisconnectAsync();
+      public Task<bool> ConnectAsync() =>
+         Client.ConnectAsync();
+
+      public Task<bool> CheckConnectionAsync() =>
+         Client.CheckConnectionAsync();
+
+      public Task DisconnectAsync() =>
+         Client.DisconnectAsync();
 
    }
 }
