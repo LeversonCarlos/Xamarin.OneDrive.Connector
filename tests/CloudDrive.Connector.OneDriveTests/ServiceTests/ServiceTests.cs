@@ -17,6 +17,18 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          Assert.Equal(expected, value.Message);
       }
 
+      [Fact]
+      public void Constructor_WithValidArgument_MustSetProperty()
+      {
+         var client = ClientBuilder.Create().Build();
+         var service = new OneDriveService(client: client);
+
+         var expected = client;
+         var value = service.Client;
+
+         Assert.Same(expected, value);
+      }
+
       [Theory]
       [InlineData((string)null)]
       [InlineData("")]
