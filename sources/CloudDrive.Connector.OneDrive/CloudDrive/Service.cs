@@ -39,14 +39,15 @@ namespace Xamarin.CloudDrive.Connector
          return (DriveID: driveID, ID: ID);
       }
 
-      string GetPath(string path)
+      internal string GetPath(string path)
       {
-         if (string.IsNullOrEmpty(path)) return "";
+         if (string.IsNullOrEmpty(path)) 
+            return "";
 
          var fullPath = Uri.UnescapeDataString(path);
 
          var splitIndex = fullPath.IndexOf(":");
-         if (splitIndex != -1 && (fullPath.StartsWith($"/drives/") || fullPath.StartsWith($"/drive/")))
+         if (splitIndex != -1 && (fullPath.StartsWith("/drives/") || fullPath.StartsWith("/drive/")))
             fullPath = fullPath.Substring(splitIndex + 1);
 
          return fullPath;
