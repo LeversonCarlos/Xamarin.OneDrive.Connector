@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using Xunit.Sdk;
 
 namespace Xamarin.CloudDrive.Connector.OneDriveTests
 {
@@ -10,7 +9,20 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
    {
 
       [Fact]
-      public async void GetSharedDrives_WithException_MustResultNull()
+      internal async void GetDrives_WithException_MustThrowException()
+      {
+         var exception = new Exception("Some Dummy Exception");
+         var client = ClientBuilder.Create().With("me?$select=id,displayName,userPrincipalName", exception).Build();
+         var service = new OneDriveService(client);
+
+         var value = await Assert.ThrowsAsync<Exception>(async () => await service.GetDrives());
+
+         Assert.NotNull(value);
+         Assert.Equal(exception.Message, value.Message);
+      }
+
+      [Fact]
+      internal async void GetSharedDrives_WithException_MustResultNull()
       {
          var exception = new Exception("Some Dummy Exception");
          var client = ClientBuilder.Create().With("me/drive/sharedWithMe", exception).Build();
