@@ -25,7 +25,7 @@ namespace Xamarin.CloudDrive.Connector
 
             // MOUNT FULL PATH
             var getFullPath = new Func<DTOs.Directory, string>(item =>
-               $"{GetPath(item?.parentReference?.path)}/{item.name}"
+               $"{GetPath(item.parentReference?.path)}/{item.name}"
             );
 
             while (!string.IsNullOrEmpty(httpPath))
@@ -36,7 +36,7 @@ namespace Xamarin.CloudDrive.Connector
                   .GetAsync<DTOs.DirectorySearch>(httpPath);
 
                // STORE RESULT
-               var folders = httpResult?.value?
+               var folders = httpResult.value?
                   .Where(item => item.folder != null)
                   .Select(item => new DirectoryVM
                   {

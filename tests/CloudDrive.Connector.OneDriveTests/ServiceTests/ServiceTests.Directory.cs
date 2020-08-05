@@ -25,20 +25,32 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       [Fact]
       internal async void GetDirectories_WithValidArgument_MustResultAsSpected()
       {
-         var paramData = new DTOs.DirectorySearch
+         var firstData = new DTOs.DirectorySearch
          {
             value = new DTOs.Directory[] {
-               new DTOs.Directory {  },
                new DTOs.Directory {
                   folder =new DTOs.DirectoryDetails{ },
                   id="fileID", name="fileName",
-                  parentReference=new DTOs.DirectoryParent{ path="/parent/folderName" } }
+                  parentReference=new DTOs.DirectoryParent{ path="/parent/folderName" }
+               }
+            },
+            nextLink = "$top=1000&$page=2"
+         };
+         var secondData = new DTOs.DirectorySearch
+         {
+            value = new DTOs.Directory[] {
+               new DTOs.Directory { },
+               new DTOs.Directory {
+                  folder =new DTOs.DirectoryDetails{ },
+                  id="file2ID", name="file2Name"
+               },
             },
             nextLink = "https://graph.microsoft.com/v1.0/"
          };
          var client = ClientBuilder
             .Create()
-            .With("", paramData)
+            .With("$top=1000", firstData)
+            .With("$top=1000&$page=2", secondData)
             .Build();
          var service = new OneDriveService(client);
          var directory = new DirectoryVM { ID = "driveID!folderID" };
@@ -46,7 +58,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          var value = await service.GetDirectories(directory);
 
          Assert.NotNull(value);
-         Assert.Single(value);
+         Assert.Equal(2, value.Length);
          Assert.Equal("fileID", value[0].ID);
          Assert.Equal("fileName", value[0].Name);
          Assert.Equal("/parent/folderName/fileName", value[0].Path);
