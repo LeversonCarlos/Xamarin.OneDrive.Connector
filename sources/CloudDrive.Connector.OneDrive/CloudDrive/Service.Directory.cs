@@ -37,12 +37,12 @@ namespace Xamarin.CloudDrive.Connector
 
                // STORE RESULT
                var folders = httpResult?.value?
-                  .Where(x => x.folder != null)
-                  .Select(x => new DirectoryVM
+                  .Where(item => item.folder != null)
+                  .Select(item => new DirectoryVM
                   {
-                     ID = x.id,
-                     Name = x.name,
-                     Path = getFullPath(x),
+                     ID = item.id,
+                     Name = item.name,
+                     Path = getFullPath(item),
                      ParentID = directory.ID
                   })
                   .ToList();
