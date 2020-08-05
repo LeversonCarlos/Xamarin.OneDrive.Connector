@@ -2,22 +2,12 @@ name: Release
 
 on:
   push:
-    branches: [ master ]
-  workflow_dispatch:
-      # Inputs the workflow accepts.
-      inputs:
-        name:
-          # Friendly description to be shown in the UI instead of 'name'
-          description: 'Person to greet'
-          # Default value if no value is explicitly provided
-          default: 'World'
-          # Input has to be provided for the workflow to run
-          required: true    
+    branches: [ master, dev, refactoring ]
   
 jobs:
 
   tests:
-    name: Validate Pull Request
+    name: Validate Changes
     runs-on: windows-latest
 
     steps:
@@ -108,6 +98,7 @@ jobs:
     needs: [build]
     name: Publish Packages
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
     
     steps:
     

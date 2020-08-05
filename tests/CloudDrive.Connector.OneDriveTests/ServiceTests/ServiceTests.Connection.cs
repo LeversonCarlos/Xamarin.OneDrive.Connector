@@ -19,7 +19,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       [Fact]
       public async void CheckConnectionAsync_WithDefaultClient_MustResultFalse()
       {
-         var client = ClientBuilder.Create().Build();
+         var client = ClientBuilder.Create().WithoutConnection().Build();
          var service = new OneDriveService(client: client);
 
          var value = await service.CheckConnectionAsync();

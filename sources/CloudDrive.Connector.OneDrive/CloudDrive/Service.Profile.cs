@@ -11,29 +11,40 @@ namespace Xamarin.CloudDrive.Connector
       {
          try
          {
-            var messageContent = await this.Client.GetAsync<DTOs.Profile>("me?$select=id,displayName,userPrincipalName");
+            if (!await Client.CheckConnectionAsync())
+               return null;
+
+            var profileDTO = await Client
+               .GetAsync<DTOs.Profile>("me?$select=id,displayName,userPrincipalName");
+
             var profileData = new ProfileVM
             {
-               ID = messageContent.id,
-               Description = messageContent.displayName,
+               ID = profileDTO.id,
+               Description = profileDTO.displayName,
                KeyValues = new Dictionary<string, string> {
-                  { "EMail", messageContent.userPrincipalName }
+                  { "EMail", profileDTO.userPrincipalName }
                }
             };
-            // profileData.ProfilePicture = await this.GetProfilePicture();
+
             return profileData;
          }
          catch (Exception) { throw; }
       }
 
-      private async Task<byte[]> GetProfilePicture()
+      public async Task<byte[]> GetProfilePicture()
       {
          try
          {
-            var message = await this.Client.GetAsync("me/photo/$value");
-            if (!message.IsSuccessStatusCode)
-            { throw new Exception(await message.Content.ReadAsStringAsync()); }
+
+            if (!await Client.CheckConnectionAsync())
+               return null;
+
+            var message = await Client
+               .GetAsync("me/photo/$value");
+
+            message.EnsureSuccessStatusCode();
             var profilePicture = await message.Content.ReadAsByteArrayAsync();
+
             return profilePicture;
          }
          catch (Exception) { throw; }
