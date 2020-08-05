@@ -22,6 +22,17 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       }
 
       [Fact]
+      internal async void GetDrives_WithoutConnection_MustResultNull()
+      {
+         var client = ClientBuilder.Create().WithoutConnection().Build();
+         var service = new OneDriveService(client);
+
+         var value = await service.GetDrives();
+
+         Assert.Null(value);
+      }
+
+      [Fact]
       internal async void GetSharedDrives_WithException_MustResultNull()
       {
          var exception = new Exception("Some Dummy Exception");

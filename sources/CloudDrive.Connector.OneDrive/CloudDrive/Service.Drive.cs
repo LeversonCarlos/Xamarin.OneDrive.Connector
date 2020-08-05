@@ -14,8 +14,12 @@ namespace Xamarin.CloudDrive.Connector
          {
             var drives = new List<DirectoryVM>();
 
-            // USER's ROOT DRIVE
+            // USER's PROFILE
             var profile = await GetProfile();
+            if (profile == null)
+               return null;
+
+            // ROOT DRIVE
             var rootDrive = new DirectoryVM
             {
                ID = $"{profile.ID}!root",
@@ -24,7 +28,7 @@ namespace Xamarin.CloudDrive.Connector
             };
             drives.Add(rootDrive);
 
-            // LOCATE SHARED DRIVES
+            // SHARED DRIVES
             var sharedDrives = await GetSharedDrives();
             if (sharedDrives != null)
                drives.AddRange(sharedDrives);
