@@ -52,13 +52,56 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          Assert.Empty(value);
       }
       public static IEnumerable<object[]> GetSharedDrives_WithInvalidShares_MustResultEmptyArray_Data() =>
-         new[]
-         {
-            new object[] { new DTOs.SharedDriveSearch { value = new DTOs.SharedDrive[] { } } },
-            new object[] { new DTOs.SharedDriveSearch { value = new DTOs.SharedDrive[] {
-               new DTOs.SharedDrive{ remoteItem=new DTOs.SharedDriveDetails{ } }
-               } } }
+         GetSharedDrives_WithInvalidShares_MustResultEmptyArray_Data_Shares()
+         .Union(new[] { new object[] { new DTOs.SharedDriveSearch { value = new DTOs.SharedDrive[] { } } } })
+         .ToArray();
+      internal static IEnumerable<object[]> GetSharedDrives_WithInvalidShares_MustResultEmptyArray_Data_Shares() =>
+         GetSharedDrives_WithInvalidShares_MustResultEmptyArray_Data_Drives()
+            .Select(drive => new DTOs.SharedDriveSearch { value = new DTOs.SharedDrive[] { drive } })
+            .Select(search => new object[] { search })
+            .ToArray();
+      internal static DTOs.SharedDrive[] GetSharedDrives_WithInvalidShares_MustResultEmptyArray_Data_Drives() =>
+         new[] {
+            new DTOs.SharedDrive{},
+            new DTOs.SharedDrive{ remoteItem=new DTOs.SharedDriveDetails{ } },
+            new DTOs.SharedDrive{ remoteItem=new DTOs.SharedDriveDetails{ shared=new DTOs.SharedDriveDetailsShared{ } } },
+            new DTOs.SharedDrive{ remoteItem=new DTOs.SharedDriveDetails{ folder=new DTOs.DirectoryDetails{ } } },
+            new DTOs.SharedDrive{ remoteItem=new DTOs.SharedDriveDetails{ folder=new DTOs.DirectoryDetails{ },
+               shared=new DTOs.SharedDriveDetailsShared{ } } },
+            new DTOs.SharedDrive{ remoteItem=new DTOs.SharedDriveDetails{ folder=new DTOs.DirectoryDetails{ },
+               shared=new DTOs.SharedDriveDetailsShared{ owner=new DTOs.SharedDriveDetailsSharedOwner{ } } } },
+            new DTOs.SharedDrive{ remoteItem=new DTOs.SharedDriveDetails{ folder=new DTOs.DirectoryDetails{ },
+               shared=new DTOs.SharedDriveDetailsShared{ owner=new DTOs.SharedDriveDetailsSharedOwner{ user=new DTOs.Profile{ } } } } },
+            new DTOs.SharedDrive{ remoteItem=new DTOs.SharedDriveDetails{ folder=new DTOs.DirectoryDetails{ },
+               shared=new DTOs.SharedDriveDetailsShared{ owner=new DTOs.SharedDriveDetailsSharedOwner{ user=new DTOs.Profile{ id="" } } } } },
          };
+
+      [Fact]
+      internal async void GetSharedDrives_WithValidShares_MustResultAsSpected()
+      {
+
+         var drive = new DTOs.SharedDrive
+         {
+            remoteItem = new DTOs.SharedDriveDetails
+            {
+               id = "driveID",
+               name = "driveName",
+               folder = new DTOs.DirectoryDetails { },
+               shared = new DTOs.SharedDriveDetailsShared { owner = new DTOs.SharedDriveDetailsSharedOwner { user = new DTOs.Profile { id = "userID" } } }
+            }
+         };
+         var param = new DTOs.SharedDriveSearch { value = new DTOs.SharedDrive[] { drive } };
+         var client = ClientBuilder.Create().With("me/drive/sharedWithMe", param).Build();
+         var service = new OneDriveService(client);
+
+         var value = await service.GetSharedDrives();
+
+         Assert.NotNull(value);
+         Assert.NotEmpty(value);
+         Assert.Equal("driveID", value[0].ID);
+         Assert.Equal("driveName", value[0].Name);
+         Assert.Equal("/", value[0].Path);
+      }
 
    }
 }
