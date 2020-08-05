@@ -35,9 +35,16 @@ namespace Xamarin.CloudDrive.Connector
       {
          try
          {
-            var message = await Client.GetAsync("me/photo/$value");
+
+            if (!await Client.CheckConnectionAsync())
+               return null;
+
+            var message = await Client
+               .GetAsync("me/photo/$value");
+
             message.EnsureSuccessStatusCode();
             var profilePicture = await message.Content.ReadAsByteArrayAsync();
+
             return profilePicture;
          }
          catch (Exception) { throw; }
