@@ -34,27 +34,28 @@ namespace Xamarin.CloudDrive.Connector
          catch (Exception) { throw; }
       }
 
-      async Task<DirectoryVM[]> GetSharedDrivers()
+      internal async Task<DirectoryVM[]> GetSharedDrivers()
       {
          try
          {
 
-            var messageContent = await this.Client.GetAsync<DTOs.SharedDriveSearch>("me/drive/sharedWithMe");
-            if (messageContent == null || messageContent.value == null) return null;
+            var messageContent = await Client
+               .GetAsync<DTOs.SharedDriveSearch>("me/drive/sharedWithMe");
+            if (messageContent == null || messageContent.value == null)
+               return null;
 
             var sharedDrives = messageContent.value
-               ?.Where(v => !string.IsNullOrEmpty(v.remoteItem?.shared?.owner?.user?.id))
-               ?.Where(v => v.remoteItem.folder != null)
-               ?.Select(v => new DirectoryVM
+               .Where(v => !string.IsNullOrEmpty(v.remoteItem?.shared?.owner?.user?.id))
+               .Where(v => v.remoteItem.folder != null)
+               .Select(v => new DirectoryVM
                {
                   ID = v.remoteItem.id,
-                  Name = $"{v.remoteItem.name}",
+                  Name = v.remoteItem.name,
                   Path = "/"
                })
-               ?.ToArray();
+               .ToArray();
 
             return sharedDrives;
-
          }
          catch (Exception) { return null; }
       }
