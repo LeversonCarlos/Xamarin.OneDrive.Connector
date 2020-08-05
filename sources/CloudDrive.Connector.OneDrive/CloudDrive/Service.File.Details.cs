@@ -13,14 +13,16 @@ namespace Xamarin.CloudDrive.Connector
          {
 
             var IDs = GetIDs(fileID);
-            var httpPath = $"drives/{IDs.DriveID}/items/{IDs.ID}";
-            httpPath += "?select=id,name,createdDateTime,size,@microsoft.graph.downloadUrl,file,parentReference";
+            var httpPath =
+               $"drives/{IDs.DriveID}/items/{IDs.ID}" +
+               "?select=id,name,createdDateTime,size,@microsoft.graph.downloadUrl,file,parentReference";
 
             // REQUEST DATA FROM SERVER
-            var fileDTO = await this.Client.GetAsync<DTOs.File>(httpPath);
+            var fileDTO = await Client
+               .GetAsync<DTOs.File>(httpPath);
 
             // CONVERT AND RETURN
-            var fileVM = this.GetDetails(fileDTO);
+            var fileVM = GetDetails(fileDTO);
             return fileVM;
 
          }

@@ -9,6 +9,20 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
    partial class ServiceTests
    {
 
+      [Fact]
+      internal async void GetDetails_WithException_MustThrowException()
+      {
+         var fileID = "driveID!fileID";
+         var exception = new Exception($"Error while loading details for file [{fileID}] with oneDrive service");
+         var client = ClientBuilder.Create().With("", exception).Build();
+         var service = new OneDriveService(client);
+
+         var value = await Assert.ThrowsAsync<Exception>(async () => await service.GetDetails(fileID));
+
+         Assert.NotNull(value);
+         Assert.Equal(exception.Message, value.Message);
+      }
+
       [Theory]
       [MemberData(nameof(GetDetails_WithValidArgument_MustResultSpectedValue_Data))]
       internal void GetDetails_WithValidArgument_MustResultSpectedValue(DTOs.File param)
