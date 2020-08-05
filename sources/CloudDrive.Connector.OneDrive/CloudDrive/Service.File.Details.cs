@@ -13,51 +13,42 @@ namespace Xamarin.CloudDrive.Connector
          {
 
             var IDs = GetIDs(fileID);
-            var httpPath = $"drives/{IDs.DriveID}/items/{IDs.ID}";
-            httpPath += "?select=id,name,createdDateTime,size,@microsoft.graph.downloadUrl,file,parentReference";
+            var httpPath =
+               $"drives/{IDs.DriveID}/items/{IDs.ID}" +
+               "?select=id,name,createdDateTime,size,@microsoft.graph.downloadUrl,file,parentReference";
 
             // REQUEST DATA FROM SERVER
-            var fileDTO = await this.Client.GetAsync<DTOs.File>(httpPath);
+            var fileDTO = await Client
+               .GetAsync<DTOs.File>(httpPath);
 
             // CONVERT AND RETURN
-            var fileVM = this.GetDetails(fileDTO);
+            var fileVM = GetDetails(fileDTO);
             return fileVM;
 
          }
          catch (Exception ex) { throw new Exception($"Error while loading details for file [{fileID}] with oneDrive service", ex); }
       }
 
-      private FileVM GetDetails(DTOs.File fileDTO)
+      internal FileVM GetDetails(DTOs.File fileDTO)
       {
-         try
+         return new FileVM
          {
-            var fileData = new FileVM
-            {
-               ID = fileDTO.id,
-               Name = fileDTO.name,
-               Path = this.GetDetails_FullPath(fileDTO),
-               CreatedDateTime = this.GetDetails_CreatedDateTime(fileDTO.createdDateTime),
-               SizeInBytes = fileDTO.size,
-               KeyValues = new Dictionary<string, string> {
-                  { "downloadUrl", fileDTO.downloadUrl }
-               },
-               ParentID = fileDTO.parentReference.id
-            };
-            return fileData;
-         }
-         catch (Exception) { throw; }
+            ID = fileDTO.id,
+            Name = fileDTO.name,
+            Path = GetPath(fileDTO.parentReference.path),
+            CreatedDateTime = GetDetails_CreatedDateTime(fileDTO.createdDateTime),
+            SizeInBytes = fileDTO.size,
+            KeyValues = new Dictionary<string, string> {
+               { "downloadUrl", fileDTO.downloadUrl }
+            },
+            ParentID = fileDTO.parentReference.id
+         };
       }
 
       DateTime GetDetails_CreatedDateTime(string createdDateTimeText)
       {
          DateTime.TryParse(createdDateTimeText, out DateTime createdDateTime);
          return createdDateTime;
-      }
-
-      string GetDetails_FullPath(DTOs.File fileDTO)
-      {
-         var fullPath = GetPath(fileDTO?.parentReference?.path);
-         return $"{fullPath}";
       }
 
    }
