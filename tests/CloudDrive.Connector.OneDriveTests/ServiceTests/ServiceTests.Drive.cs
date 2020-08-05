@@ -36,7 +36,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       internal async void GetDrives_WithValidProfile_MustResultSpectedDrive()
       {
          var param = new DTOs.Profile { id = "id", displayName = "displayName" };
-         var client = ClientBuilder.Create().With("", param).Build();
+         var client = ClientBuilder.Create().With("me?$select=id,displayName,userPrincipalName", param).Build();
          var service = new OneDriveService(client);
 
          var value = await service.GetDrives();
@@ -46,6 +46,42 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          Assert.Equal($"id!root", value[0].ID);
          Assert.Equal("displayName", value[0].Name);
          Assert.Equal("/", value[0].Path);
+      }
+
+      [Fact]
+      internal async void GetDrives_WithValidProfileAndSharedDrives_MustResultSpectedDrives()
+      {
+         var profile = new DTOs.Profile { id = "id", displayName = "displayName" };
+         var sharedDrives = new DTOs.SharedDriveSearch
+         {
+            value = new DTOs.SharedDrive[] {
+               new DTOs.SharedDrive
+               {
+                  remoteItem = new DTOs.SharedDriveDetails
+                  {
+                     id = "driveID",
+                     name = "driveName",
+                     folder = new DTOs.DirectoryDetails { },
+                     shared = new DTOs.SharedDriveDetailsShared { owner = new DTOs.SharedDriveDetailsSharedOwner { user = new DTOs.Profile { id = "userID" } } }
+                  }
+               }
+            }
+         };
+         var client = ClientBuilder
+            .Create()
+            .With("me?$select=id,displayName,userPrincipalName", profile)
+            .With("me/drive/sharedWithMe", sharedDrives)
+            .Build();
+         var service = new OneDriveService(client);
+
+         var value = await service.GetDrives();
+
+         Assert.NotNull(value);
+         Assert.NotEmpty(value);
+         Assert.Equal(2, value.Length);
+         Assert.Equal($"driveID", value[1].ID);
+         Assert.Equal("driveName", value[1].Name);
+         Assert.Equal("/", value[1].Path);
       }
 
       [Fact]
