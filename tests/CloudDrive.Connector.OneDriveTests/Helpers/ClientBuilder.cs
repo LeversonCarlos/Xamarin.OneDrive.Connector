@@ -18,12 +18,6 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          Mock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
             ItExpr.Is<HttpRequestMessage>(req => req.RequestUri.ToString().EndsWith(requestUri)),
             ItExpr.IsAny<CancellationToken>());
-      /*
-      ISetup<HttpMessageHandler, Task<HttpResponseMessage>> SendAsync(HttpRequestMessage requestMessage) =>
-         Mock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
-            ItExpr.Is<HttpRequestMessage>(req => req.Method == requestMessage.Method && req.RequestUri == req.RequestUri),
-            ItExpr.IsAny<CancellationToken>());
-      */
 
       public ClientBuilder With(string requestUri, Exception ex)
       {
@@ -36,17 +30,12 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          return this;
       }
 
-      /*
-      internal static HttpRequestMessage GetRequestMessage(string requestUri) =>
-         new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/" + requestUri);
-      internal static HttpRequestMessage GetRequestMessage<T>(string requestUri, T value, HttpMethod method)
+      bool _ConnectionState = true;
+      public ClientBuilder WithoutConnection()
       {
-         var jsonContent = System.Text.Json.JsonSerializer.Serialize(value, new System.Text.Json.JsonSerializerOptions { });
-         var stringContent = new StringContent(jsonContent, System.Text.Encoding.UTF8, "application/json");
-         var message = new HttpRequestMessage(method, requestUri) { Content = stringContent };
-         return message;
+         _ConnectionState = false;
+         return this;
       }
-      */
 
       HttpResponseMessage GetResponseMessage<T>(T value)
       {
@@ -57,6 +46,6 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       }
 
       public OneDriveClient Build() =>
-         new OneDriveClient(TokenBuilder.Create().Build(), Mock.Object);
+         new OneDriveClient(TokenBuilder.Create().WithConnectionState(_ConnectionState).Build(), Mock.Object);
    }
 }

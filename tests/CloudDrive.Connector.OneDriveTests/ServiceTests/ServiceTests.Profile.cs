@@ -7,6 +7,17 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
    {
 
       [Fact]
+      public async void GetProfile_WithoutConnection_MustResultNull()
+      {
+         var client = ClientBuilder.Create().WithoutConnection().Build();
+         var service = new OneDriveService(client);
+
+         var value = await service.GetProfile();
+
+         Assert.Null(value);
+      }
+
+      [Fact]
       public async void GetProfile_WithException_MustThrowException()
       {
          var exception = new Exception("Some Dummy Exception");
