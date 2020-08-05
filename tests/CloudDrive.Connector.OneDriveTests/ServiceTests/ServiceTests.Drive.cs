@@ -18,5 +18,29 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          Assert.Null(value);
       }
 
+      [Fact]
+      public async void GetSharedDrives_WithNullShares_MustResultNull()
+      {
+         DTOs.SharedDriveSearch param = null;
+         var client = ClientBuilder.Create().With("me/drive/sharedWithMe", param).Build();
+         var service = new OneDriveService(client);
+
+         var value = await service.GetSharedDrives();
+
+         Assert.Null(value);
+      }
+
+      [Fact]
+      public async void GetSharedDrives_WithNullValueShares_MustResultNull()
+      {
+         DTOs.SharedDriveSearch param = new DTOs.SharedDriveSearch();
+         var client = ClientBuilder.Create().With("me/drive/sharedWithMe", param).Build();
+         var service = new OneDriveService(client);
+
+         var value = await service.GetSharedDrives();
+
+         Assert.Null(value);
+      }
+
    }
 }
