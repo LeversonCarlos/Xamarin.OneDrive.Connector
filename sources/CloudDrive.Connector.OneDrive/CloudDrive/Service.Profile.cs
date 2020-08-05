@@ -11,16 +11,21 @@ namespace Xamarin.CloudDrive.Connector
       {
          try
          {
-            var messageContent = await Client.GetAsync<DTOs.Profile>("me?$select=id,displayName,userPrincipalName");
+            if (!await Client.CheckConnectionAsync())
+               return null;
+
+            var profileDTO = await Client
+               .GetAsync<DTOs.Profile>("me?$select=id,displayName,userPrincipalName");
+
             var profileData = new ProfileVM
             {
-               ID = messageContent.id,
-               Description = messageContent.displayName, 
+               ID = profileDTO.id,
+               Description = profileDTO.displayName,
                KeyValues = new Dictionary<string, string> {
-                  { "EMail", messageContent.userPrincipalName }
+                  { "EMail", profileDTO.userPrincipalName }
                }
             };
-            // profileData.ProfilePicture = await this.GetProfilePicture();
+
             return profileData;
          }
          catch (Exception) { throw; }
