@@ -1,10 +1,12 @@
 using System;
+using System.IO;
 using System.Net.Http;
 
 namespace Xamarin.CloudDrive.Connector
 {
    public partial class OneDriveClient : IOneDriveClient
    {
+      internal const string MicrosoftGraphUrl = "https://graph.microsoft.com/v1.0/";
 
       internal OneDriveClient(IOneDriveToken token) :
          this(token, new OneDriveClientHandler(token))
@@ -14,7 +16,7 @@ namespace Xamarin.CloudDrive.Connector
       {
          Token = token;
          _HttpClient = new HttpClient(messageHandler)
-         { BaseAddress = new Uri("https://graph.microsoft.com/v1.0/") };
+         { BaseAddress = new Uri(MicrosoftGraphUrl) };
       }
 
       internal readonly HttpClient _HttpClient;
