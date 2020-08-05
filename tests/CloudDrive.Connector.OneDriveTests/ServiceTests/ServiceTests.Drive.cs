@@ -33,6 +33,22 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       }
 
       [Fact]
+      internal async void GetDrives_WithValidProfile_MustResultSpectedDrive()
+      {
+         var param = new DTOs.Profile { id = "id", displayName = "displayName" };
+         var client = ClientBuilder.Create().With("", param).Build();
+         var service = new OneDriveService(client);
+
+         var value = await service.GetDrives();
+
+         Assert.NotNull(value);
+         Assert.NotEmpty(value);
+         Assert.Equal($"id!root", value[0].ID);
+         Assert.Equal("displayName", value[0].Name);
+         Assert.Equal("/", value[0].Path);
+      }
+
+      [Fact]
       internal async void GetSharedDrives_WithException_MustResultNull()
       {
          var exception = new Exception("Some Dummy Exception");
