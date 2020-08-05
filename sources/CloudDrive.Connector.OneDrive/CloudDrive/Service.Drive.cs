@@ -14,8 +14,12 @@ namespace Xamarin.CloudDrive.Connector
          {
             var drives = new List<DirectoryVM>();
 
-            // USER's ROOT DRIVE
-            var profile = await this.GetProfile();
+            // USER's PROFILE
+            var profile = await GetProfile();
+            if (profile == null)
+               return null;
+
+            // ROOT DRIVE
             var rootDrive = new DirectoryVM
             {
                ID = $"{profile.ID}!root",
@@ -24,9 +28,9 @@ namespace Xamarin.CloudDrive.Connector
             };
             drives.Add(rootDrive);
 
-            // LOCATE SHARED DRIVES
-            var sharedDrives = await GetSharedDrivers();
-            if (sharedDrives != null && sharedDrives.Length != 0)
+            // SHARED DRIVES
+            var sharedDrives = await GetSharedDrives();
+            if (sharedDrives != null)
                drives.AddRange(sharedDrives);
 
             return drives.ToArray();
@@ -34,27 +38,29 @@ namespace Xamarin.CloudDrive.Connector
          catch (Exception) { throw; }
       }
 
-      async Task<DirectoryVM[]> GetSharedDrivers()
+      internal async Task<DirectoryVM[]> GetSharedDrives()
       {
          try
          {
 
-            var messageContent = await this.Client.GetAsync<DTOs.SharedDriveSearch>("me/drive/sharedWithMe");
-            if (messageContent == null || messageContent.value == null) return null;
+            var messageContent = await Client
+               .GetAsync<DTOs.SharedDriveSearch>("me/drive/sharedWithMe");
+            if (messageContent == null || messageContent.value == null)
+               return null;
 
             var sharedDrives = messageContent.value
-               ?.Where(v => !string.IsNullOrEmpty(v.remoteItem?.shared?.owner?.user?.id))
-               ?.Where(v => v.remoteItem.folder != null)
-               ?.Select(v => new DirectoryVM
+               .Where(v => v.remoteItem != null)
+               .Where(v => v.remoteItem.folder != null)
+               .Where(v => !string.IsNullOrEmpty(v.remoteItem.shared?.owner?.user?.id))
+               .Select(v => new DirectoryVM
                {
                   ID = v.remoteItem.id,
-                  Name = $"{v.remoteItem.name}",
+                  Name = v.remoteItem.name,
                   Path = "/"
                })
-               ?.ToArray();
+               .ToArray();
 
             return sharedDrives;
-
          }
          catch (Exception) { return null; }
       }
