@@ -25,7 +25,7 @@ namespace Xamarin.CloudDrive.Connector
             drives.Add(rootDrive);
 
             // LOCATE SHARED DRIVES
-            var sharedDrives = await GetSharedDrivers();
+            var sharedDrives = await GetSharedDrives();
             if (sharedDrives != null && sharedDrives.Length != 0)
                drives.AddRange(sharedDrives);
 
@@ -34,7 +34,7 @@ namespace Xamarin.CloudDrive.Connector
          catch (Exception) { throw; }
       }
 
-      internal async Task<DirectoryVM[]> GetSharedDrivers()
+      internal async Task<DirectoryVM[]> GetSharedDrives()
       {
          try
          {
