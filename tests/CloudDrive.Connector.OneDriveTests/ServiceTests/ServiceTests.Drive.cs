@@ -48,14 +48,16 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
 
          var value = await service.GetSharedDrives();
 
-         Assert.Null(value);
+         Assert.NotNull(value);
+         Assert.Empty(value);
       }
-
       public static IEnumerable<object[]> GetSharedDrives_WithInvalidShares_MustResultEmptyArray_Data() =>
          new[]
          {
-            new object[] { null },
-            new object[] { new DTOs.SharedDriveSearch() }
+            new object[] { new DTOs.SharedDriveSearch { value = new DTOs.SharedDrive[] { } } },
+            new object[] { new DTOs.SharedDriveSearch { value = new DTOs.SharedDrive[] {
+               new DTOs.SharedDrive{ remoteItem=new DTOs.SharedDriveDetails{ } }
+               } } }
          };
 
    }
