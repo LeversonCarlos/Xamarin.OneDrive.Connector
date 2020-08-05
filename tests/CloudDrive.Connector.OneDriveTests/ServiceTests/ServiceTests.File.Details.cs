@@ -23,6 +23,28 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          Assert.Equal(exception.Message, value.Message);
       }
 
+      [Fact]
+      internal async void GetDetails_WithValidData_MustResultSpected()
+      {
+         var fileID = "driveID!fileID";
+         var file = new DTOs.File
+         {
+            id = "id",
+            name = "name",
+            size = 123,
+            downloadUrl = "http://test.com",
+            parentReference = new DTOs.DirectoryParent { path = "/parent/folderName" },
+            createdDateTime = "2020-08-05 20:22:15",
+         };
+         var client = ClientBuilder.Create().With("", file).Build();
+         var service = new OneDriveService(client);
+
+         var value = await service.GetDetails(fileID);
+
+         Assert.NotNull(value);
+         Assert.Equal(file.id, value.ID);
+      }
+
       [Theory]
       [MemberData(nameof(GetDetails_WithValidArgument_MustResultSpectedValue_Data))]
       internal void GetDetails_WithValidArgument_MustResultSpectedValue(DTOs.File param)
