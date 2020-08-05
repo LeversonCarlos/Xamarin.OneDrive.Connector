@@ -14,22 +14,29 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       public ClientBuilder() => Mock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
       public static ClientBuilder Create() => new ClientBuilder();
 
+      ISetup<HttpMessageHandler, Task<HttpResponseMessage>> SendAsync(string requestUri) =>
+         Mock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+            ItExpr.Is<HttpRequestMessage>(req => req.RequestUri.ToString().EndsWith(requestUri)),
+            ItExpr.IsAny<CancellationToken>());
+      /*
       ISetup<HttpMessageHandler, Task<HttpResponseMessage>> SendAsync(HttpRequestMessage requestMessage) =>
          Mock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
             ItExpr.Is<HttpRequestMessage>(req => req.Method == requestMessage.Method && req.RequestUri == req.RequestUri),
             ItExpr.IsAny<CancellationToken>());
+      */
 
-      public ClientBuilder With(HttpRequestMessage requestMessage, Exception ex)
+      public ClientBuilder With(string requestUri, Exception ex)
       {
-         SendAsync(requestMessage).ThrowsAsync(ex);
+         SendAsync(requestUri).ThrowsAsync(ex);
          return this;
       }
-      public ClientBuilder With<T>(HttpRequestMessage requestMessage, T value)
+      public ClientBuilder With<T>(string requestUri, T value)
       {
-         SendAsync(requestMessage).ReturnsAsync(GetResponseMessage(value));
+         SendAsync(requestUri).ReturnsAsync(GetResponseMessage(value));
          return this;
       }
 
+      /*
       internal static HttpRequestMessage GetRequestMessage(string requestUri) =>
          new HttpRequestMessage(HttpMethod.Get, "https://graph.microsoft.com/v1.0/" + requestUri);
       internal static HttpRequestMessage GetRequestMessage<T>(string requestUri, T value, HttpMethod method)
@@ -39,6 +46,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          var message = new HttpRequestMessage(method, requestUri) { Content = stringContent };
          return message;
       }
+      */
 
       HttpResponseMessage GetResponseMessage<T>(T value)
       {
