@@ -24,6 +24,11 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          SendAsync(requestUri).ThrowsAsync(ex);
          return this;
       }
+      public ClientBuilder With(string requestUri, HttpResponseMessage value)
+      {
+         SendAsync(requestUri).ReturnsAsync(value);
+         return this;
+      }
       public ClientBuilder With<T>(string requestUri, T value)
       {
          SendAsync(requestUri).ReturnsAsync(GetResponseMessage(value));
