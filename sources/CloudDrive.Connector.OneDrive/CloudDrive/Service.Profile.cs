@@ -11,11 +11,11 @@ namespace Xamarin.CloudDrive.Connector
       {
          try
          {
-            var messageContent = await this.Client.GetAsync<DTOs.Profile>("me?$select=id,displayName,userPrincipalName");
+            var messageContent = await Client.GetAsync<DTOs.Profile>("me?$select=id,displayName,userPrincipalName");
             var profileData = new ProfileVM
             {
                ID = messageContent.id,
-               Description = messageContent.displayName,
+               Description = messageContent.displayName, 
                KeyValues = new Dictionary<string, string> {
                   { "EMail", messageContent.userPrincipalName }
                }
@@ -26,13 +26,12 @@ namespace Xamarin.CloudDrive.Connector
          catch (Exception) { throw; }
       }
 
-      private async Task<byte[]> GetProfilePicture()
+      public async Task<byte[]> GetProfilePicture()
       {
          try
          {
-            var message = await this.Client.GetAsync("me/photo/$value");
-            if (!message.IsSuccessStatusCode)
-            { throw new Exception(await message.Content.ReadAsStringAsync()); }
+            var message = await Client.GetAsync("me/photo/$value");
+            message.EnsureSuccessStatusCode();
             var profilePicture = await message.Content.ReadAsByteArrayAsync();
             return profilePicture;
          }
