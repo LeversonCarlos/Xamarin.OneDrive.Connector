@@ -16,6 +16,8 @@ namespace Xamarin.CloudDrive.Connector
          try
          {
             var fileList = new List<FileVM>();
+            if (limit == 0)
+               return fileList.ToArray();
 
             // SPLIT SEARCH PATTERNS INTO ARRAY
             var searchPatterns = searchPattern
@@ -28,7 +30,7 @@ namespace Xamarin.CloudDrive.Connector
             var addFilesUntilLimit = new Func<FileVM[], bool>(files =>
             {
                fileList.AddRange(files);
-               return limit == 0 || fileList.Count < limit;
+               return fileList.Count < limit;
             });
 
             // EXECUTE SEARCH FOR FILES THROUGH MULTIPLE THREADS

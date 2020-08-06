@@ -21,6 +21,19 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       }
 
       [Fact]
+      internal async void SearchFiles_WithZeroLimit_MustResultAndEmptyArray()
+      {
+         var client = ClientBuilder.Create().Build();
+         var service = new OneDriveService(client);
+         var directory = new DirectoryVM { };
+
+         var value = await service.SearchFiles(directory, "", 0);
+
+         Assert.NotNull(value);
+         Assert.Empty(value);
+      }
+
+      [Fact]
       internal async void SearchFiles_WithValidArguments_MustResultAsSpected()
       {
          var fileData = new DTOs.FileSearch
