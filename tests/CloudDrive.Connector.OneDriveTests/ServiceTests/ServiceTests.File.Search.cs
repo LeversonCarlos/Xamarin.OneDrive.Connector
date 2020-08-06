@@ -14,7 +14,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          var service = new OneDriveService(client);
          var directory = new DirectoryVM { };
 
-         var value = await Assert.ThrowsAsync<ArgumentException>(async () => await service.SearchFiles(directory, "", 0));
+         var value = await Assert.ThrowsAsync<ArgumentException>(async () => await service.SearchFiles(directory, "", 1));
 
          Assert.NotNull(value);
          Assert.Equal(exception.Message, value.Message);
