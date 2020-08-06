@@ -15,29 +15,31 @@ namespace Xamarin.CloudDrive.Connector
             var fileList = new List<FileVM>();
 
             var IDs = GetIDs(directory.ID);
-            var httpPath = $"drives/{IDs.DriveID}/items/{IDs.ID}/children";
-            httpPath += "?";
-            httpPath += "$filter=file ne null&";
-            httpPath += "$select=id,name,createdDateTime,size,@microsoft.graph.downloadUrl,file,parentReference&";
-            httpPath += "$top=1000";
+            var httpPath = "" +
+               $"drives/{IDs.DriveID}/items/{IDs.ID}/children" +
+               "?" +
+               "$filter=file ne null&" +
+               "$select=id,name,createdDateTime,size,@microsoft.graph.downloadUrl,file,parentReference&" +
+               "$top=1000";
 
             while (!string.IsNullOrEmpty(httpPath))
             {
 
                // REQUEST DATA FROM SERVER
-               var httpResult = await this.Client.GetAsync<DTOs.FileSearch>(httpPath);
+               var httpResult = await Client
+                  .GetAsync<DTOs.FileSearch>(httpPath);
 
                // STORE RESULT
-               var files = httpResult?.value?
+               var files = httpResult.value
                   .Where(x => x.file != null)
-                  .Select(x => this.GetDetails(x))
+                  .Select(x => GetDetails(x))
                   .ToList();
                fileList.AddRange(files);
 
                // CHECK IF THERE IS ANOTHER PAGE OF RESULTS
                httpPath = httpResult.nextLink;
                if (!string.IsNullOrEmpty(httpPath))
-               { httpPath = httpPath.Replace(((System.Net.Http.HttpClient)this.Client).BaseAddress.AbsoluteUri, string.Empty); }
+                  httpPath = httpPath.Replace(OneDriveClient.MicrosoftGraphUrl, string.Empty);
 
             }
 
@@ -45,7 +47,6 @@ namespace Xamarin.CloudDrive.Connector
          }
          catch (Exception) { throw; }
       }
-
 
    }
 }
