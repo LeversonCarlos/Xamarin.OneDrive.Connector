@@ -34,7 +34,7 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       }
 
       [Fact]
-      internal async void SearchFiles_WithValidArguments_MustResultAsSpected()
+      internal async void SearchFiles_WithSingleFileAndNoChildFolder_MustSingleArray()
       {
          var fileData = new DTOs.FileSearch
          {
@@ -60,8 +60,55 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
          var value = await service.SearchFiles(directory, "*.txt");
 
          Assert.NotNull(value);
-         Assert.NotEmpty(value);
+         Assert.Single(value);
          Assert.Equal("fileID", value[0].ID);
+      }
+
+      [Theory]
+      [InlineData("*.txt", 2, 2)]
+      internal async void SearchFiles_WithValidArguments_MustResultAsSpected(string seacrhPattern, int searchLimit, int expectedSize)
+      {
+         var fileData = new DTOs.FileSearch
+         {
+            value = new DTOs.File[] {
+               new DTOs.File {
+                  file = new DTOs.FileDetails{ },
+                  id="file1ID", name="file1Name.txt",
+                  parentReference=new DTOs.DirectoryParent{ id="parentID", path="/parent/folderName" }
+               },
+               new DTOs.File {
+                  file = new DTOs.FileDetails{ },
+                  id="file2ID", name="file2Name.zip",
+                  parentReference=new DTOs.DirectoryParent{ id="parentID", path="/parent/folderName" }
+               },
+               new DTOs.File {
+                  file = new DTOs.FileDetails{ },
+                  id="file3ID", name="file3Name.txt",
+                  parentReference=new DTOs.DirectoryParent{ id="parentID", path="/parent/folderName" }
+               }
+            }
+         };
+         var directoryData = new DTOs.DirectorySearch
+         {
+            value = new DTOs.Directory[] {
+               new DTOs.Directory {
+                  folder =new DTOs.DirectoryDetails{ },
+                  id="folderID", name="folderName",
+                  parentReference=new DTOs.DirectoryParent{ path="/rootName" }
+               }
+            }
+         };
+         var client = ClientBuilder.Create()
+            .With("$select=id,name,createdDateTime,size,@microsoft.graph.downloadUrl,file,parentReference&$top=1000", fileData)
+            .With("$select=id,name,folder,parentReference&$top=1000", directoryData)
+            .Build();
+         var service = new OneDriveService(client);
+         var directory = new DirectoryVM { ID = "driveID!folderID" };
+
+         var value = await service.SearchFiles(directory, seacrhPattern, searchLimit);
+
+         Assert.NotNull(value);
+         Assert.Equal(expectedSize, value.Length);
       }
 
    }
