@@ -15,34 +15,38 @@ namespace Xamarin.CloudDrive.Connector
       {
          try
          {
+            var fileList = new List<FileVM>();
 
+            // SPLIT SEARCH PATTERNS INTO ARRAY
             var searchPatterns = searchPattern
                .Replace("*.", "")
                .ToLower()
                .Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries)
                .ToArray();
 
-            var fileList = new List<FileVM>();
+            // AUXILIARY FUNCTION TO ADD RESULT AND CHECK FOR THE LIMIT
             var addFilesUntilLimit = new Func<FileVM[], bool>(files =>
             {
                fileList.AddRange(files);
                return limit == 0 || fileList.Count < limit;
             });
 
-            await this.SearchFiles(directory, searchPatterns, addFilesUntilLimit);
+            // EXECUTE SEARCH FOR FILES THROUGH MULTIPLE THREADS
+            await SearchFiles(directory, searchPatterns, addFilesUntilLimit);
 
+            // RESULT
             var filesArray = fileList
-               ?.Where(x => x != null)
-               ?.Where(x => !string.IsNullOrEmpty(x.Path))
-               ?.OrderBy(x => x.Path)
-               ?.ToArray();
-
+               .Where(file => file != null)
+               .Where(file => !string.IsNullOrEmpty(file.Path))
+               .OrderBy(file => file.Path)
+               .Take(limit)
+               .ToArray();
             return filesArray;
          }
          catch (Exception) { throw; }
       }
 
-      internal async Task<bool> SearchFiles(DirectoryVM directory, string[] searchPatterns, Func<FileVM[], bool> addFilesUntilLimit)
+      async Task<bool> SearchFiles(DirectoryVM directory, string[] searchPatterns, Func<FileVM[], bool> addFilesUntilLimit)
       {
          try
          {
