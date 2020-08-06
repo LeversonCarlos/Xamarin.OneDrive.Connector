@@ -42,26 +42,26 @@ namespace Xamarin.CloudDrive.Connector
          catch (Exception) { throw; }
       }
 
-      private async Task<bool> SearchFiles(DirectoryVM directory, string[] searchPatterns, Func<FileVM[], bool> addFilesUntilLimit)
+      internal async Task<bool> SearchFiles(DirectoryVM directory, string[] searchPatterns, Func<FileVM[], bool> addFilesUntilLimit)
       {
          try
          {
 
             // SEARCH FILE ON FOLDER
-            var fileList = (await this.GetFiles(directory))?.ToList();
+            var fileList = (await GetFiles(directory)).ToList();
             fileList.RemoveAll(x => !searchPatterns.Any(ext => x.Name.EndsWith(ext, StringComparison.InvariantCultureIgnoreCase)));
-            if (!addFilesUntilLimit(fileList.ToArray())) { return false; }
+            if (!addFilesUntilLimit(fileList.ToArray()))
+               return false;
 
             // LOCATE SUB DIRECTORIES
-            var childFolders = await this.GetDirectories(directory);
-            if (childFolders == null || childFolders.Length == 0) { return true; }
+            var childFolders = await GetDirectories(directory);
+            if (childFolders == null || childFolders.Length == 0)
+               return true;
 
             // LOOP SUB DIRECTORIES 
             var childTasks = new List<Task<bool>>();
             foreach (var childFolder in childFolders)
-            {
-               childTasks.Add(this.SearchFiles(childFolder, searchPatterns, addFilesUntilLimit));
-            }
+               childTasks.Add(SearchFiles(childFolder, searchPatterns, addFilesUntilLimit));
             var childsResult = await Task.WhenAll(childTasks.ToArray());
 
             return childsResult.All(x => x == true);
