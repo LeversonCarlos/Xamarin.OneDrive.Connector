@@ -61,7 +61,7 @@ namespace Xamarin.CloudDrive.Connector
 
             // LOCATE SUB DIRECTORIES
             var childFolders = await GetDirectories(directory);
-            if (childFolders == null || childFolders.Length == 0)
+            if (childFolders.Length == 0)
                return true;
 
             // LOOP SUB DIRECTORIES 
