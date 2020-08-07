@@ -44,9 +44,18 @@ namespace Xamarin.CloudDrive.Connector
       {
          if (!httpMessage.IsSuccessStatusCode)
             throw new Exception(await httpMessage.Content.ReadAsStringAsync());
-         var httpContent = await httpMessage.Content.ReadAsStreamAsync();
-         var httpResult = await System.Text.Json.JsonSerializer.DeserializeAsync<T>(httpContent);
-         return httpResult;
+
+         var contentString = await httpMessage.Content.ReadAsStringAsync();
+         var contentBytes = System.Text.Encoding.UTF8.GetBytes(contentString);
+
+         using (var contentStream = new System.IO.MemoryStream(contentBytes))
+         {
+            var httpResult = await System.Text.Json.JsonSerializer.DeserializeAsync<T>(contentStream);
+            return httpResult;
+         }
+         // var httpContent = await httpMessage.Content.ReadAsStreamAsync();
+         // var httpResult = await System.Text.Json.JsonSerializer.DeserializeAsync<T>(httpContent);
+         // return httpResult;
       }
 
    }

@@ -67,6 +67,8 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       [Theory]
       [InlineData("*.txt", 2)]
       [InlineData("*.txt", 1)]
+      [InlineData("*.txt", 3)]
+      [InlineData("*.zip", 2)]
       internal async void SearchFiles_WithValidFilesAndFolder_MustResultAsSpected(string searchPattern, int searchLimit)
       {
          var fileData = new DTOs.FileSearch
