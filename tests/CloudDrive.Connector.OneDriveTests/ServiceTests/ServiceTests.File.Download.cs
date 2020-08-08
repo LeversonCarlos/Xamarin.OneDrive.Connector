@@ -12,6 +12,19 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
       [InlineData("fileID")]
       internal async void Download_WithInvalidArgument_MustThrowException(string fileID)
       {
+         var client = ClientBuilder.Create().Build();
+         var exceptionMessage = $"Error while downloading file [{fileID}] with oneDrive service";
+         var service = new OneDriveService(client);
+
+         var value = await Assert.ThrowsAsync<Exception>(async () => await service.Download(fileID));
+
+         Assert.NotNull(value);
+         Assert.Equal(exceptionMessage, value.Message);
+      }
+
+      internal async void Download_WithExceptionOnCall_MustThrowException()
+      {
+         var fileID = "driveID!fileID";
          var exception = new Exception($"Error while downloading file [{fileID}] with oneDrive service");
          var client = ClientBuilder.Create().With("", exception).Build();
          var service = new OneDriveService(client);
