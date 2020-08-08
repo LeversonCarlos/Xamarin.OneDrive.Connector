@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using Xunit;
 
 namespace Xamarin.CloudDrive.Connector.OneDriveTests
@@ -34,6 +35,20 @@ namespace Xamarin.CloudDrive.Connector.OneDriveTests
 
          Assert.NotNull(value);
          Assert.Equal(exception.Message, value.Message);
+      }
+
+      [Fact]
+      internal async void Download_WithBadResponse_MustThrowException()
+      {
+         var fileID = "driveID!fileID";
+         var exceptionMessage = $"Error while downloading file [{fileID}] with oneDrive service";
+         var client = ClientBuilder.Create().With("", new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)).Build();
+         var service = new OneDriveService(client);
+
+         var value = await Assert.ThrowsAsync<Exception>(async () => await service.Download(fileID));
+
+         Assert.NotNull(value);
+         Assert.Equal(exceptionMessage, value.Message);
       }
 
       [Fact]
