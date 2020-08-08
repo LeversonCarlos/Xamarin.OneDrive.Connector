@@ -14,10 +14,12 @@ namespace Xamarin.CloudDrive.Connector
             var IDs = GetIDs(fileID);
             var httpPath = $"drives/{IDs.DriveID}/items/{IDs.ID}/content";
 
-            var httpMessage = await this.Client.GetAsync(httpPath);
-            if (!httpMessage.IsSuccessStatusCode) throw new Exception(await httpMessage.Content.ReadAsStringAsync());
-            var httpContent = await httpMessage.Content.ReadAsStreamAsync();
+            var httpMessage = await Client
+               .GetAsync(httpPath);
+            if (!httpMessage.IsSuccessStatusCode) 
+               throw new Exception(await httpMessage.Content.ReadAsStringAsync());
 
+            var httpContent = await httpMessage.Content.ReadAsStreamAsync();
             return httpContent;
          }
          catch (Exception ex) { throw new Exception($"Error while downloading file [{fileID}] with oneDrive service", ex); }
