@@ -1,15 +1,17 @@
 # Xamarin.CloudDrive.Connector
-A wrapper around some of the **most common cloud drivers** around to be easily used with **xamarin apps**. What started as a specific microsoft onedrive connector, now evolved to a generic library with **multiple implementations** *(including an onedrive one)*.  
+A wrapper around some of the **most common cloud drives**, to be easily used with **xamarin apps**. What started as a specific *microsoft onedrive* connector, now evolved to a generic library with **multiple implementations** *(including an onedrive one)*.  
+
 ![Release](https://github.com/LeversonCarlos/Xamarin.OneDrive.Connector/workflows/Release/badge.svg)
 ![Nuget](https://img.shields.io/nuget/v/Xamarin.CloudDrive.Connector.Common?label=nuget&logo=nuget) 
 [![codecov](https://codecov.io/gh/LeversonCarlos/Xamarin.OneDrive.Connector/branch/refactoring/graph/badge.svg)](https://codecov.io/gh/LeversonCarlos/Xamarin.OneDrive.Connector)
 
 ## Install instructions
-You can add the library to your project using the [nuget](https://www.nuget.org/packages/Xamarin.OneDrive.Connector) package:  
-   ```shell
-   dotnet add package Xamarin.OneDrive.Connector
-   ```  
-*To use the onedrive implementation, you will need a microsoft application id that you can get following [this guide](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-v2-register-an-app).*
+You can add the library to your project using some of the nuget packages: [onedrive](https://www.nuget.org/packages/Xamarin.CloudDrive.Connector.OneDrive/) or [localdrive](https://www.nuget.org/packages/Xamarin.CloudDrive.Connector.LocalDrive//) :  
+```shell
+dotnet add package Xamarin.CloudDrive.Connector.OneDrive
+dotnet add package Xamarin.CloudDrive.Connector.LocalDrive
+```  
+> To use the onedrive implementation, you will need a microsoft application id that you can get following [this guide](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-v2-register-an-app).
 
 ## Example project
 There is an example project on the `example` directory. A simple file picker using both implementations (localDrive and oneDrive) to show how to configure and execute to whole thing.  
@@ -20,20 +22,21 @@ Replace `{YOUR_MICROSOFT_APPLICATION_ID}` with the microsoft application id that
 
 ### Android project : MainActivity.cs
 ```csharp
-using Xamarin.CloudDrive.Connector.OneDrive;
 protected override void OnCreate(Bundle savedInstanceState)
 {
    ...
    Xamarin.Forms.Forms.Init(this, savedInstanceState);
-   this.AddOneDriveConnector("{YOUR_MICROSOFT_APPLICATION_ID}", "User.Read", "Files.ReadWrite");
+   Xamarin.CloudDrive.Connector.OneDriveService.Init(this, 
+      "{YOUR_MICROSOFT_APPLICATION_ID}", 
+      "msal{YOUR_MICROSOFT_APPLICATION_ID}://auth", 
+      "User.Read", "Files.Read.All");
    ...
 }
-```
-```csharp
+
 protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
 {
    base.OnActivityResult(requestCode, resultCode, data);
-   this.SetOneDriveAuthenticationResult(requestCode, resultCode, data);
+   Xamarin.CloudDrive.Connector.OneDriveService.SetAuthenticationResult(requestCode, resultCode, data);
 }
 ```
 
@@ -54,22 +57,23 @@ protected override void OnActivityResult(int requestCode, Result resultCode, Int
 ### Simplest get-started example 
 
 ```csharp
-using Xamarin.CloudDrive.Connector.Common;
-using Xamarin.CloudDrive.Connector.OneDrive;
+using Xamarin.CloudDrive.Connector;
 
-var service = DependencyProvider.Get<OneDriveService>();
+// Init method on the mainActivity has placed instance on dependency service
+var service = DependencyService.Get<OneDriveService>();
 
-if (await service.ConnectAsync()) { // user will be asked for credentials 
+// user will be asked for credentials 
+if (await service.ConnectAsync()) { 
 
    // user profile [id, name, mail, picture]
    var profile = await service.GetProfile(); 
 
    // user's drivers including shared ones
-   var driversList = await service.GetDrivers(); 
-   var driver = driversList.First();
+   var drivesList = await service.GetDrives(); 
+   var drive = drivesList.First();
 
    // list directories on a directory 
-   var directoriesList = await service.GetDirectories(driver);
+   var directoriesList = await service.GetDirectories(drive);
    var directory = directoriesList.First();
 
    // list files on a directory 
@@ -81,6 +85,12 @@ if (await service.ConnectAsync()) { // user will be asked for credentials
    
    // upload file overwriting its content
    file = await service.Upload(file.ID, fileContent);
+
+   // any other call availabled on the oneDrive documentation 
+   // could be called throught generics helper methods
+   service.Client.GetAsync();
+   service.Client.PostAsync();
+   service.Client.PutAsync();
 
    // at some point you may call disconnect to clear user auth data
    // doing so, next time user will be asked credentials again
@@ -99,19 +109,17 @@ This implementation is used to access local external card data
 
 ### Android project : MainActivity.cs
 ```csharp
-using Xamarin.CloudDrive.Connector.LocalDrive;
 protected override void OnCreate(Bundle savedInstanceState)
 {
    ...
    Xamarin.Forms.Forms.Init(this, savedInstanceState);
-   this.AddLocalDriveConnector(savedInstanceState);
+   Xamarin.CloudDrive.Connector.LocalDriveService.Init(this, savedInstanceState);
    ...
 }
-```
-```csharp
+
 public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
 {
-   this.SetLocalDrivePermissionsResult(requestCode, permissions, grantResults);
+   Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
    base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 }
 ```
@@ -119,19 +127,20 @@ public override void OnRequestPermissionsResult(int requestCode, string[] permis
 ### Simplest get-started example 
 
 ```csharp
-using Xamarin.CloudDrive.Connector.Common;
-using Xamarin.CloudDrive.Connector.LocalDrive;
+using Xamarin.CloudDrive.Connector;
 
-var service = DependencyProvider.Get<LocalDriveService>();
+// Init method on the mainActivity has placed instance on dependency service
+var service = DependencyService.Get<OneDriveService>();
 
-if (await service.ConnectAsync()) { // user will be asked to authorize storage permissions 
+// user will be asked to authorize storage permissions 
+if (await service.ConnectAsync()) { 
 
    // device's external cards 
-   var driversList = await service.GetDrivers(); 
-   var driver = driversList.First();
+   var drivesList = await service.GetDrives(); 
+   var drive = drivesList.First();
 
    // list directories on a directory 
-   var directoriesList = await service.GetDirectories(driver);
+   var directoriesList = await service.GetDirectories(drive);
    var directory = directoriesList.First();
 
    // list files on a directory 
@@ -157,7 +166,7 @@ if (await service.ConnectAsync()) { // user will be asked to authorize storage p
 ## Changelog
 ### v1.0.*
 The specific OneDrive package evolved to a generic library with multiple implementations.  
-**breaking changes**
+> This version has breaking changes with previous versions
 ### v0.4.*
 Upgrading component version 
 ### v0.3.*
@@ -181,6 +190,7 @@ Methods for listing folder's childs.
 
 ## Authors
 * [Leverson Carlos](https://github.com/LeversonCarlos) 
+* [other contributors](https://github.com/LeversonCarlos/Xamarin.OneDrive.Connector/graphs/contributors)
 
 ## License
 MIT License - see the [LICENSE](LICENSE) file for details.
