@@ -1,0 +1,66 @@
+<Project Sdk="MSBuild.Sdk.Extras/2.0.54">
+
+   <PropertyGroup>
+      <TargetFrameworkNetStandard>netstandard2.0</TargetFrameworkNetStandard>
+      <TargetFrameworkIos>Xamarin.iOS10</TargetFrameworkIos>
+      <TargetFrameworkAndroid>MonoAndroid9.0</TargetFrameworkAndroid>
+      <TargetFrameworks>
+         $(TargetFrameworkNetStandard);$(TargetFrameworkAndroid)<!--;$(TargetFrameworkIos)-->
+      </TargetFrameworks>
+   </PropertyGroup>
+
+   <PropertyGroup>
+      <BuildVersion>0</BuildVersion>
+      <SuffixVersion></SuffixVersion>
+      <Version>1.0.$(BuildVersion)$(SuffixVersion)</Version>
+   </PropertyGroup>
+
+   <PropertyGroup>
+      <RootNamespace>Xamarin.CloudDrive.Connector.OneDrive</RootNamespace>
+      <PackageId>Xamarin.CloudDrive.Connector.OneDrive</PackageId>
+      <Product>Xamarin.CloudDrive.Connector</Product>
+      <Title>CloudDrive Connector for OneDrive on Xamarin</Title>
+      <Description>A wrapper around the device local drive to easy the directory and file selection</Description>
+      <Description>A wrapper around microsoft identity connector and microsoft graph api to access onedrive content. This is an evolution of the old Xamarin.OneDrive.Connector</Description>
+      <Authors>Leverson Carlos;lcjohnny</Authors>
+      <Company>Leverson Carlos</Company>
+      <RepositoryUrl>https://github.com/LeversonCarlos/Xamarin.OneDrive.Connector</RepositoryUrl>
+      <DefaultLanguage>en</DefaultLanguage>
+      <PackageTags>Xamarin.OneDrive.Connector Xamarin Xamarin.OneDrive OneDrive Microsoft.Identity Microsoft.Identity.Client Microsoft.Graph</PackageTags>
+      <PackageLicenseExpression>MIT</PackageLicenseExpression>
+   </PropertyGroup>
+
+   <PropertyGroup>
+      <!-- Need to include / exclude / remove cs files manually so that they are present in both assemblies -->
+      <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+      <!-- <NoWarn>$(NoWarn);CS8002</NoWarn> -->
+   </PropertyGroup>
+
+   <PropertyGroup Condition="'$(TargetFramework)' == '$(TargetFrameworkAndroid)'">
+      <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+   </PropertyGroup>
+
+   <ItemGroup>
+      <PackageReference Include="Microsoft.Identity.Client" Version="4.11.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.3" />
+      <PackageReference Include="System.Text.Json" Version="4.7.1" />
+      <ProjectReference Include="..\CloudDrive.Connector.Common\CloudDrive.Connector.Common.csproj" />
+
+      <!-- This None is here so the conditionally included files show up in the Solution Explorer -->
+      <None Include="**\*.cs" Exclude="obj\**\*.*;bin\**\*.*" />
+
+      <!-- Manually include the cs files -->
+      <Compile Include="**\*.cs" Exclude="obj\**\*.*" />
+      <Compile Remove="Platforms\**\*.*;" />
+   </ItemGroup>
+
+   <ItemGroup Condition=" '$(TargetFramework)' == '$(TargetFrameworkAndroid)' ">
+      <PackageReference Include="Xamarin.Forms" Version="4.6.0.967" />
+      <Compile Include="Platforms\Android\**\*.cs" />
+   </ItemGroup>
+
+   <ItemGroup Condition=" '$(TargetFramework)' == '$(TargetFrameworkNetStandard)' ">
+      <Compile Include="Platforms\NetStandard\**\*.cs" />
+   </ItemGroup>
+
+</Project>

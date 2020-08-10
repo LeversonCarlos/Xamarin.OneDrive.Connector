@@ -1,0 +1,39 @@
+name: Pull Request
+
+on: [pull_request]
+  
+jobs:
+  tests:
+    name: Validate Changes
+    runs-on: windows-latest
+
+    steps:
+
+      - name: Checkout Source Repository
+        uses: actions/checkout@v2
+      
+      - name: Setup MsBuild Tooling
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Build the LocalDrive Test Project
+        working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
+        run: msbuild -restore -p:Configuration=Debug /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+        
+      - name: Run the LocalDrive Tests
+        working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
+        run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+
+      - name: Build the OneDrive Test Project
+        working-directory: 'tests/CloudDrive.Connector.OneDriveTests/'
+        run: msbuild -restore -p:Configuration=Debug /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+        
+      - name: Run the OneDrive Tests
+        working-directory: 'tests/CloudDrive.Connector.OneDriveTests/'
+        run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+
+      - name: Send Tests Report to Codecov.IO
+        run: |
+          curl -s https://codecov.io/bash | bash
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          
