@@ -2,7 +2,7 @@ name: Release
 
 on:
   push:
-    branches: [ master, dev, refactoring ]
+    branches: [ master, dev ]
   
 jobs:
 
@@ -60,6 +60,8 @@ jobs:
                           
       - name: Define release type
         id: release_type
+        env:
+          REF: ${{ github.ref }}
         run: |
           if ($REF -eq 'refs/heads/master') {
               echo "::set-output name=suffixVersion::''"
@@ -67,8 +69,6 @@ jobs:
           else {
               echo "::set-output name=suffixVersion::'-alpha'"
           }
-        env:
-          REF: ${{ github.ref }}        
                     
       - name: Build and Pack the Common Interfaces
         run: msbuild ./sources/CloudDrive.Connector.Common -r -p:Configuration=Release /p:BuildVersion=${{ github.run_number }} /p:SuffixVersion=${{ steps.release_type.outputs.suffixVersion }} /t:pack 
