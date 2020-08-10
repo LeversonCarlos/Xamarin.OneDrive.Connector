@@ -38,11 +38,11 @@ namespace Xamarin.CloudDrive.Connector
          catch (Exception ex) { throw new Exception($"Error while uploading file [{httpPath}] with oneDrive service", ex); }
       }
 
-      public async Task<bool> UploadThumbnail(FileVM fileVM, System.IO.Stream image)
+      public async Task<bool> UploadThumbnail(string fileID, System.IO.Stream image)
       {
          try
          {
-            var IDs = GetIDs(fileVM.ID);
+            var IDs = GetIDs(fileID);
             var httpPath = $"drives/{IDs.DriveID}/items/{IDs.ID}/thumbnails/0/source/content";
 
             var httpData = new System.Net.Http.StreamContent(image);
@@ -52,7 +52,7 @@ namespace Xamarin.CloudDrive.Connector
                throw new Exception(await httpMessage.Content.ReadAsStringAsync());
             return true;
          }
-         catch (Exception ex) { throw new Exception($"Error while uploading thumbnail for file [{fileVM.ID}] with oneDrive service", ex); }
+         catch (Exception ex) { throw new Exception($"Error while uploading thumbnail for file [{fileID}] with oneDrive service", ex); }
       }
 
    }
