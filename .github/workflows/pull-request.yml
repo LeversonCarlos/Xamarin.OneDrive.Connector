@@ -20,33 +20,29 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"          
 
-      - name: Define release type
-        id: release_type
-        env:
-          REF: '${{ github.ref }}'
-        run: |
-          if ($REF -eq 'refs/pull/68/merge') {
-              echo "::set-output name=suffixVersion::''"
-          }
-          else {
-              echo "::set-output name=suffixVersion::'-alpha'"
-          }
-
+      - name: Define Stable Release
+        if: github.ref == 'refs/pull/68/merge'
+        run: echo "::set-env name=suffixVersion::"
+                    
+      - name: Define Pre Release
+        if: github.ref != 'refs/pull/68/merge'
+        run: echo "::set-env name=suffixVersion::-alpha"
+                    
       - name: Build the LocalDrive Test Project
         working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
-        run: msbuild -restore -p:Configuration=Debug /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:SuffixVersion=${{ steps.release_type.outputs.suffixVersion }}
+        run: msbuild -restore -p:Configuration=Debug /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:SuffixVersion=$suffixVersion
         
       - name: Run the LocalDrive Tests
         working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
-        run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover 
+        run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:SuffixVersion=$suffixVersion
 
       - name: Build the OneDrive Test Project
         working-directory: 'tests/CloudDrive.Connector.OneDriveTests/'
-        run: msbuild -restore -p:Configuration=Debug /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+        run: msbuild -restore -p:Configuration=Debug /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:SuffixVersion=$suffixVersion
         
       - name: Run the OneDrive Tests
         working-directory: 'tests/CloudDrive.Connector.OneDriveTests/'
-        run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:SuffixVersion=${{ steps.release_type.outputs.suffixVersion }}
+        run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:SuffixVersion=$suffixVersion
 
       - name: Send Tests Report to Codecov.IO
         run: |
