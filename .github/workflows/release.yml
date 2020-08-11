@@ -63,7 +63,7 @@ jobs:
         run: echo "::set-env name=suffixVersion::"
                     
       - name: Define Pre Release
-        if: github.ref == 'refs/heads/dev'
+        if: github.ref != 'refs/heads/master'
         run: echo "::set-env name=suffixVersion::-alpha"
                                         
       - name: Build and Pack the Common Interfaces
