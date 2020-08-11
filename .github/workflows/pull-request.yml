@@ -21,11 +21,11 @@ jobs:
         run: echo "$GITHUB_CONTEXT"          
 
       - name: Define Stable Release
-        if: github.ref == 'refs/pull/68/merge'
+        if: github.ref == 'refs/heads/master'
         run: echo "::set-env name=suffixVersion::"
                     
       - name: Define Pre Release
-        if: github.ref != 'refs/pull/68/merge'
+        if: github.ref == 'refs/heads/dev'
         run: echo "::set-env name=suffixVersion::-alpha"
                     
       - name: Build the LocalDrive Test Project
