@@ -23,7 +23,7 @@ jobs:
       - name: Define release type
         id: release_type
         env:
-          REF: ${{ github.ref }}
+          REF: '${{ github.ref }}'
         run: |
           if ($REF -eq 'refs/pull/68/merge') {
               echo "::set-output name=suffixVersion::''"
@@ -34,11 +34,11 @@ jobs:
 
       - name: Build the LocalDrive Test Project
         working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
-        run: msbuild -restore -p:Configuration=Debug /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+        run: msbuild -restore -p:Configuration=Debug /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:SuffixVersion=${{ steps.release_type.outputs.suffixVersion }}
         
       - name: Run the LocalDrive Tests
         working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
-        run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:SuffixVersion=${{ steps.release_type.outputs.suffixVersion }}
+        run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover 
 
       - name: Build the OneDrive Test Project
         working-directory: 'tests/CloudDrive.Connector.OneDriveTests/'
