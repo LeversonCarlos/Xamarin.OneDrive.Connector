@@ -30,19 +30,19 @@ jobs:
                     
       - name: Build the LocalDrive Test Project
         working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
-        run: msbuild -restore -p:Configuration=Debug /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:SuffixVersion=${{ suffixVersion }}
+        run: msbuild -restore -p:Configuration=Debug /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:SuffixVersion=$(suffixVersion)
         
       - name: Run the LocalDrive Tests
         working-directory: 'tests/CloudDrive.Connector.LocalDriveTests/'
-        run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:SuffixVersion=${{ suffixVersion }}
+        run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:SuffixVersion=$(suffixVersion)
 
       - name: Build the OneDrive Test Project
         working-directory: 'tests/CloudDrive.Connector.OneDriveTests/'
-        run: msbuild -restore -p:Configuration=Debug /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:SuffixVersion=${{ suffixVersion }}
+        run: msbuild -restore -p:Configuration=Debug /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:SuffixVersion=$(suffixVersion)
         
       - name: Run the OneDrive Tests
         working-directory: 'tests/CloudDrive.Connector.OneDriveTests/'
-        run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:SuffixVersion=${{ suffixVersion }}
+        run: dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:SuffixVersion=$(suffixVersion)
 
       - name: Send Tests Report to Codecov.IO
         run: |
