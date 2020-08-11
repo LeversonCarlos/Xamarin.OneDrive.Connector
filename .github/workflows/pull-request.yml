@@ -25,7 +25,7 @@ jobs:
         env:
           REF: ${{ github.ref }}
         run: |
-          if ($REF -eq 'refs/heads/master') {
+          if ($REF -eq 'refs/pull/68/merge') {
               echo "::set-output name=suffixVersion::''"
           }
           else {
